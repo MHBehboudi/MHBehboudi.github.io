@@ -26,51 +26,6 @@
     }
     .container{width:90%;max-width:1200px;margin:auto;padding:20px 0}
     h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:600;margin:0 0 15px}
-    .about-lead{
-  font-size:1.05em;
-  color:var(--text-light);
-  margin-bottom:14px;
-}
-
-  .about-checklist{
-    list-style:none; padding-left:0; margin:12px 0 18px;
-  }
-  .about-checklist li{
-    position:relative; padding-left:28px; margin:10px 0; color:var(--text-muted);
-  }
-  .about-checklist li::before{
-    content:""; position:absolute; left:0; top:.45em;
-    width:16px; height:16px; border-radius:4px;
-    border:1px solid rgba(255,255,255,.35);
-    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-    box-shadow:inset 0 0 0 2px rgba(0,0,0,.15);
-  }
-  .about-checklist li span{
-    color:var(--text-light);
-  }
-  
-  .about-now-grid{
-    display:grid; gap:12px; margin:10px 0 14px;
-    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
-  }
-  .about-now-card{
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:12px; padding:14px 14px;
-  }
-  .about-now-card h4{
-    margin:0 0 6px; color:var(--primary-color); font-size:1rem; text-transform:uppercase; letter-spacing:.04em;
-  }
-  
-  .about-values{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 6px; }
-  .pill{
-    padding:6px 10px; border-radius:999px; font-size:.85rem;
-    border:1px solid rgba(255,255,255,.16);
-    background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-    color:#EAEAEA;
-  }
-  
-  .about-outro{ margin-top:10px; color:var(--text-light); }
 
     /* Headings */
     h1{
@@ -90,7 +45,7 @@
     a:hover{color:var(--secondary-color);text-decoration:underline}
     strong{color:var(--secondary-color)}
 
-    /* ===== Fixed background layer (video stays put; content scrolls over it) ===== */
+    /* ===== Fixed background layer (video stays; content scrolls over) ===== */
     #bg-layer{
       position:fixed; inset:0; z-index:0; pointer-events:none;
     }
@@ -103,7 +58,7 @@
       background:radial-gradient(80% 60% at 50% 40%, rgba(0,0,0,.25), rgba(0,0,0,.65));
     }
 
-    /* ===== Welcome / Hero (full screen, above video, below main when scrolled) ===== */
+    /* ===== Welcome / Hero (full screen) ===== */
     #welcome{
       position:relative; z-index:1;
       min-height:100vh; /* fallback */
@@ -126,7 +81,6 @@
       font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;
       color:var(--text-muted);margin-bottom:6px
     }
-    /* Responsive name */
     .hero-name{
       font-size:clamp(1.9rem,12cqi,4rem);
       line-height:1.05;letter-spacing:-0.01em;margin:0 0 10px;
@@ -159,13 +113,8 @@
       border-color:rgba(255,255,255,.18)
     }
     .btn-secondary:hover{background:rgba(255,255,255,.06)}
-    .edu-detail {
-                  margin-top: 8px;
-                  color: var(--text-muted);
-                  font-style: italic;
-                }
 
-    /* Social icons row */
+    /* Social icons under CTAs */
     .social-row{
       display:flex;gap:12px;justify-content:center;margin-top:12px;flex-wrap:wrap;
     }
@@ -203,9 +152,9 @@
       clip:rect(0,0,0,0);white-space:nowrap;border:0
     }
 
-    /* ===== Main content sits ABOVE the video and can visually cover the welcome ===== */
+    /* ===== Main content (over background) ===== */
     #main-content{
-      position:relative; z-index:2; /* above fixed video and welcome layer */
+      position:relative; z-index:2;
       background:var(--main-bg);
     }
 
@@ -213,6 +162,73 @@
     .section-box{background:var(--section-bg);padding:30px 40px;margin-bottom:30px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.5);overflow:auto}
     .profile-pic{width:150px;height:150px;border-radius:50%;object-fit:cover;border:4px solid var(--primary-color);float:left;margin:0 30px 20px 0}
 
+    /* ===== About styles ===== */
+    .about-lead{
+      font-size:1.05em;
+      color:var(--text-light);
+      margin-bottom:14px;
+    }
+    .about-checklist{
+      list-style:none; padding-left:0; margin:12px 0 18px;
+    }
+    .about-checklist li{
+      position:relative; padding-left:28px; margin:10px 0; color:var(--text-muted);
+    }
+    .about-checklist li::before{
+      content:""; position:absolute; left:0; top:.45em;
+      width:16px; height:16px; border-radius:4px;
+      border:1px solid rgba(255,255,255,.35);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+      box-shadow:inset 0 0 0 2px rgba(0,0,0,.15);
+    }
+    .about-checklist li span{ color:var(--text-light); }
+    .about-now-grid{
+      display:grid; gap:12px; margin:10px 0 14px;
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .about-now-card{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px; padding:14px 14px;
+    }
+    .about-now-card h4{
+      margin:0 0 6px; color:var(--primary-color); font-size:1rem; text-transform:uppercase; letter-spacing:.04em;
+    }
+    .about-values{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 6px; }
+    .pill{
+      padding:6px 10px; border-radius:999px; font-size:.85rem;
+      border:1px solid rgba(255,255,255,.16);
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      color:#EAEAEA;
+    }
+    .about-outro{ margin-top:10px; color:var(--text-light); }
+
+    /* Education extras */
+    .edu-detail { margin-top:8px; color:var(--text-muted); font-style:italic; }
+
+    /* Publications extras */
+    .pub-subhead{
+      margin: 18px 0 10px;
+      color: var(--secondary-color);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      border-left: 3px solid var(--secondary-color);
+      padding-left: 10px;
+    }
+    .pub-meta .doi { white-space: nowrap; }
+    .pub-meta .doi a{
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(255,255,255,.3);
+    }
+    .pub-meta .doi a:hover{
+      color: var(--secondary-color);
+      text-decoration: underline;
+      border-bottom-color: transparent;
+    }
+
+    /* Cards etc. */
     .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:30px}
     .project-card{background:var(--dark-bg);border-radius:8px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.4);transition:transform .2s ease,box-shadow .2s ease}
     .project-card:hover{transform:translateY(-6px);box-shadow:0 10px 22px rgba(0,0,0,.55)}
@@ -223,6 +239,7 @@
 
     .publication-item,.toolbox-item{background:var(--dark-bg);padding:20px;margin-bottom:15px;border-left:4px solid var(--secondary-color);border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
     .pub-meta{font-size:.95em;color:var(--text-muted)}
+
     footer{background:var(--section-bg);color:var(--text-muted);text-align:center;padding:30px 20px;margin-top:40px;border-top:3px solid var(--primary-color);font-size:.9em}
 
     /* Mobile tweaks */
@@ -270,7 +287,7 @@
             <line x1="10" y1="19" x2="14" y2="5"></line>
           </svg>
         </a>
-        <a class="icon-btn" href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+        <a class="icon-btn" href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
             <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
             <circle cx="8" cy="9" r="1.5" fill="currentColor" stroke="none"></circle>
@@ -303,16 +320,18 @@
 
   <main id="main-content">
     <div class="container">
+
+      <!-- About Me (engaging, informative, friendly) -->
       <section id="about" class="section-box" aria-labelledby="about-title">
         <h2 id="about-title">About Me</h2>
         <img src="profile.jpg" alt="Portrait of Mohammad H. Behboudi" class="profile-pic">
-      
+
         <p class="about-lead">
           I’m a Ph.D. researcher in Cognition &amp; Neuroscience who speaks both <strong>brain</strong> and <strong>engineering</strong>.
-          I build end-to-end EEG pipelines—from careful data collection to explainable models—to turn signals into insights that can
-          improve people’s health.
+          I build end-to-end EEG pipelines—from careful data collection to explainable models—to turn signals into insights
+          that can improve people’s health.
         </p>
-      
+
         <ul class="about-checklist">
           <li><span>Robust EEG pipelines:</span> artifact handling, time–frequency analysis, connectivity, and graph metrics.</li>
           <li><span>ML &amp; DL that ship:</span> clean features, reproducible training, and fair evaluation (SVM/KNN → deep models).</li>
@@ -320,7 +339,7 @@
           <li><span>Better biosignals:</span> collaborate with hardware/firmware/software to raise signal quality and reliability.</li>
           <li><span>Clear communication:</span> tidy plots, readable code, and findings that non-experts can act on.</li>
         </ul>
-      
+
         <div class="about-now-grid">
           <div class="about-now-card">
             <h4>Right now</h4>
@@ -335,7 +354,7 @@
             <p>Wearable biosensing, on-device signal control/processing, neural decoding for speech &amp; cognition, and safe LLMs for health.</p>
           </div>
         </div>
-      
+
         <div class="about-values">
           <span class="pill">Curiosity</span>
           <span class="pill">Clarity</span>
@@ -343,13 +362,13 @@
           <span class="pill">Rigor</span>
           <span class="pill">Reproducibility</span>
         </div>
-      
+
         <p class="about-outro">
           If you like building useful, human-centered neurotech—or you just want to nerd out about filters and feature stability—<a href="mailto:Behboudi@UTDallas.edu">let’s talk</a>.
         </p>
       </section>
 
-
+      <!-- Education -->
       <section id="education" class="section-box">
         <h2>Education</h2>
         <div class="publication-list">
@@ -358,21 +377,19 @@
             <p class="pub-meta"><strong>The University of Texas at Dallas</strong>, Dallas, TX | Aug 2021 – Present</p>
             <p class="edu-detail"><strong>Thesis:</strong> Development of Large-Scale Brain Networks During Semantic and Syntactic Error Processing: An EEG Connectivity and Graph Theory Analysis</p>
           </div>
-      
           <div class="publication-item">
             <h3>M.Sc. in Applied Cognition and Neuroscience</h3>
             <p class="pub-meta"><strong>The University of Texas at Dallas</strong>, Dallas, TX | Aug 2021 – May 2024</p>
           </div>
-      
           <div class="publication-item">
             <h3>B.Sc. in Electrical Engineering</h3>
             <p class="pub-meta"><strong>K. N. Toosi University of Technology</strong>, Tehran, Iran | Aug 2015 – Jan 2020</p>
-            <p class="edu-detail"><strong>Final Project:</strong> 6-Classes Sleep Apnea Classification Based on Single Channel EEG</p>
+            <p class="edu-detail"><strong>Final Project:</strong> 6-classes sleep apnea classification based on single channel EEG</p>
           </div>
         </div>
       </section>
 
-
+      <!-- Skills (kept from earlier) -->
       <section id="skills" class="section-box">
         <h2>Skills & Expertise</h2>
         <div class="project-grid">
@@ -395,6 +412,7 @@
         </div>
       </section>
 
+      <!-- Projects (kept) -->
       <section id="projects" class="section-box">
         <h2>Featured Projects</h2>
         <div class="project-grid">
@@ -425,9 +443,10 @@
         </div>
       </section>
 
+      <!-- Publications (DOIs inline) -->
       <section id="publications" class="section-box">
         <h2>Publications</h2>
-      
+
         <!-- Under Review -->
         <h3 class="pub-subhead">Under Review</h3>
         <div class="publication-list">
@@ -436,7 +455,7 @@
             <p class="pub-meta">Benítez-Barrera, C. R., <strong>Behboudi, M. H.</strong>, Chalamalasetty, P., Castro, S., Leung, E., &amp; Maguire, M. J. (Under review). <em>Language and Speech</em>.</p>
           </div>
         </div>
-      
+
         <!-- In Preparation -->
         <h3 class="pub-subhead">In Preparation</h3>
         <div class="publication-list">
@@ -449,46 +468,45 @@
             <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Schneider, C. J. M., &amp; Maguire, M. J. (In preparation).</p>
           </div>
         </div>
-      
+
         <!-- Published (newest → oldest) -->
         <h3 class="pub-subhead">Published</h3>
         <div class="publication-list">
-      
+
           <div class="publication-item">
             <h3>Neural oscillations during predictive sentence processing in young children.</h3>
             <p class="pub-meta">Benítez-Barrera, C. R., <strong>Behboudi, M. H.</strong>, &amp; Maguire, M. J. (2024). <em>Brain and Language</em>, 254, 105437 <span class="doi">• <a href="https://doi.org/10.1016/j.bandl.2024.105437" target="_blank" rel="noopener">doi:10.1016/j.bandl.2024.105437</a></span></p>
           </div>
-      
+
           <div class="publication-item">
             <h3>The necessity of taking culture and context into account when studying the relationship between socioeconomic status and brain development.</h3>
             <p class="pub-meta">Schneider, J. M., <strong>Behboudi, M. H.</strong>, &amp; Maguire, M. J. (2024). <em>Brain Sciences</em>, 14(4), 392 <span class="doi">• <a href="https://doi.org/10.3390/brainsci14040392" target="_blank" rel="noopener">doi:10.3390/brainsci14040392</a></span></p>
           </div>
-      
+
           <div class="publication-item">
             <h3>Rethinking household size and children’s language environment.</h3>
             <p class="pub-meta">Poudel, S., Denicola-Prechtl, K., Nelson, J. A., <strong>Behboudi, M. H.</strong>, Benítez-Barrera, C., Castro, S., &amp; Maguire, M. J. (2024). <em>Developmental Psychology</em>, 60(1), 159 <span class="doi">• <a href="https://doi.org/10.1037/dev0001650" target="_blank" rel="noopener">doi:10.1037/dev0001650</a></span></p>
           </div>
-      
+
           <div class="publication-item">
             <h3>Development of gamma oscillation during sentence processing in early adolescence: Insights into the maturation of semantic processing.</h3>
             <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., Chalamalasetty, P., &amp; Maguire, M. J. (2023). <em>Brain Sciences</em>, 13(12), 1639 <span class="doi">• <a href="https://doi.org/10.3390/brainsci13121639" target="_blank" rel="noopener">doi:10.3390/brainsci13121639</a></span></p>
           </div>
-      
+
           <div class="publication-item">
             <h3>Sleep apnea diagnosis using complexity features of EEG signals.</h3>
             <p class="pub-meta">Gholami, B., <strong>Behboudi, M. H.</strong>, Khadem, A., Shoeibi, A., &amp; Gorriz, J. M. (2022, May). In <em>International Work-Conference on the Interplay Between Natural and Artificial Computation</em> (pp. 74–83). Cham: Springer International Publishing <span class="doi">• <a href="https://doi.org/10.1007/978-3-031-06242-1_8" target="_blank" rel="noopener">doi:10.1007/978-3-031-06242-1_8</a></span></p>
           </div>
-      
+
           <div class="publication-item">
             <h3>Diagnosis of Sleep Apnea Syndrome from EEG Signals using Different Entropy Measures.</h3>
             <p class="pub-meta">Gholami, B., <strong>Behboudi, M. H.</strong>, Mahjani, M. G., &amp; Khadem, A. (2021). <em>2021 7th International Conference on Signal Processing and Intelligent Systems (ICSPIS)</em>, Tehran, Iran, 1–6 <span class="doi">• <a href="https://doi.org/10.1109/ICSPIS54653.2021.9729367" target="_blank" rel="noopener">doi:10.1109/ICSPIS54653.2021.9729367</a></span></p>
           </div>
-      
+
         </div>
       </section>
 
-
-
+      <!-- Contact -->
       <section id="contact" class="section-box">
         <h2>Contact</h2>
         <p>For collaborations or inquiries about my research:</p>
@@ -496,6 +514,7 @@
         <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank" rel="noopener">mohammad-hossein-behboudi-m-sc-a5b592168</a></p>
         <p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener">0000-0003-1335-3617</a></p>
       </section>
+
     </div>
 
     <footer>
