@@ -190,7 +190,9 @@
             bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 60px;
             height: 60px;
             border: 2px solid var(--primary-color);
@@ -201,10 +203,6 @@
         }
 
         .scroll-btn span {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             font-size: 2em;
             color: var(--primary-color);
             transition: all 0.3s ease-in-out;
@@ -249,8 +247,21 @@
             margin-bottom: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            overflow: auto; /* To contain floated elements */
         }
 
+        /* New Profile Picture Styling */
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            float: left;
+            margin-right: 30px;
+            margin-bottom: 20px;
+        }
+        
         /* Project Cards */
         .project-grid {
             display: grid;
@@ -466,7 +477,7 @@
         <div class="hero-content">
             <h1>Mohammad Hossein Behboudi</h1>
             <p>Applied Scientist in Neuroscience & Signal Processing</p>
-            <a href="#main-content" class="scroll-btn"><span>&darr;</span></a>
+            <a href="#about" class="scroll-btn"><span>&darr;</span></a>
         </div>
     </section>
     
@@ -474,6 +485,7 @@
         <div class="container">
             <section id="about" class="section-box">
                 <h2>About Me</h2>
+                <img src="profile.jpg" alt="Mohammad H. Behboudi" class="profile-pic">
                 <p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in **Electrical Engineering**. My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development. I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes. I have a proven track record of leading and contributing to research projects in this domain.</p>
                 <p>My expertise spans **MATLAB, Python, and R**, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets. My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis.</p>
             </section>
