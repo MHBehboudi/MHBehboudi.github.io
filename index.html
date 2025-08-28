@@ -148,7 +148,7 @@
             display: block;
         }
 
-        /* Full-Page Welcome Section */
+        /* Full-Page Welcome Section (FIXED: clickable by raising z-index and disabling video pointer events) */
         #welcome {
             position: fixed;
             height: 100vh;
@@ -156,7 +156,7 @@
             top: 0;
             left: 0;
             overflow: hidden;
-            z-index: -1;
+            z-index: 1; /* was -1 */
         }
 
         #welcome .hero-video {
@@ -167,12 +167,13 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: -1;
+            z-index: -1;            /* keep behind content */
+            pointer-events: none;   /* don't eat clicks */
         }
 
         #welcome .hero-content {
             position: relative;
-            z-index: 102; /* Higher z-index to ensure it's clickable */
+            z-index: 102; /* stays above video; below navbar's 1000 */
             color: var(--text-light);
             text-align: center;
             display: flex;
@@ -181,6 +182,7 @@
             align-items: center;
             height: 100vh;
             width: 100%;
+            pointer-events: auto;
         }
 
         #welcome .hero-content p {
@@ -209,6 +211,8 @@
             cursor: pointer;
             z-index: 103;
             transition: all 0.3s ease;
+            display: block;         /* ensure it's a clickable box */
+            pointer-events: auto;   /* explicit */
         }
 
         .scroll-frame::before {
@@ -232,7 +236,6 @@
             animation-play-state: paused;
         }
 
-
         /* Main Content Section that Scrolls Over the Welcome Page */
         #main-content {
             position: relative;
@@ -243,12 +246,8 @@
 
         /* CSS for 3D Rotation Animation */
         @keyframes rotate3D {
-            from {
-                transform: rotateY(0deg);
-            }
-            to {
-                transform: rotateY(360deg);
-            }
+            from { transform: rotateY(0deg); }
+            to   { transform: rotateY(360deg); }
         }
 
         .rotating-figure {
@@ -493,7 +492,8 @@
         <div class="hero-content">
             <h1>Hi, I'm Mohammad Hossein Behboudi</h1>
             <p>Exploring the frontiers of neuroscience through signal processing and data science.</p>
-            <a href="#about" class="scroll-frame"></a>
+            <!-- Clickable scroll button -->
+            <a href="#about" class="scroll-frame" aria-label="Scroll to About section" title="Scroll"></a>
         </div>
     </section>
     
@@ -502,8 +502,8 @@
             <section id="about" class="section-box">
                 <h2>About Me</h2>
                 <img src="profile.jpg" alt="Mohammad H. Behboudi" class="profile-pic">
-                <p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in **Electrical Engineering**. My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development. I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes. I have a proven track record of leading and contributing to research projects in this domain.</p>
-                <p>My expertise spans **MATLAB, Python, and R**, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets. My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis.</p>
+                <p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in <strong>Electrical Engineering</strong>. My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development. I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes. I have a proven track record of leading and contributing to research projects in this domain.</p>
+                <p>My expertise spans <strong>MATLAB, Python, and R</strong>, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets. My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis.</p>
             </section>
 
             <section id="education" class="section-box">
@@ -596,14 +596,14 @@
                     </div>
                     <div class="publication-item">
                         <h3>Neural oscillations during predictive sentence processing in young children.</h3>
-                        <p class="pub-meta">Benítez-Barrera, C. R., **Behboudi, M. H.**, & Maguire, M. J. (2024). <em>Brain and Language</em>, 254, 105437.</p>
+                        <p class="pub-meta">Benítez-Barrera, C. R., <strong>Behboudi, M. H.</strong>, & Maguire, M. J. (2024). <em>Brain and Language</em>, 254, 105437.</p>
                         <div class="pub-links">
                             <a href="https://doi.org/10.1016/j.bandl.2024.105437">[DOI]</a>
                         </div>
                     </div>
                     <div class="publication-item">
                         <h3>Sleep Apnea Diagnosis Using Complexity Features of EEG Signals.</h3>
-                        <p class="pub-meta">Gholami, B., **Behboudi, M.H.**, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). <em>IWINAC 2022. Lecture Notes in Computer Science</em>.</p>
+                        <p class="pub-meta">Gholami, B., <strong>Behboudi, M.H.</strong>, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). <em>IWINAC 2022. Lecture Notes in Computer Science</em>.</p>
                         <div class="pub-links">
                             <a href="https://doi.org/10.1007/978-3-031-06242-1_8">[DOI]</a>
                         </div>
@@ -615,8 +615,8 @@
                 <h2>Contact</h2>
                 <p>For collaborations or inquiries about my research, please feel free to reach out:</p>
                 <p><strong>Email:</strong> Behboudi@UTDallas.edu</p>
-                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank">mohammad-hossein-behboudi-m-sc-a5b592168</a></p>
-                <p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank">0000-0003-1335-3617</a></p>
+                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank" rel="noopener">mohammad-hossein-behboudi-m-sc-a5b592168</a></p>
+                <p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener">0000-0003-1335-3617</a></p>
             </section>
         </div>
 
@@ -626,5 +626,24 @@
             </div>
         </footer>
     </main>
+
+    <!-- Smooth scroll handler: consistent behavior across browsers -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.querySelector('.scroll-frame');
+      const target = document.querySelector('#about');
+      if (btn && target) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          try {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } catch (err) {
+            // Fallback for very old browsers
+            window.location.hash = '#about';
+          }
+        });
+      }
+    });
+    </script>
 </body>
 </html>
