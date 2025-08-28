@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroDynamics Lab | Signal Processing & Neuroscience</title>
+    <title>My Neuroscience Portfolio</title>
     <style>
-        /* General Styles & New Color Palette */
+        /* New Color Palette & General Styles */
         :root {
-            --dark-bg: #121212;
-            --main-bg: #1a1a1a;
+            --dark-bg: #151515;
             --section-bg: #212121;
-            --primary-blue: #007bff;
-            --secondary-orange: #ffc107;
-            --text-light: #e0e0e0;
+            --card-bg: #2a2a2a;
+            --primary-color: #007bff; /* Vibrant Blue */
+            --accent-color: #ffc107; /* Energetic Orange */
+            --text-light: #f0f0f0;
             --text-muted: #a0a0a0;
         }
 
@@ -35,7 +35,7 @@
         }
 
         h1, h2, h3, h4 {
-            color: var(--primary-blue);
+            color: var(--primary-color);
             font-weight: 600;
             margin-bottom: 15px;
         }
@@ -48,26 +48,26 @@
             margin-bottom: 30px;
             text-transform: uppercase;
         }
-
+        
         strong {
-            color: var(--secondary-orange);
+            color: var(--accent-color);
         }
 
         a {
-            color: var(--primary-blue);
+            color: var(--primary-color);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         a:hover {
-            color: var(--secondary-orange);
+            color: var(--accent-color);
             text-decoration: underline;
         }
 
         /* Navbar */
         .navbar {
             background-color: var(--section-bg);
-            border-bottom: 3px solid var(--primary-blue);
+            border-bottom: 3px solid var(--primary-color);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -88,8 +88,8 @@
         }
 
         .navbar a:hover, .dropdown:hover .dropbtn {
-            background-color: #333;
-            color: var(--primary-blue);
+            background-color: var(--card-bg);
+            color: var(--primary-color);
         }
 
         .dropdown {
@@ -126,7 +126,7 @@
         }
 
         .dropdown-content a:hover {
-            background-color: var(--primary-blue);
+            background-color: var(--primary-color);
             color: var(--dark-bg);
         }
 
@@ -176,7 +176,7 @@
         }
 
         .btn-primary {
-            background-color: var(--primary-blue);
+            background-color: var(--primary-color);
             color: var(--dark-bg);
             padding: 12px 25px;
             border-radius: 5px;
@@ -186,7 +186,7 @@
         }
 
         .btn-primary:hover {
-            background-color: var(--secondary-orange);
+            background-color: var(--accent-color);
             text-decoration: none;
         }
 
@@ -214,6 +214,7 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
             transition: box-shadow 0.3s ease;
         }
+
         .section-box:hover {
             box-shadow: 0 6px 25px rgba(0, 123, 255, 0.2);
         }
@@ -227,7 +228,7 @@
         }
 
         .project-card {
-            background-color: #2a2a2a;
+            background-color: var(--card-bg);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
@@ -243,7 +244,7 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border-bottom: 2px solid var(--primary-blue);
+            border-bottom: 2px solid var(--primary-color);
         }
 
         .project-card-content {
@@ -253,7 +254,7 @@
         .project-card h3 {
             margin-top: 0;
             font-size: 1.4em;
-            color: var(--primary-blue);
+            color: var(--primary-color);
         }
 
         .project-card p {
@@ -264,16 +265,16 @@
         .project-card .read-more {
             display: inline-block;
             margin-top: 15px;
-            color: var(--secondary-orange);
+            color: var(--accent-color);
             font-weight: bold;
         }
 
         /* Publications & Toolboxes */
         .publication-item, .toolbox-item {
-            background-color: #2a2a2a;
+            background-color: var(--card-bg);
             padding: 20px;
             margin-bottom: 15px;
-            border-left: 4px solid var(--primary-blue);
+            border-left: 4px solid var(--primary-color);
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             transition: transform 0.2s ease;
@@ -313,7 +314,7 @@
         }
 
         .visualization-item {
-            background-color: #2a2a2a;
+            background-color: var(--card-bg);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
@@ -336,7 +337,7 @@
 
         .visualization-item .interactive-note {
             font-size: 0.8em;
-            color: var(--primary-blue);
+            color: var(--primary-color);
             margin-top: 10px;
         }
 
@@ -349,9 +350,9 @@
         }
 
         .glossary-item {
-            background-color: #2a2a2a;
+            background-color: var(--card-bg);
             padding: 15px;
-            border-left: 3px solid var(--primary-blue);
+            border-left: 3px solid var(--primary-color);
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
@@ -359,7 +360,7 @@
         .glossary-item h4 {
             margin-top: 0;
             margin-bottom: 5px;
-            color: var(--primary-blue);
+            color: var(--primary-color);
         }
 
         .glossary-item p {
@@ -374,19 +375,19 @@
             text-align: center;
             padding: 30px 20px;
             margin-top: 40px;
-            border-top: 3px solid var(--primary-blue);
+            border-top: 3px solid var(--primary-color);
             font-size: 0.9em;
         }
 
         footer .social-links a {
-            color: var(--primary-blue);
+            color: var(--primary-color);
             font-size: 1.5em;
             margin: 0 10px;
             transition: color 0.3s ease;
         }
 
         footer .social-links a:hover {
-            color: var(--secondary-orange);
+            color: var(--accent-color);
         }
 
         /* Responsive Design */
@@ -421,7 +422,7 @@
         <a href="#projects">Projects</a>
         <a href="#publications">Publications</a>
         <div class="dropdown">
-            <button class="dropbtn">Resources <i class="fa fa-caret-down"></i></button>
+            <button class="dropbtn">Resources</button>
             <div class="dropdown-content">
                 <a href="#toolboxes">Toolboxes</a>
                 <a href="#glossary">Glossary</a>
@@ -437,17 +438,17 @@
             Your browser does not support the video tag.
         </video>
         <div class="hero-content">
-            <h1>NeuroDynamics Lab</h1>
-            <p>Advancing Neuroscience through Signal Processing and Data Science. Exploring the electrical language of the brain.</p>
-            <a href="#projects" class="btn-primary">View Our Work</a>
+            <h1>Welcome! My Neuroscience Portfolio</h1>
+            <p>Exploring the electrical language of the brain with a passion for signal processing, statistical analysis, and data science.</p>
+            <a href="#projects" class="btn-primary">Explore My Work &rarr;</a>
         </div>
     </div>
 
     <div class="container">
         <section id="about" class="section-box">
-            <h2>About Us</h2>
-            <p>Welcome to NeuroDynamics Lab. We are at the forefront of **neuroscience research**, specializing in the intricate fields of **biological signal processing** and **advanced statistical analysis**. Our mission is to unravel the complexities of brain function using cutting-edge methodologies, including **EEG, MEG, and fMRI data analysis**. Based in **Dallas, Texas**, our team develops novel analytical tools and applies machine learning techniques to gain deeper insights into neurological processes, from perception and cognition to neurological disorders.</p>
-            <p>Our expertise spans **time-frequency analysis, source localization, connectivity analysis, and developing custom algorithms** to extract meaningful patterns from noisy biological signals. We are committed to open science and sharing our tools and findings with the broader scientific community.</p>
+            <h2>About Me</h2>
+            <p>I am a passionate researcher specializing in the intricate fields of **biological signal processing** and **advanced statistical analysis**. My mission is to unravel the complexities of brain function using cutting-edge methodologies, including **EEG, MEG, and fMRI data analysis**. Based in **Dallas, Texas**, my work involves developing novel analytical tools and applying machine learning techniques to gain deeper insights into neurological processes.</p>
+            <p>My expertise spans **time-frequency analysis, source localization, connectivity analysis, and developing custom algorithms** to extract meaningful patterns from noisy biological signals. I am committed to open science and sharing my tools and findings with the broader scientific community.</p>
         </section>
 
         <section id="projects" class="section-box">
@@ -578,9 +579,9 @@
         </section>
         
         <section id="contact" class="section-box">
-            <h2>Contact Us</h2>
-            <p>For collaborations, inquiries, or more information about our research, please feel free to reach out:</p>
-            <p><strong>Email:</strong> <a href="mailto:info@neurodynamicslab.org">info@neurodynamicslab.org</a></p>
+            <h2>Contact</h2>
+            <p>For collaborations, inquiries, or more information about my research, please feel free to reach out:</p>
+            <p><strong>Email:</strong> <a href="mailto:your-email@example.com">your-email@example.com</a></p>
             <p><strong>Location:</strong> Dallas, Texas, USA</p>
             <p class="social-links">
                 <a href="#" target="_blank" title="LinkedIn">LinkedIn</a> |
@@ -592,7 +593,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 NeuroDynamics Lab. All rights reserved.</p>
+            <p>&copy; 2024 Your Name. All rights reserved.</p>
             <p>Built with passion for Neuroscience and Signal Processing.</p>
         </div>
     </footer>
