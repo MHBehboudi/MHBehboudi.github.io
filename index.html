@@ -184,39 +184,6 @@
             text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
         }
 
-        /* New Floating Button */
-        .scroll-btn {
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            border: 2px solid var(--primary-color);
-            border-radius: 50%;
-            transition: all 0.3s ease-in-out;
-            z-index: 101; /* Ensure it's above everything */
-            cursor: pointer;
-        }
-
-        .scroll-btn span {
-            font-size: 2em;
-            color: var(--primary-color);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .scroll-btn:hover {
-            background-color: var(--primary-color);
-            box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
-        }
-
-        .scroll-btn:hover span {
-            color: var(--dark-bg);
-        }
-
         /* Main Content Section that Scrolls Over the Welcome Page */
         #main-content {
             position: relative;
@@ -477,7 +444,6 @@
         <div class="hero-content">
             <h1>Mohammad Hossein Behboudi</h1>
             <p>Applied Scientist in Neuroscience & Signal Processing</p>
-            <a href="#about" class="scroll-btn"><span>&darr;</span></a>
         </div>
     </section>
     
