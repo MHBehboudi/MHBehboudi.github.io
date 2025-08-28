@@ -55,7 +55,7 @@
     .navbar a:hover{background:var(--dark-bg);color:var(--primary-color)}
     section{scroll-margin-top:80px} /* offset anchors for sticky nav */
 
-    /* -------- Welcome / Hero (now in normal flow) -------- */
+    /* -------- Welcome / Hero (normal flow) -------- */
     #welcome{
       position:relative;
       overflow:hidden;
@@ -79,7 +79,7 @@
       display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
     }
     .hero-card{
-      width:min(900px,92%);
+      width:min(1000px,94%);
       padding:28px 28px 34px;border-radius:18px;
       background:rgba(44,44,44,.55);
       backdrop-filter:saturate(140%) blur(10px);
@@ -106,17 +106,25 @@
     }
     .hero-subtitle{
       font-size:clamp(1rem,2.2vw,1.15rem);
-      color:var(--text-muted);margin:0 auto 14px;max-width:44ch
+      color:var(--text-muted);margin:0 auto 16px;max-width:44ch
     }
+
+    /* Tag grid — expanded, job-aligned */
     .hero-tags{
-      display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 20px
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:10px;
+      justify-items:stretch;
+      margin:16px 0 22px;
     }
     .tag{
-      padding:6px 10px;border-radius:999px;font-size:.85rem;
+      padding:8px 10px;border-radius:12px;font-size:.9rem;
       border:1px solid rgba(255,255,255,.14);
       background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      color:#EAEAEA
+      color:#EAEAEA; text-align:center;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
+
     .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px}
     .btn{
       display:inline-block;padding:12px 18px;border-radius:12px;font-weight:700;
@@ -157,7 +165,7 @@
       clip:rect(0,0,0,0);white-space:nowrap;border:0
     }
 
-    /* Main content now follows immediately (no margin-top needed) */
+    /* Main content follows hero */
     #main-content{position:relative;background:var(--main-bg)}
 
     /* Sections */
@@ -203,7 +211,7 @@
     <a href="#contact">Contact</a>
   </div>
 
-  <!-- Welcome / Name section (in normal flow) -->
+  <!-- Welcome / Name section -->
   <section id="welcome" aria-label="Intro">
     <video autoplay muted loop playsinline class="hero-video">
       <source src="Headmap_Plot.mp4" type="video/mp4"/>
@@ -213,23 +221,36 @@
 
     <div class="hero-content">
       <div class="hero-card" role="region" aria-label="Introduction">
-        <div class="hero-greeting">Welcome — Hi I'm</div>
+        <div class="hero-greeting">Welcome — nice to meet you!</div>
         <h1 class="hero-name">Mohammad Hossein<wbr> Behboudi</h1>
-        <p class="hero-subtitle">
-          Ph.D. Researcher in Cognition & Neuroscience • EEG, Signal Processing & Machine Learning for Digital Health
-        </p>
+        <p class="hero-subtitle">Ph.D. Researcher in Cognition & Neuroscience</p>
 
+        <!-- Updated, job-aligned tag set -->
         <div class="hero-tags" aria-label="Areas of focus">
           <span class="tag">Signal Processing</span>
-          <span class="tag">EEG Piplines</span>
-          <span class="tag">ML and DL Pipelines</span>
+          <span class="tag">EEG Pipelines</span>
+          <span class="tag">ML &amp; DL Pipelines</span>
           <span class="tag">Neural Decoding</span>
+
+          <span class="tag">Wearable Biosensing</span>
+          <span class="tag">Time-Series Analysis</span>
+          <span class="tag">Kalman &amp; Adaptive Filters</span>
+          <span class="tag">Biosignal Quality &amp; Evaluation</span>
+
+          <span class="tag">Self-Supervised Learning</span>
+          <span class="tag">Cloud ML (AWS/GCP)</span>
+          <span class="tag">LLMs for Health</span>
+          <span class="tag">Data Cleaning &amp; Standardization</span>
+
+          <span class="tag">Real-time Systems</span>
+          <span class="tag">Python • Git</span>
+          <span class="tag">Cross-Functional Collaboration</span>
+          <span class="tag">Study Design &amp; Validation</span>
         </div>
 
         <div class="cta-row">
-          <a class="btn btn-primary" href="#projects" aria-label="View Projects">View Projects</a>
+          <a class="btn btn-primary" href="#about" aria-label="About Mohammad">About Me</a>
           <a class="btn btn-secondary" href="mailto:Behboudi@UTDallas.edu" aria-label="Email Mohammad">Email Me</a>
-          <a class="btn btn-secondary" href="#publications" aria-label="View Publications">Publications</a>
         </div>
       </div>
 
@@ -355,20 +376,24 @@
 
   <!-- Corrected script -->
   <script>
-    // Smooth scroll for the scroll cue (works even if default behavior differs)
+    // Smooth scroll for the scroll cue and About Me button
     document.addEventListener('DOMContentLoaded', function () {
-      const btn = document.querySelector('.scroll-frame');
-      const target = document.querySelector('#about');
-      if (btn && target) {
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          if ('scrollIntoView' in target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            location.hash = '#about';
-          }
-        });
-      }
+      const smoothLink = (selector, targetSel) => {
+        const el = document.querySelector(selector);
+        const target = document.querySelector(targetSel);
+        if (el && target) {
+          el.addEventListener('click', function (e) {
+            e.preventDefault();
+            if ('scrollIntoView' in target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+              location.hash = targetSel;
+            }
+          });
+        }
+      };
+      smoothLink('.scroll-frame', '#about');
+      smoothLink('.btn.btn-primary[href="#about"]', '#about');
     });
   </script>
 </body>
