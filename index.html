@@ -5,25 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohammad H. Behboudi | Neuroscience & Signal Processing</title>
     <style>
-        /* New Color Palette & General Styles */
+        /* Professional Color Palette & General Styles */
         :root {
-            --dark-bg: #1f1f1f;
-            --main-bg: #2b2b2b;
-            --section-bg: #333;
-            --primary-color: #f9a825; /* Warm Orange */
-            --accent-color: #00796b; /* Deep Teal */
-            --text-light: #f0f0f0;
-            --text-muted: #c0c0c0;
+            --dark-bg: #121212;
+            --main-bg: #1e1e1e;
+            --section-bg: #2a2a2a;
+            --primary-color: #007bff; /* Professional Blue */
+            --text-light: #e0e0e0;
+            --text-muted: #a0a0a0;
         }
 
         body {
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
             background-color: var(--dark-bg);
-            background-image: radial-gradient(circle, var(--main-bg) 1px, transparent 1px);
-            background-size: 20px 20px;
             color: var(--text-light);
             scroll-behavior: smooth;
         }
@@ -45,14 +42,14 @@
         h2 {
             text-align: center;
             padding-bottom: 15px;
-            border-bottom: 2px solid rgba(249, 168, 37, 0.3);
+            border-bottom: 2px solid rgba(0, 123, 255, 0.3);
             margin-top: 40px;
             margin-bottom: 30px;
             text-transform: uppercase;
         }
         
         strong {
-            color: var(--accent-color);
+            color: var(--text-light);
         }
 
         a {
@@ -62,7 +59,7 @@
         }
 
         a:hover {
-            color: var(--accent-color);
+            color: var(--text-light);
             text-decoration: underline;
         }
 
@@ -85,12 +82,12 @@
             text-align: center;
             padding: 18px 22px;
             text-decoration: none;
-            font-size: 1.05em;
+            font-size: 1em;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .navbar a:hover, .dropdown:hover .dropbtn {
-            background-color: var(--card-bg);
+            background-color: var(--main-bg);
             color: var(--primary-color);
         }
 
@@ -165,13 +162,13 @@
         }
 
         .hero-content h1 {
-            font-size: 3.5em;
+            font-size: 3em;
             margin-bottom: 15px;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
         }
 
         .hero-content p {
-            font-size: 1.3em;
+            font-size: 1.2em;
             max-width: 800px;
             margin: 0 auto 30px auto;
             text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
@@ -188,7 +185,7 @@
         }
 
         .btn-primary:hover {
-            background-color: var(--accent-color);
+            background-color: var(--text-light);
             text-decoration: none;
         }
 
@@ -214,17 +211,6 @@
             margin-bottom: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .section-box:hover {
-            box-shadow: 0 6px 25px rgba(249, 168, 37, 0.2);
-        }
-        
-        #about.section-box {
-            background: var(--section-bg);
-            background: linear-gradient(145deg, var(--section-bg), #222);
-            border-left: 5px solid var(--accent-color);
         }
 
         /* Project Cards */
@@ -236,7 +222,7 @@
         }
 
         .project-card {
-            background-color: var(--card-bg);
+            background-color: var(--main-bg);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
@@ -261,25 +247,25 @@
 
         .project-card h3 {
             margin-top: 0;
-            font-size: 1.4em;
+            font-size: 1.3em;
             color: var(--primary-color);
         }
 
         .project-card p {
-            font-size: 0.95em;
+            font-size: 0.9em;
             color: var(--text-muted);
         }
 
         .project-card .read-more {
             display: inline-block;
             margin-top: 15px;
-            color: var(--accent-color);
+            color: var(--primary-color);
             font-weight: bold;
         }
 
         /* Publications & Toolboxes */
         .publication-item, .toolbox-item {
-            background-color: var(--card-bg);
+            background-color: var(--main-bg);
             padding: 20px;
             margin-bottom: 15px;
             border-left: 4px solid var(--primary-color);
@@ -295,7 +281,7 @@
         .publication-item h3, .toolbox-item h3 {
             margin-top: 0;
             margin-bottom: 8px;
-            font-size: 1.3em;
+            font-size: 1.2em;
         }
 
         .publication-item p, .toolbox-item p {
@@ -304,25 +290,25 @@
         }
 
         .pub-meta {
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: var(--text-muted);
         }
 
         .pub-links a {
             margin-right: 15px;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         /* Figures/Visualizations */
         .visualization-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 30px;
         }
 
         .visualization-item {
-            background-color: var(--card-bg);
+            background-color: var(--main-bg);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
@@ -340,11 +326,11 @@
         .visualization-item .caption {
             font-style: italic;
             color: var(--text-muted);
-            font-size: 0.9em;
+            font-size: 0.8em;
         }
 
         .visualization-item .interactive-note {
-            font-size: 0.8em;
+            font-size: 0.7em;
             color: var(--primary-color);
             margin-top: 10px;
         }
@@ -352,13 +338,13 @@
         /* Glossary */
         .glossary-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
 
         .glossary-item {
-            background-color: var(--card-bg);
+            background-color: var(--main-bg);
             padding: 15px;
             border-left: 3px solid var(--primary-color);
             border-radius: 5px;
@@ -372,7 +358,7 @@
         }
 
         .glossary-item p {
-            font-size: 0.9em;
+            font-size: 0.85em;
             margin: 0;
         }
 
@@ -384,38 +370,38 @@
             padding: 30px 20px;
             margin-top: 40px;
             border-top: 3px solid var(--primary-color);
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         footer .social-links a {
             color: var(--primary-color);
-            font-size: 1.5em;
+            font-size: 1.3em;
             margin: 0 10px;
             transition: color 0.3s ease;
         }
 
         footer .social-links a:hover {
-            color: var(--accent-color);
+            color: var(--text-light);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .navbar a, .dropdown .dropbtn {
-                padding: 15px 15px;
-                font-size: 0.95em;
+                padding: 12px 10px;
+                font-size: 0.9em;
             }
             .hero-content h1 {
-                font-size: 2.5em;
+                font-size: 2em;
             }
             .hero-content p {
-                font-size: 1.1em;
+                font-size: 1em;
             }
             .container {
                 width: 95%;
                 padding: 15px 0;
             }
             h2 {
-                font-size: 1.8em;
+                font-size: 1.5em;
             }
             .project-grid, .visualization-grid, .glossary-grid {
                 grid-template-columns: 1fr;
@@ -446,17 +432,47 @@
             Your browser does not support the video tag.
         </video>
         <div class="hero-content">
-            <h1>Hi, I'm Mohammad. Welcome to My Portfolio!</h1>
-            <p>Exploring the electrical language of the brain with a passion for signal processing, statistical analysis, and data science.</p>
-            <a href="#projects" class="btn-primary">Explore My Work &rarr;</a>
+            <h1>Mohammad H. Behboudi, Ph.D.</h1>
+            <p>Applied Scientist in Neuroscience & Signal Processing</p>
+            <a href="#projects" class="btn-primary">View My Work &rarr;</a>
         </div>
     </div>
 
     <div class="container">
         <section id="about" class="section-box">
             <h2>About Me</h2>
-            <p>I am a passionate researcher specializing in the intricate fields of **biological signal processing** and **advanced statistical analysis**. My mission is to unravel the complexities of brain function using cutting-edge methodologies, including **EEG, MEG, and fMRI data analysis**. Based in **Dallas, Texas**, my work involves developing novel analytical tools and applying machine learning techniques to gain deeper insights into neurological processes.</p>
-            <p>My expertise spans **time-frequency analysis, source localization, connectivity analysis, and developing custom algorithms** to extract meaningful patterns from noisy biological signals. I am committed to open science and sharing my tools and findings with the broader scientific community.</p>
+            [cite_start]<p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in **Electrical Engineering**[cite: 3, 288]. [cite_start]My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development[cite: 5, 290]. [cite_start]I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes[cite: 5, 218].</p>
+            [cite_start]<p>My expertise spans **MATLAB, Python, and R**, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets[cite: 4, 16, 25, 289, 302, 311]. [cite_start]My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis[cite: 18, 26, 253].</p>
+        </section>
+
+        <section id="skills" class="section-box">
+            <h2>Skills & Expertise</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-card-content">
+                        <h3>Signal Processing & Analysis</h3>
+                        [cite_start]<p>EEG, EMG, Time-Domain and Frequency-Domain Analysis, Feature Extraction, Event-Related Spectral Perturbation (ERSP), Connectivity Analysis, Graph Theory, Artifact Rejection[cite: 18, 304].</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-card-content">
+                        <h3>Machine Learning & AI</h3>
+                        [cite_start]<p>Support Vector Machine (SVM), K-Nearest Neighbors (KNN), Deep Learning, Neural Networks, Automated Speech Recognition (ASR), Diarization, LLMs, and Sentiment Analysis[cite: 19, 92, 235, 305].</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-card-content">
+                        <h3>Programming & Tools</h3>
+                        [cite_start]<p>MATLAB, Python, R, TensorFlow, Scikit-learn, EEGLAB, FieldTrip, NumPy, SciPy, Matplotlib, Pandas, SQL[cite: 16, 17, 91, 230, 302, 303].</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-card-content">
+                        <h3>Experimental Design & Statistics</h3>
+                        [cite_start]<p>Human-in-the-loop experimentation, Statistical Analysis, ANOVA, MANOVA, Permutation Testing, Linear Mixed-Effect Models[cite: 20, 93, 232, 306].</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="projects" class="section-box">
@@ -465,24 +481,24 @@
                 <div class="project-card">
                     <img src="neurofeedback_project.png" alt="Real-time EEG Neurofeedback project">
                     <div class="project-card-content">
-                        <h3>Real-time EEG Neurofeedback</h3>
-                        <p>Developing systems for real-time brain state decoding and feedback, with applications in cognitive training and rehabilitation. Utilizes advanced ICA and spectral analysis.</p>
+                        <h3>Real-time EEG Stimuli & Signal System</h3>
+                        [cite_start]<p>Led the development of a mobile system for real-time stimulus delivery and EEG data acquisition, applying time-frequency analysis and artifact rejection[cite: 26, 312].</p>
                         <a href="#" class="read-more">Learn More &rarr;</a>
                     </div>
                 </div>
                 <div class="project-card">
                     <img src="meg_localization_project.png" alt="MEG Source Localization project">
                     <div class="project-card-content">
-                        <h3>MEG Source Localization in Epilepsy</h3>
-                        <p>Applying advanced inverse solutions to MEG data to precisely localize epileptic foci, aiding pre-surgical planning. Focus on beamforming and sLORETA techniques.</p>
+                        <h3>Connectivity & Graph Theory Analysis</h3>
+                        [cite_start]<p>Created pipelines for connectivity and graph theory analysis to study EEG-based neural interactions in language processing tasks[cite: 29, 315].</p>
                         <a href="#" class="read-more">Learn More &rarr;</a>
                     </div>
                 </div>
                 <div class="project-card">
                     <img src="sleep_classification_project.png" alt="Sleep Stage Classification project">
                     <div class="project-card-content">
-                        <h3>Sleep Stage Classification with ML</h3>
-                        <p>Using deep learning (CNNs, LSTMs) on polysomnography (PSG) data for automated and accurate sleep stage classification. Exploring biomarkers for sleep disorders.</p>
+                        <h3>Sleep Apnea Diagnosis System</h3>
+                        [cite_start]<p>Developed a computer-aided diagnosis system using EEG signals and machine learning to detect sleep apnea, achieving high sensitivity and specificity[cite: 14, 39, 262, 325].</p>
                         <a href="#" class="read-more">Learn More &rarr;</a>
                     </div>
                 </div>
@@ -490,24 +506,27 @@
         </section>
 
         <section id="publications" class="section-box">
-            <h2>Recent Publications</h2>
+            <h2>Publications</h2>
             <div class="publication-list">
                 <div class="publication-item">
-                    <h3>Decoding Cognitive States from EEG using Supervised Learning</h3>
-                    <p class="pub-meta">J. Smith, A. Khan, B. Chen. <em>Neuroscience Journal</em>, 2024. Vol. 15, Iss. 3, pp. 123-135.</p>
-                    <p>Exploration of various machine learning algorithms to classify different cognitive tasks based on multivariate EEG features.</p>
+                    <h3>Development of Gamma Oscillation during Sentence Processing in Early Adolescence...</h3>
+                    <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., Chalamalasetty, P., & Maguire, M. J. (2023). [cite_start]<em>Brain Sciences</em>, 13(12), 1639. [cite: 59, 134, 173, 337]</p>
                     <div class="pub-links">
-                        <a href="#">[PDF]</a>
-                        <a href="#">[Code]</a>
+                        <a href="https://doi.org/10.3390/brainsci13121639">[DOI]</a>
                     </div>
                 </div>
                 <div class="publication-item">
-                    <h3>Adaptive Filtering for Artifact Removal in MEG Data</h3>
-                    <p class="pub-meta">C. Davis, E. Rodriguez. <em>Journal of Biomedical Signal Processing</em>, 2023. Vol. 18, pp. 45-58.</p>
-                    <p>A novel adaptive filtering technique demonstrating superior performance in removing ocular and cardiac artifacts from magnetoencephalography recordings.</p>
+                    <h3>Neural oscillations during predictive sentence processing in young children.</h3>
+                    <p class="pub-meta">Benítez-Barrera, C. R., **Behboudi, M. H.**, & Maguire, M. J. (2024). [cite_start]<em>Brain and Language</em>, 254, 105437. [cite: 54, 129, 168, 267, 332]</p>
                     <div class="pub-links">
-                        <a href="#">[PDF]</a>
-                        <a href="#">[Preprint]</a>
+                        <a href="https://doi.org/10.1016/j.bandl.2024.105437">[DOI]</a>
+                    </div>
+                </div>
+                <div class="publication-item">
+                    <h3>Sleep Apnea Diagnosis Using Complexity Features of EEG Signals.</h3>
+                    <p class="pub-meta">Gholami, B., **Behboudi, M.H.**, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). [cite_start]<em>IWINAC 2022. Lecture Notes in Computer Science</em>. [cite: 65, 139, 178, 277, 343]</p>
+                    <div class="pub-links">
+                        <a href="https://doi.org/10.1007/978-3-031-06242-1_8">[DOI]</a>
                     </div>
                 </div>
             </div>
@@ -517,92 +536,28 @@
             <h2>Toolboxes & Open-Source Software</h2>
             <div class="toolbox-list">
                 <div class="toolbox-item">
-                    <h3>NeuroPy Toolkit (Python)</h3>
-                    <p>A comprehensive Python library for pre-processing, analysis, and visualization of EEG/MEG data. Includes modules for time-frequency analysis, source modeling, and statistical inference.</p>
-                    <div class="pub-links">
-                        <a href="#">[GitHub Repository]</a>
-                        <a href="#">[Documentation]</a>
-                    </div>
+                    <h3>MATLAB & EEGLAB Pipelines</h3>
+                    [cite_start]<p>Designed a robust preprocessing workflow in MATLAB and EEGLAB to improve data quality and remove artifacts from electrophysiology data[cite: 28, 314].</p>
                 </div>
                 <div class="toolbox-item">
-                    <h3>BioStats R Package</h3>
-                    <p>An R package designed for robust statistical analysis of biological and neurophysiological datasets, featuring advanced GLM, mixed models, and permutation testing capabilities.</p>
-                    <div class="pub-links">
-                        <a href="#">[GitHub Repository]</a>
-                        <a href="#">[CRAN]</a>
-                    </div>
+                    <h3>NeuroPy & BioStats (Python/R)</h3>
+                    [cite_start]<p>Proficient in Python libraries like **SciPy, Pandas, and TensorFlow** and statistical analysis in R using `lme4`[cite: 17, 92, 230, 303].</p>
                 </div>
             </div>
         </section>
 
-        <section id="visualizations" class="section-box">
-            <h2>Dynamic Visualizations & Figures</h2>
-            <div class="visualization-grid">
-                <div class="visualization-item">
-                    <img src="eeg_topomap.png" alt="EEG Topographic Map of Brain Activity" class="rotating-figure">
-                    <p class="caption">Figure 1: **EEG Topographic Map** showing neural activity distribution across the scalp during a cognitive task. This map highlights localized power in the alpha band.</p>
-                    <p class="interactive-note">(Click for interactive plot)</p>
-                </div>
-                <div class="visualization-item">
-                    <img src="meg_source_localization.png" alt="MEG Source Localization of Auditory Processing">
-                    <p class="caption">Figure 2: **MEG Source Localization** revealing deep brain activity during auditory processing. This visualization uses a beamforming approach to pinpoint neural sources.</p>
-                    <p class="interactive-note">(Click for 3D model)</p>
-                </div>
-                <div class="visualization-item">
-                    <img src="time_frequency_spectrogram.png" alt="Time-Frequency Spectrogram of EEG Signal">
-                    <p class="caption">Figure 3: **Time-Frequency Representation** (Spectrogram) of an EEG signal, illustrating the evolution of oscillatory power over time and frequency bands.</p>
-                    <p class="interactive-note">(Hover for details)</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="glossary" class="section-box">
-            <h2>Neuroscience & Signal Processing Glossary</h2>
-            <div class="glossary-grid">
-                <div class="glossary-item">
-                    <h4>EEG (Electroencephalography)</h4>
-                    <p>A neurophysiological measurement technique that records the electrical activity of the brain from the scalp.</p>
-                </div>
-                <div class="glossary-item">
-                    <h4>MEG (Magnetoencephalography)</h4>
-                    <p>A neurophysiological technique that measures the magnetic fields produced by electrical currents in the brain.</p>
-                </div>
-                <div class="glossary-item">
-                    <h4>ICA (Independent Component Analysis)</h4>
-                    <p>A computational method for separating a multivariate signal into additive subcomponents, often used for artifact removal in EEG/MEG.</p>
-                </div>
-                <div class="glossary-item">
-                    <h4>Spectrogram</h4>
-                    <p>A visual representation of the spectrum of frequencies of a signal as it varies with time, crucial for time-frequency analysis.</p>
-                </div>
-                <div class="glossary-item">
-                    <h4>Source Localization</h4>
-                    <p>The process of estimating the intracranial neuronal sources of activity recorded by EEG or MEG sensors.</p>
-                </div>
-                <div class="glossary-item">
-                    <h4>Time-Frequency Analysis</h4>
-                    <p>Techniques that analyze how the frequency content of a signal changes over time, revealing oscillatory dynamics.</p>
-                </div>
-            </div>
-        </section>
-        
         <section id="contact" class="section-box">
             <h2>Contact</h2>
-            <p>For collaborations, inquiries, or more information about my research, please feel free to reach out:</p>
-            <p><strong>Email:</strong> <a href="mailto:your-email@example.com">your-email@example.com</a></p>
-            <p><strong>Location:</strong> Dallas, Texas, USA</p>
-            <p class="social-links">
-                <a href="#" target="_blank" title="LinkedIn">LinkedIn</a> |
-                <a href="#" target="_blank" title="GitHub">GitHub</a> |
-                <a href="#" target="_blank" title="ORCID">ORCID</a>
-            </p>
+            <p>For collaborations or inquiries about my research, please feel free to reach out:</p>
+            [cite_start]<p><strong>Email:</strong> Behboudi@UTDallas.edu [cite: 2, 76, 149, 217, 287, 356]</p>
+            [cite_start]<p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank">mohammad-hossein-behboudi-m-sc-a5b592168</a> [cite: 2]</p>
+            [cite_start]<p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank">0000-0003-1335-3617</a> [cite: 150]</p>
         </section>
     </div>
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Your Name. All rights reserved.</p>
-            <p>Built with passion for Neuroscience and Signal Processing.</p>
+            <p>&copy; 2024 Mohammad H. Behboudi. All rights reserved.</p>
         </div>
     </footer>
 
