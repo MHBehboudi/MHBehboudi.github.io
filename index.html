@@ -190,32 +190,46 @@
             text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
         }
 
-        /* New Floating Button */
-        .scroll-btn {
+        /* New Animated Scroll Frame */
+        @keyframes scroll-anim {
+            0% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+
+        .scroll-frame {
             position: absolute;
             bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            transition: all 0.3s ease-in-out;
-            z-index: 103; /* Highest z-index for button */
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
             cursor: pointer;
+            z-index: 103;
+            transition: all 0.3s ease;
         }
 
-        .scroll-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease;
+        .scroll-frame::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: scroll-anim 1.5s infinite;
         }
-        
-        .scroll-btn:hover img {
-            transform: scale(1.1);
+
+        .scroll-frame:hover {
+            border-color: var(--secondary-color);
+        }
+        .scroll-frame:hover::before {
+            background: var(--secondary-color);
+            animation-play-state: paused;
         }
 
 
@@ -479,9 +493,7 @@
         <div class="hero-content">
             <h1>Hi, I'm Mohammad Hossein Behboudi</h1>
             <p>Exploring the frontiers of neuroscience through signal processing and data science.</p>
-            <a href="#about" class="scroll-btn">
-                <img src="Scroll_Down.png" alt="Scroll Down">
-            </a>
+            <a href="#about" class="scroll-frame"></a>
         </div>
     </section>
     
