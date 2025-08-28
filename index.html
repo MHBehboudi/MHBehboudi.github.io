@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohammad H. Behboudi | Neuroscience & Signal Processing</title>
+    <title>Mohammad Hossein Behboudi | Neuroscience & Signal Processing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* New Color Palette & General Styles */
         :root {
             --dark-bg: #1e1e1e;
             --main-bg: #2c2c2c;
             --section-bg: #383838;
-            --primary-color: #00A36C; /* Emerald Green */
-            --secondary-color: #FFD700; /* Gold */
+            --primary-color: #FF8C00; /* Vibrant Orange */
+            --secondary-color: #00BFFF; /* Electric Blue */
             --text-light: #F0F0F0;
             --text-muted: #B0B0B0;
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Lato', sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
@@ -35,15 +38,25 @@
         }
 
         h1, h2, h3, h4 {
-            color: var(--primary-color);
+            font-family: 'Montserrat', sans-serif;
             font-weight: 600;
             margin-bottom: 15px;
         }
 
+        h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         h2 {
+            color: var(--primary-color);
             text-align: center;
             padding-bottom: 15px;
-            border-bottom: 2px solid rgba(0, 163, 108, 0.3);
+            border-bottom: 2px solid rgba(255, 140, 0, 0.3);
             margin-top: 40px;
             margin-bottom: 30px;
             text-transform: uppercase;
@@ -162,12 +175,6 @@
             color: var(--text-light);
             text-align: center;
             padding-top: 30vh;
-        }
-
-        #welcome .hero-content h1 {
-            font-size: 3em;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
         }
 
         #welcome .hero-content p {
@@ -424,17 +431,10 @@
 
     <div class="navbar">
         <a href="#about">About</a>
+        <a href="#education">Education</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
         <a href="#publications">Publications</a>
-        <div class="dropdown">
-            <button class="dropbtn">Resources</button>
-            <div class="dropdown-content">
-                <a href="#toolboxes">Toolboxes</a>
-                <a href="#glossary">Glossary</a>
-            </div>
-        </div>
-        <a href="#visualizations">Visualizations</a>
         <a href="#contact">Contact</a>
     </div>
 
@@ -444,7 +444,7 @@
             Your browser does not support the video tag.
         </video>
         <div class="hero-content">
-            <h1>Mohammad H. Behboudi, Ph.D.</h1>
+            <h1>Mohammad Hossein Behboudi</h1>
             <p>Applied Scientist in Neuroscience & Signal Processing</p>
             <a href="#main-content" class="btn-primary">Ignite Curiosity &rarr;</a>
         </div>
@@ -456,6 +456,24 @@
                 <h2>About Me</h2>
                 <p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in **Electrical Engineering**. My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development. I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes. I have a proven track record of leading and contributing to research projects in this domain.</p>
                 <p>My expertise spans **MATLAB, Python, and R**, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets. My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis.</p>
+            </section>
+
+            <section id="education" class="section-box">
+                <h2>Education</h2>
+                <div class="publication-list">
+                    <div class="publication-item">
+                        <h3>Ph.D. Student in Cognition and Neuroscience</h3>
+                        <p class="pub-meta"><strong>The University of Texas at Dallas</strong>, Dallas, TX | Aug 2021 – Present [cite: 8, 80, 155, 227, 292, 362]</p>
+                    </div>
+                    <div class="publication-item">
+                        <h3>M.Sc. in Applied Cognition and Neuroscience</h3>
+                        <p class="pub-meta"><strong>The University of Texas at Dallas</strong>, Dallas, TX | Aug 2021 – May 2024 [cite: 12, 83, 158, 231, 295, 366]</p>
+                    </div>
+                    <div class="publication-item">
+                        <h3>B.Sc. in Electrical Engineering</h3>
+                        <p class="pub-meta"><strong>K. N. Toosi University of Technology</strong>, Tehran, Iran | Aug 2015 – Jan 2020 [cite: 14, 85, 160, 233, 297, 368]</p>
+                    </div>
+                </div>
             </section>
 
             <section id="skills" class="section-box">
@@ -523,42 +541,28 @@
                 <div class="publication-list">
                     <div class="publication-item">
                         <h3>Development of Gamma Oscillation during Sentence Processing in Early Adolescence: Insights into the Maturation of Semantic Processing.</h3>
-                        <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., Chalamalasetty, P., & Maguire, M. J. (2023). <em>Brain Sciences</em>, 13(12), 1639.</p>
+                        <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., Chalamalasetty, P., & Maguire, M. J. (2023). <em>Brain Sciences</em>, 13(12), 1639. [cite: 60, 132, 204, 243, 342, 407]</p>
                         <div class="pub-links">
                             <a href="https://doi.org/10.3390/brainsci13121639">[DOI]</a>
                         </div>
                     </div>
                     <div class="publication-item">
                         <h3>Neural oscillations during predictive sentence processing in young children.</h3>
-                        <p class="pub-meta">Benítez-Barrera, C. R., **Behboudi, M. H.**, & Maguire, M. J. (2024). <em>Brain and Language</em>, 254, 105437.</p>
+                        <p class="pub-meta">Benítez-Barrera, C. R., **Behboudi, M. H.**, & Maguire, M. J. (2024). <em>Brain and Language</em>, 254, 105437. [cite: 55, 127, 199, 238, 337, 402]</p>
                         <div class="pub-links">
                             <a href="https://doi.org/10.1016/j.bandl.2024.105437">[DOI]</a>
                         </div>
                     </div>
                     <div class="publication-item">
                         <h3>Sleep Apnea Diagnosis Using Complexity Features of EEG Signals.</h3>
-                        <p class="pub-meta">Gholami, B., **Behboudi, M.H.**, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). <em>IWINAC 2022. Lecture Notes in Computer Science</em>.</p>
+                        <p class="pub-meta">Gholami, B., **Behboudi, M.H.**, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). <em>IWINAC 2022. Lecture Notes in Computer Science</em>. [cite: 65, 138, 209, 248, 347, 413]</p>
                         <div class="pub-links">
                             <a href="https://doi.org/10.1007/978-3-031-06242-1_8">[DOI]</a>
                         </div>
                     </div>
                 </div>
             </section>
-
-            <section id="toolboxes" class="section-box">
-                <h2>Toolboxes & Open-Source Software</h2>
-                <div class="toolbox-list">
-                    <div class="toolbox-item">
-                        <h3>MATLAB & EEGLAB Pipelines</h3>
-                        <p>Designed a robust preprocessing workflow in MATLAB and EEGLAB to improve data quality and remove artifacts, including channel removal, filtering, and ICA-based rejection.</p>
-                    </div>
-                    <div class="toolbox-item">
-                        <h3>NeuroPy & BioStats (Python/R)</h3>
-                        <p>Proficient in Python libraries like SciPy, Pandas, and TensorFlow and statistical analysis in R using `lme4`.</p>
-                    </div>
-                </div>
-            </section>
-
+            
             <section id="contact" class="section-box">
                 <h2>Contact</h2>
                 <p>For collaborations or inquiries about my research, please feel free to reach out:</p>
@@ -570,7 +574,7 @@
 
         <footer>
             <div class="container">
-                <p>&copy; 2024 Mohammad H. Behboudi. All rights reserved.</p>
+                <p>&copy; 2024 Mohammad Hossein Behboudi. All rights reserved.</p>
             </div>
         </footer>
     </main>
