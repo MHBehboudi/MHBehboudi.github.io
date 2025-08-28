@@ -44,16 +44,7 @@
     a{color:var(--primary-color);text-decoration:none;transition:color .2s ease}
     a:hover{color:var(--secondary-color);text-decoration:underline}
     strong{color:var(--secondary-color)}
-
-    /* Navbar */
-    .navbar{
-      background:var(--section-bg);border-bottom:3px solid var(--secondary-color);
-      position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.4);
-      display:flex;justify-content:center;flex-wrap:wrap
-    }
-    .navbar a{display:block;color:var(--text-light);padding:18px 22px}
-    .navbar a:hover{background:var(--dark-bg);color:var(--primary-color)}
-    section{scroll-margin-top:80px} /* offset anchors for sticky nav */
+    section{scroll-margin-top:80px} /* safe anchor offset */
 
     /* -------- Welcome / Hero (normal flow) -------- */
     #welcome{
@@ -109,13 +100,13 @@
       color:var(--text-muted);margin:0 auto 16px;max-width:44ch
     }
 
-    /* Tag grid — expanded, job-aligned */
+    /* Tag grid — ONLY the six requested */
     .hero-tags{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
       gap:10px;
       justify-items:stretch;
-      margin:16px 0 22px;
+      margin:16px 0 20px;
     }
     .tag{
       padding:8px 10px;border-radius:12px;font-size:.9rem;
@@ -141,6 +132,21 @@
       border-color:rgba(255,255,255,.18)
     }
     .btn-secondary:hover{background:rgba(255,255,255,.06)}
+
+    /* Social icons row */
+    .social-row{
+      display:flex;gap:12px;justify-content:center;margin-top:12px;flex-wrap:wrap;
+    }
+    .icon-btn{
+      width:42px;height:42px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--text-light);
+      transition:transform .15s ease, background .15s ease, color .15s ease;
+    }
+    .icon-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.12);color:var(--secondary-color)}
+    .icon-btn svg{width:22px;height:22px;display:block}
 
     /* Scroll cue (clickable) */
     .scroll-frame{
@@ -186,7 +192,6 @@
 
     /* Mobile tweaks */
     @media (max-width:768px){
-      .navbar a{padding:12px 10px;font-size:.95em}
       .container{width:95%;padding:15px 0}
       h2{font-size:1.25rem}
       .project-grid{grid-template-columns:1fr}
@@ -200,18 +205,7 @@
 </head>
 <body>
 
-  <a href="#main-content" class="sr-only">Skip to main content</a>
-
-  <div class="navbar">
-    <a href="#about">About</a>
-    <a href="#education">Education</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">Projects</a>
-    <a href="#publications">Publications</a>
-    <a href="#contact">Contact</a>
-  </div>
-
-  <!-- Welcome / Name section -->
+  <!-- Welcome / Name section (navbar removed as requested) -->
   <section id="welcome" aria-label="Intro">
     <video autoplay muted loop playsinline class="hero-video">
       <source src="Headmap_Plot.mp4" type="video/mp4"/>
@@ -225,32 +219,59 @@
         <h1 class="hero-name">Mohammad Hossein<wbr> Behboudi</h1>
         <p class="hero-subtitle">Ph.D. Researcher in Cognition & Neuroscience</p>
 
-        <!-- Updated, job-aligned tag set -->
+        <!-- Only the six tags you asked to keep -->
         <div class="hero-tags" aria-label="Areas of focus">
           <span class="tag">Signal Processing</span>
           <span class="tag">EEG Pipelines</span>
           <span class="tag">ML &amp; DL Pipelines</span>
           <span class="tag">Neural Decoding</span>
-
-          <span class="tag">Wearable Biosensing</span>
-          <span class="tag">Time-Series Analysis</span>
-          <span class="tag">Kalman &amp; Adaptive Filters</span>
-          <span class="tag">Biosignal Quality &amp; Evaluation</span>
-
-          <span class="tag">Self-Supervised Learning</span>
-          <span class="tag">Cloud ML (AWS/GCP)</span>
-          <span class="tag">LLMs for Health</span>
-          <span class="tag">Data Cleaning &amp; Standardization</span>
-
-          <span class="tag">Real-time Systems</span>
-          <span class="tag">Python • Git</span>
-          <span class="tag">Cross-Functional Collaboration</span>
-          <span class="tag">Study Design &amp; Validation</span>
+          <span class="tag">LLMs for Health and Education</span>
+          <span class="tag">Statistical Analysis</span>
         </div>
 
         <div class="cta-row">
           <a class="btn btn-primary" href="#about" aria-label="About Mohammad">About Me</a>
           <a class="btn btn-secondary" href="mailto:Behboudi@UTDallas.edu" aria-label="Email Mohammad">Email Me</a>
+        </div>
+
+        <!-- Social icons row (replace hrefs as needed) -->
+        <div class="social-row" aria-label="Profiles">
+          <a class="icon-btn" href="https://github.com/REPLACE_WITH_USERNAME" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+            <!-- simple <> code icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="8 9 5 12 8 15"></polyline>
+              <polyline points="16 9 19 12 16 15"></polyline>
+              <line x1="10" y1="19" x2="14" y2="5"></line>
+            </svg>
+          </a>
+
+          <a class="icon-btn" href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+            <!-- simple 'in' badge -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+              <circle cx="8" cy="9" r="1.5" fill="currentColor" stroke="none"></circle>
+              <line x1="8" y1="11" x2="8" y2="17"></line>
+              <path d="M12 17v-3.2a2.2 2.2 0 0 1 4.4 0V17"></path>
+            </svg>
+          </a>
+
+          <a class="icon-btn" href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener" aria-label="ORCID" title="ORCID">
+            <!-- 'iD' in circle -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <line x1="9" y1="8" x2="9" y2="16"></line>
+              <path d="M13 16v-5.5h2.1a2.75 2.75 0 1 1 0 5.5H13z"></path>
+            </svg>
+          </a>
+
+          <a class="icon-btn" href="https://scholar.google.com/citations?user=REPLACE_WITH_USER_ID" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar">
+            <!-- simple scholar cap -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="12 5 3 9 12 13 21 9 12 5"></polygon>
+              <path d="M7 12v4a5 5 0 0 0 10 0v-4"></path>
+              <line x1="21" y1="9" x2="21" y2="14"></line>
+            </svg>
+          </a>
         </div>
       </div>
 
@@ -374,9 +395,8 @@
     </footer>
   </main>
 
-  <!-- Corrected script -->
+  <!-- Smooth scrolling -->
   <script>
-    // Smooth scroll for the scroll cue and About Me button
     document.addEventListener('DOMContentLoaded', function () {
       const smoothLink = (selector, targetSel) => {
         const el = document.querySelector(selector);
