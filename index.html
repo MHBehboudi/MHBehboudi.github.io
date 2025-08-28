@@ -1,345 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Mohammad Hossein Behboudi | Neuroscience & Signal Processing</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mohammad Hossein Behboudi | Neuroscience & Signal Processing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 
-    <style>
-        :root{
-            --dark-bg:#1e1e1e;
-            --main-bg:#2c2c2c;
-            --section-bg:#383838;
-            --primary-color:#FF8C00;
-            --secondary-color:#00BFFF;
-            --text-light:#F0F0F0;
-            --text-muted:#B0B0B0;
-        }
-        *{box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{
-            font-family:'Lato',sans-serif;
-            line-height:1.6;margin:0;background:var(--main-bg);color:var(--text-light);
-        }
-        .container{width:90%;max-width:1200px;margin:auto;padding:20px 0}
-        h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:600;margin:0 0 15px}
-        h1{
-            font-weight:700;
-            font-size:clamp(2rem,5vw,4rem);
-            line-height:1.1;
-            background:linear-gradient(90deg,#FFDAB9, #00BFFF 40%, #FFDAB9 80%);
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-            text-shadow:0 0 5px rgba(255,255,255,.35),0 0 18px rgba(0,191,255,.25);
-            margin-bottom:10px;
-        }
-        h2{
-            color:var(--primary-color);text-align:center;padding-bottom:15px;
-            border-bottom:2px solid rgba(255,140,0,.3);margin:40px 0 30px;text-transform:uppercase;
-        }
-        a{color:var(--primary-color);text-decoration:none;transition:color .2s ease}
-        a:hover{color:var(--secondary-color);text-decoration:underline}
-        strong{color:var(--secondary-color)}
+  <style>
+    :root{
+      --dark-bg:#1e1e1e;
+      --main-bg:#2c2c2c;
+      --section-bg:#383838;
+      --primary-color:#FF8C00;
+      --secondary-color:#00BFFF;
+      --text-light:#F0F0F0;
+      --text-muted:#B0B0B0;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Lato',sans-serif;
+      line-height:1.6;margin:0;background:var(--main-bg);color:var(--text-light);
+    }
+    .container{width:90%;max-width:1200px;margin:auto;padding:20px 0}
+    h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:600;margin:0 0 15px}
 
-        /* --- Navbar --- */
-        .navbar{
-            background:var(--section-bg);border-bottom:3px solid var(--secondary-color);
-            position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.4);
-            display:flex;justify-content:center;flex-wrap:wrap
-        }
-        .navbar a{display:block;color:var(--text-light);padding:18px 22px}
-        .navbar a:hover{background:var(--dark-bg);color:var(--primary-color)}
-        /* Ensure in-page anchors don't sit under the sticky nav */
-        section{scroll-margin-top:80px}
+    /* Headings */
+    h1{
+      font-weight:700;
+      font-size:clamp(2rem,5vw,4rem);
+      line-height:1.1;
+      background:linear-gradient(90deg,#FFDAB9, #00BFFF 40%, #FFDAB9 80%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      text-shadow:0 0 5px rgba(255,255,255,.35),0 0 18px rgba(0,191,255,.25);
+      margin-bottom:10px;
+    }
+    h2{
+      color:var(--primary-color);text-align:center;padding-bottom:15px;
+      border-bottom:2px solid rgba(255,140,0,.3);margin:40px 0 30px;text-transform:uppercase;
+    }
+    a{color:var(--primary-color);text-decoration:none;transition:color .2s ease}
+    a:hover{color:var(--secondary-color);text-decoration:underline}
+    strong{color:var(--secondary-color)}
 
-        /* --- Welcome / Hero (improved) --- */
-        #welcome{
-            position:fixed;inset:0;height:100vh;width:100vw;overflow:hidden;z-index:1;
-        }
-        #welcome .hero-video{
-            position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-            filter:brightness(.5) contrast(1.1);
-            z-index:-1;pointer-events:none;
-        }
-        #welcome .overlay{
-            position:absolute;inset:0;
-            background:radial-gradient(80% 60% at 50% 40%, rgba(0,0,0,.2), rgba(0,0,0,.6));
-            pointer-events:none;
-        }
-        #welcome .hero-content{
-            position:relative;z-index:2;height:100vh;width:100%;
-            display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
-        }
-        .hero-card{
-            width:min(900px,92%);
-            padding:28px 28px 34px;
-            border-radius:18px;
-            background:rgba(44,44,44,.55);
-            backdrop-filter:saturate(140%) blur(10px);
-            -webkit-backdrop-filter:saturate(140%) blur(10px);
-            border:1px solid rgba(255,255,255,.12);
-            box-shadow:0 30px 60px rgba(0,0,0,.45);
-        }
-        .hero-greeting{
-            font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;
-            color:var(--text-muted);margin-bottom:6px
-        }
-        .hero-subtitle{
-            font-size:clamp(1rem,2.2vw,1.15rem);
-            color:var(--text-muted);margin:0 auto 14px;max-width:44ch
-        }
-        .hero-tags{
-            display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 20px
-        }
-        .tag{
-            padding:6px 10px;border-radius:999px;font-size:.85rem;
-            border:1px solid rgba(255,255,255,.14);
-            background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-            color:#EAEAEA
-        }
-        .cta-row{
-            display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px
-        }
-        .btn{
-            display:inline-block;padding:12px 18px;border-radius:12px;font-weight:700;
-            border:2px solid transparent;text-decoration:none;line-height:1;
-        }
-        .btn-primary{
-            background:linear-gradient(90deg,var(--primary-color),#ffb14d);
-            color:#1e1e1e;border-color:rgba(255,255,255,.06);
-            box-shadow:0 8px 20px rgba(255,140,0,.35);
-        }
-        .btn-primary:hover{filter:brightness(1.03)}
-        .btn-secondary{
-            background:transparent;color:var(--text-light);
-            border-color:rgba(255,255,255,.18)
-        }
-        .btn-secondary:hover{background:rgba(255,255,255,.06)}
+    /* Navbar */
+    .navbar{
+      background:var(--section-bg);border-bottom:3px solid var(--secondary-color);
+      position:sticky;top:0;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.4);
+      display:flex;justify-content:center;flex-wrap:wrap
+    }
+    .navbar a{display:block;color:var(--text-light);padding:18px 22px}
+    .navbar a:hover{background:var(--dark-bg);color:var(--primary-color)}
+    section{scroll-margin-top:80px} /* offset anchors for sticky nav */
 
-        /* Scroll cue (clickable) */
-        .scroll-frame{
-            position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
-            width:34px;height:56px;border:2px solid var(--primary-color);border-radius:20px;
-            cursor:pointer;z-index:3;display:block;transition:all .2s ease
-        }
-        .scroll-frame::before{
-            content:'';position:absolute;left:50%;top:10px;transform:translateX(-50%);
-            width:6px;height:6px;border-radius:50%;background:var(--primary-color);
-            animation:scroll-anim 1.6s infinite
-        }
-        .scroll-frame:hover{border-color:var(--secondary-color)}
-        .scroll-frame:hover::before{background:var(--secondary-color)}
-        @keyframes scroll-anim{
-            0%{transform:translate(-50%,0);opacity:0}
-            25%{opacity:1}
-            100%{transform:translate(-50%,18px);opacity:0}
-        }
-        .sr-only{
-            position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
-            clip:rect(0,0,0,0);white-space:nowrap;border:0
-        }
+    /* -------- Welcome / Hero (now in normal flow) -------- */
+    #welcome{
+      position:relative;
+      overflow:hidden;
+      height:100vh; /* fallback */
+    }
+    @supports (height: 100svh){
+      #welcome{height:100svh;} /* better on mobile browsers */
+    }
+    #welcome .hero-video{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      filter:brightness(.5) contrast(1.1);
+      z-index:-1;pointer-events:none; /* do not intercept clicks */
+    }
+    #welcome .overlay{
+      position:absolute;inset:0;
+      background:radial-gradient(80% 60% at 50% 40%, rgba(0,0,0,.2), rgba(0,0,0,.6));
+      pointer-events:none;
+    }
+    #welcome .hero-content{
+      position:relative;height:100%;width:100%;
+      display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
+    }
+    .hero-card{
+      width:min(900px,92%);
+      padding:28px 28px 34px;border-radius:18px;
+      background:rgba(44,44,44,.55);
+      backdrop-filter:saturate(140%) blur(10px);
+      -webkit-backdrop-filter:saturate(140%) blur(10px);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 30px 60px rgba(0,0,0,.45);
+      container-type:inline-size; /* enable container-relative sizing */
+    }
+    .hero-greeting{
+      font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--text-muted);margin-bottom:6px
+    }
+    /* Responsive name wrap */
+    .hero-name{
+      font-size:clamp(1.9rem,12cqi,4rem);
+      line-height:1.05;letter-spacing:-0.01em;margin:0 0 10px;
+      text-wrap:balance;overflow-wrap:anywhere;
+    }
+    @supports not (font-size: 1cqi){
+      .hero-name{font-size:clamp(1.9rem,5.6vw,4rem);}
+    }
+    @media (max-width: 420px){
+      .hero-name{font-size:clamp(1.6rem,6.8vw,2.6rem);}
+    }
+    .hero-subtitle{
+      font-size:clamp(1rem,2.2vw,1.15rem);
+      color:var(--text-muted);margin:0 auto 14px;max-width:44ch
+    }
+    .hero-tags{
+      display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0 20px
+    }
+    .tag{
+      padding:6px 10px;border-radius:999px;font-size:.85rem;
+      border:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      color:#EAEAEA
+    }
+    .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+    .btn{
+      display:inline-block;padding:12px 18px;border-radius:12px;font-weight:700;
+      border:2px solid transparent;line-height:1;
+    }
+    .btn-primary{
+      background:linear-gradient(90deg,var(--primary-color),#ffb14d);
+      color:#1e1e1e;border-color:rgba(255,255,255,.06);
+      box-shadow:0 8px 20px rgba(255,140,0,.35);
+    }
+    .btn-primary:hover{filter:brightness(1.03)}
+    .btn-secondary{
+      background:transparent;color:var(--text-light);
+      border-color:rgba(255,255,255,.18)
+    }
+    .btn-secondary:hover{background:rgba(255,255,255,.06)}
 
-        /* Main content sits below fixed hero */
-        #main-content{position:relative;z-index:0;background:var(--main-bg);margin-top:100vh}
+    /* Scroll cue (clickable) */
+    .scroll-frame{
+      position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
+      width:34px;height:56px;border:2px solid var(--primary-color);border-radius:20px;
+      cursor:pointer;display:block;transition:all .2s ease
+    }
+    .scroll-frame::before{
+      content:'';position:absolute;left:50%;top:10px;transform:translateX(-50%);
+      width:6px;height:6px;border-radius:50%;background:var(--primary-color);
+      animation:scroll-anim 1.6s infinite
+    }
+    .scroll-frame:hover{border-color:var(--secondary-color)}
+    .scroll-frame:hover::before{background:var(--secondary-color)}
+    @keyframes scroll-anim{
+      0%{transform:translate(-50%,0);opacity:0}
+      25%{opacity:1}
+      100%{transform:translate(-50%,18px);opacity:0}
+    }
+    .sr-only{
+      position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+      clip:rect(0,0,0,0);white-space:nowrap;border:0
+    }
 
-        /* Sections (unchanged styles, condensed) */
-        .section-box{background:var(--section-bg);padding:30px 40px;margin-bottom:30px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.5);overflow:auto}
-        .profile-pic{width:150px;height:150px;border-radius:50%;object-fit:cover;border:4px solid var(--primary-color);float:left;margin:0 30px 20px 0}
+    /* Main content now follows immediately (no margin-top needed) */
+    #main-content{position:relative;background:var(--main-bg)}
 
-        .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:30px}
-        .project-card{background:var(--dark-bg);border-radius:8px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.4);transition:transform .2s ease,box-shadow .2s ease}
-        .project-card:hover{transform:translateY(-6px);box-shadow:0 10px 22px rgba(0,0,0,.55)}
-        .project-card img{width:100%;height:200px;object-fit:cover;border-bottom:2px solid var(--primary-color)}
-        .project-card-content{padding:20px}
-        .project-card h3{margin-top:0;font-size:1.2em;color:var(--primary-color)}
-        .project-card p{font-size:.95em;color:var(--text-muted)}
+    /* Sections */
+    .section-box{background:var(--section-bg);padding:30px 40px;margin-bottom:30px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.5);overflow:auto}
+    .profile-pic{width:150px;height:150px;border-radius:50%;object-fit:cover;border:4px solid var(--primary-color);float:left;margin:0 30px 20px 0}
 
-        .publication-item,.toolbox-item{background:var(--dark-bg);padding:20px;margin-bottom:15px;border-left:4px solid var(--secondary-color);border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-        .pub-meta{font-size:.95em;color:var(--text-muted)}
-        footer{background:var(--section-bg);color:var(--text-muted);text-align:center;padding:30px 20px;margin-top:40px;border-top:3px solid var(--primary-color);font-size:.9em}
+    .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:30px}
+    .project-card{background:var(--dark-bg);border-radius:8px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.4);transition:transform .2s ease,box-shadow .2s ease}
+    .project-card:hover{transform:translateY(-6px);box-shadow:0 10px 22px rgba(0,0,0,.55)}
+    .project-card img{width:100%;height:200px;object-fit:cover;border-bottom:2px solid var(--primary-color)}
+    .project-card-content{padding:20px}
+    .project-card h3{margin-top:0;font-size:1.2em;color:var(--primary-color)}
+    .project-card p{font-size:.95em;color:var(--text-muted)}
 
-        /* Mobile tweaks */
-        @media (max-width:768px){
-            .navbar a{padding:12px 10px;font-size:.95em}
-            .container{width:95%;padding:15px 0}
-            h2{font-size:1.25rem}
-            .project-grid{grid-template-columns:1fr}
-        }
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion:reduce){
-            html{scroll-behavior:auto}
-            .scroll-frame::before{animation:none}
-        }
-    </style>
+    .publication-item,.toolbox-item{background:var(--dark-bg);padding:20px;margin-bottom:15px;border-left:4px solid var(--secondary-color);border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+    .pub-meta{font-size:.95em;color:var(--text-muted)}
+    footer{background:var(--section-bg);color:var(--text-muted);text-align:center;padding:30px 20px;margin-top:40px;border-top:3px solid var(--primary-color);font-size:.9em}
+
+    /* Mobile tweaks */
+    @media (max-width:768px){
+      .navbar a{padding:12px 10px;font-size:.95em}
+      .container{width:95%;padding:15px 0}
+      h2{font-size:1.25rem}
+      .project-grid{grid-template-columns:1fr}
+    }
+    /* Reduced motion */
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .scroll-frame::before{animation:none}
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Skip link for accessibility -->
-    <a href="#main-content" class="sr-only">Skip to main content</a>
+  <a href="#main-content" class="sr-only">Skip to main content</a>
 
-    <div class="navbar">
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#publications">Publications</a>
-        <a href="#contact">Contact</a>
+  <div class="navbar">
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#publications">Publications</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Welcome / Name section (in normal flow) -->
+  <section id="welcome" aria-label="Intro">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="Headmap_Plot.mp4" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
+    <div class="overlay" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <div class="hero-card" role="region" aria-label="Introduction">
+        <div class="hero-greeting">Welcome — nice to meet you!</div>
+        <h1 class="hero-name">Mohammad Hossein<wbr> Behboudi</h1>
+        <p class="hero-subtitle">
+          Ph.D. Researcher in Cognition & Neuroscience • EEG, Signal Processing & Machine Learning for Digital Health
+        </p>
+
+        <div class="hero-tags" aria-label="Areas of focus">
+          <span class="tag">EEG & Connectivity</span>
+          <span class="tag">Graph Theory</span>
+          <span class="tag">ML Pipelines</span>
+          <span class="tag">Real-time Systems</span>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#projects" aria-label="View Projects">View Projects</a>
+          <a class="btn btn-secondary" href="mailto:Behboudi@UTDallas.edu" aria-label="Email Mohammad">Email Me</a>
+          <a class="btn btn-secondary" href="#publications" aria-label="View Publications">Publications</a>
+        </div>
+      </div>
+
+      <!-- Clickable scroll cue -->
+      <a href="#about" class="scroll-frame" aria-label="Scroll to About section" title="Scroll to About">
+        <span class="sr-only">Scroll to About</span>
+      </a>
+    </div>
+  </section>
+
+  <main id="main-content">
+    <div class="container">
+      <section id="about" class="section-box" aria-labelledby="about-title">
+        <h2 id="about-title">About Me</h2>
+        <img src="profile.jpg" alt="Portrait of Mohammad H. Behboudi" class="profile-pic">
+        <p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in <strong>Electrical Engineering</strong>. My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development. I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes.</p>
+        <p>My expertise spans <strong>MATLAB, Python, and R</strong>, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets. My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis.</p>
+      </section>
+
+      <section id="education" class="section-box">
+        <h2>Education</h2>
+        <div class="publication-list">
+          <div class="publication-item">
+            <h3>Ph.D. Student in Cognition and Neuroscience</h3>
+            <p class="pub-meta"><strong>The University of Texas at Dallas</strong>, Dallas, TX | Aug 2021 – Present</p>
+          </div>
+          <div class="publication-item">
+            <h3>M.Sc. in Applied Cognition and Neuroscience</h3>
+            <p class="pub-meta"><strong>The University of Texas at Dallas</strong>, Dallas, TX | Aug 2021 – May 2024</p>
+          </div>
+          <div class="publication-item">
+            <h3>B.Sc. in Electrical Engineering</h3>
+            <p class="pub-meta"><strong>K. N. Toosi University of Technology</strong>, Tehran, Iran | Aug 2015 – Jan 2020</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section-box">
+        <h2>Skills & Expertise</h2>
+        <div class="project-grid">
+          <div class="project-card"><div class="project-card-content">
+            <h3>Signal Processing & Analysis</h3>
+            <p>EEG, EMG, Time/Frequency Analysis, ERSP, Connectivity, Graph Theory, Artifact Rejection.</p>
+          </div></div>
+          <div class="project-card"><div class="project-card-content">
+            <h3>Machine Learning & AI</h3>
+            <p>SVM, KNN, Deep Learning, ASR, Diarization, LLMs, Sentiment Analysis.</p>
+          </div></div>
+          <div class="project-card"><div class="project-card-content">
+            <h3>Programming & Tools</h3>
+            <p>MATLAB, Python, R, TensorFlow, Scikit-learn, EEGLAB, FieldTrip, NumPy, SciPy, Pandas, SQL.</p>
+          </div></div>
+          <div class="project-card"><div class="project-card-content">
+            <h3>Experimental Design & Statistics</h3>
+            <p>Human-in-the-loop, ANOVA/MANOVA, Permutation Tests, LME (lme4), multilevel & longitudinal analysis.</p>
+          </div></div>
+        </div>
+      </section>
+
+      <section id="projects" class="section-box">
+        <h2>Featured Projects</h2>
+        <div class="project-grid">
+          <div class="project-card">
+            <img src="neurofeedback_project.png" alt="Real-time EEG Neurofeedback project">
+            <div class="project-card-content">
+              <h3>Mobile EEG Stimuli & Signal System</h3>
+              <p>Developed a mobile system for real-time stimulus delivery and EEG data acquisition to study auditory and cognitive processes in children.</p>
+              <a href="#" class="read-more">Learn More &rarr;</a>
+            </div>
+          </div>
+          <div class="project-card">
+            <img src="meg_localization_project.png" alt="MEG/EEG Connectivity project">
+            <div class="project-card-content">
+              <h3>Connectivity & Graph Theory Analysis</h3>
+              <p>Custom pipelines for connectivity and graph metrics (e.g., PLI) to examine neural interactions during language processing.</p>
+              <a href="#" class="read-more">Learn More &rarr;</a>
+            </div>
+          </div>
+          <div class="project-card">
+            <img src="sleep_classification_project.png" alt="Sleep Apnea EEG Classification project">
+            <div class="project-card-content">
+              <h3>Computer-Aided Sleep Apnea Diagnosis</h3>
+              <p>Entropy-based features + mRMR selection with SVM/KNN for accurate apnea event identification from EEG.</p>
+              <a href="#" class="read-more">Learn More &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="publications" class="section-box">
+        <h2>Publications</h2>
+        <div class="publication-list">
+          <div class="publication-item">
+            <h3>Development of Gamma Oscillation during Sentence Processing in Early Adolescence</h3>
+            <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., Chalamalasetty, P., & Maguire, M. J. (2023). <em>Brain Sciences</em>, 13(12), 1639. <a href="https://doi.org/10.3390/brainsci13121639">DOI</a></p>
+          </div>
+          <div class="publication-item">
+            <h3>Neural oscillations during predictive sentence processing in young children</h3>
+            <p class="pub-meta">Benítez-Barrera, C. R., <strong>Behboudi, M. H.</strong>, & Maguire, M. J. (2024). <em>Brain and Language</em>, 254, 105437. <a href="https://doi.org/10.1016/j.bandl.2024.105437">DOI</a></p>
+          </div>
+          <div class="publication-item">
+            <h3>Sleep Apnea Diagnosis Using Complexity Features of EEG Signals</h3>
+            <p class="pub-meta">Gholami, B., <strong>Behboudi, M.H.</strong>, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). In <em>IWINAC 2022. LNCS</em>. <a href="https://doi.org/10.1007/978-3-031-06242-1_8">DOI</a></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section-box">
+        <h2>Contact</h2>
+        <p>For collaborations or inquiries about my research:</p>
+        <p><strong>Email:</strong> <a href="mailto:Behboudi@UTDallas.edu">Behboudi@UTDallas.edu</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank" rel="noopener">mohammad-hossein-behboudi-m-sc-a5b592168</a></p>
+        <p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener">0000-0003-1335-3617</a></p>
+      </section>
     </div>
 
-    <!-- Friendlier, more professional Welcome / Name section -->
-    <section id="welcome" aria-label="Intro">
-        <video autoplay muted loop playsinline class="hero-video">
-            <source src="Headmap_Plot.mp4" type="video/mp4"/>
-            Your browser does not support the video tag.
-        </video>
-        <div class="overlay" aria-hidden="true"></div>
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 Mohammad Hossein Behboudi. All rights reserved.</p>
+      </div>
+    </footer>
+  </main>
 
-        <div class="hero-content">
-            <div class="hero-card" role="region" aria-label="Introduction">
-                <div class="hero-greeting">Welcome — nice to meet you!</div>
-                <h1>Mohammad&nbsp;Hossein&nbsp;Behboudi</h1>
-                <p class="hero-subtitle">
-                    Ph.D. Researcher in Cognition & Neuroscience • EEG, Signal Processing & Machine Learning for Digital Health
-                </p>
-
-                <div class="hero-tags" aria-label="Areas of focus">
-                    <span class="tag">EEG & Connectivity</span>
-                    <span class="tag">Graph Theory</span>
-                    <span class="tag">ML Pipelines</span>
-                    <span class="tag">Real-time Systems</span>
-                </div>
-
-                <div class="cta-row">
-                    <a class="btn btn-primary" href="#projects" role="button" aria-label="View Projects">View Projects</a>
-                    <a class="btn btn-secondary" href="mailto:Behboudi@UTDallas.edu" role="button" aria-label="Email Mohammad">Email Me</a>
-                    <a class="btn btn-secondary" href="#publications" role="button" aria-label="View Publications">Publications</a>
-                </div>
-            </div>
-
-            <!-- Clickable scroll cue -->
-            <a href="#about" class="scroll-frame" aria-label="Scroll to About section" title="Scroll to About">
-                <span class="sr-only">Scroll to About</span>
-            </a>
-        </div>
-    </section>
-
-    <main id="main-content">
-        <div class="container">
-            <section id="about" class="section-box" aria-labelledby="about-title">
-                <h2 id="about-title">About Me</h2>
-                <img src="profile.jpg" alt="Portrait of Mohammad H. Behboudi" class="profile-pic">
-                <p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in <strong>Electrical Engineering</strong>. My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development. I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes.</p>
-                <p>My expertise spans <strong>MATLAB, Python, and R</strong>, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets. My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis.</p>
-            </section>
-
-            <section id="education" class="section-box">
-                <h2>Education</h2>
-                <div class="publication-list">
-                    <div class="publication-item">
-                        <h3>Ph.D. Student in Cognition and Neuroscience</h3>
-                        <p class="pub-meta"><strong>The University of Texas at Dallas</strong>, Dallas, TX | Aug 2021 – Present</p>
-                    </div>
-                    <div class="publication-item">
-                        <h3>M.Sc. in Applied Cognition and Neuroscience</h3>
-                        <p class="pub-meta"><strong>The University of Texas at Dallas</strong>, Dallas, TX | Aug 2021 – May 2024</p>
-                    </div>
-                    <div class="publication-item">
-                        <h3>B.Sc. in Electrical Engineering</h3>
-                        <p class="pub-meta"><strong>K. N. Toosi University of Technology</strong>, Tehran, Iran | Aug 2015 – Jan 2020</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="skills" class="section-box">
-                <h2>Skills & Expertise</h2>
-                <div class="project-grid">
-                    <div class="project-card"><div class="project-card-content">
-                        <h3>Signal Processing & Analysis</h3>
-                        <p>EEG, EMG, Time/Frequency Analysis, ERSP, Connectivity, Graph Theory, Artifact Rejection.</p>
-                    </div></div>
-                    <div class="project-card"><div class="project-card-content">
-                        <h3>Machine Learning & AI</h3>
-                        <p>SVM, KNN, Deep Learning, ASR, Diarization, LLMs, Sentiment Analysis.</p>
-                    </div></div>
-                    <div class="project-card"><div class="project-card-content">
-                        <h3>Programming & Tools</h3>
-                        <p>MATLAB, Python, R, TensorFlow, Scikit-learn, EEGLAB, FieldTrip, NumPy, SciPy, Pandas, SQL.</p>
-                    </div></div>
-                    <div class="project-card"><div class="project-card-content">
-                        <h3>Experimental Design & Statistics</h3>
-                        <p>Human-in-the-loop, ANOVA/MANOVA, Permutation Tests, LME (lme4), multilevel & longitudinal analysis.</p>
-                    </div></div>
-                </div>
-            </section>
-
-            <section id="projects" class="section-box">
-                <h2>Featured Projects</h2>
-                <div class="project-grid">
-                    <div class="project-card">
-                        <img src="neurofeedback_project.png" alt="Real-time EEG Neurofeedback project">
-                        <div class="project-card-content">
-                            <h3>Mobile EEG Stimuli & Signal System</h3>
-                            <p>Developed a mobile system for real-time stimulus delivery and EEG data acquisition to study auditory and cognitive processes in children.</p>
-                            <a href="#" class="read-more">Learn More &rarr;</a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <img src="meg_localization_project.png" alt="MEG/EEG Connectivity project">
-                        <div class="project-card-content">
-                            <h3>Connectivity & Graph Theory Analysis</h3>
-                            <p>Custom pipelines for connectivity and graph metrics (e.g., PLI) to examine neural interactions during language processing.</p>
-                            <a href="#" class="read-more">Learn More &rarr;</a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <img src="sleep_classification_project.png" alt="Sleep Apnea EEG Classification project">
-                        <div class="project-card-content">
-                            <h3>Computer-Aided Sleep Apnea Diagnosis</h3>
-                            <p>Entropy-based features + mRMR selection with SVM/KNN for accurate apnea event identification from EEG.</p>
-                            <a href="#" class="read-more">Learn More &rarr;</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="publications" class="section-box">
-                <h2>Publications</h2>
-                <div class="publication-list">
-                    <div class="publication-item">
-                        <h3>Development of Gamma Oscillation during Sentence Processing in Early Adolescence</h3>
-                        <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., Chalamalasetty, P., & Maguire, M. J. (2023). <em>Brain Sciences</em>, 13(12), 1639. <a href="https://doi.org/10.3390/brainsci13121639">DOI</a></p>
-                    </div>
-                    <div class="publication-item">
-                        <h3>Neural oscillations during predictive sentence processing in young children</h3>
-                        <p class="pub-meta">Benítez-Barrera, C. R., <strong>Behboudi, M. H.</strong>, & Maguire, M. J. (2024). <em>Brain and Language</em>, 254, 105437. <a href="https://doi.org/10.1016/j.bandl.2024.105437">DOI</a></p>
-                    </div>
-                    <div class="publication-item">
-                        <h3>Sleep Apnea Diagnosis Using Complexity Features of EEG Signals</h3>
-                        <p class="pub-meta">Gholami, B., <strong>Behboudi, M.H.</strong>, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). In <em>IWINAC 2022. LNCS</em>. <a href="https://doi.org/10.1007/978-3-031-06242-1_8">DOI</a></p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact" class="section-box">
-                <h2>Contact</h2>
-                <p>For collaborations or inquiries about my research:</p>
-                <p><strong>Email:</strong> <a href="mailto:Behboudi@UTDallas.edu">Behboudi@UTDallas.edu</a></p>
-                <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank" rel="noopener">mohammad-hossein-behboudi-m-sc-a5b592168</a></p>
-                <p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener">0000-0003-1335-3617</a></p>
-            </section>
-        </div>
-
-        <footer>
-            <div class="container">
-                <p>&copy; 2024 Mohammad Hossein Behboudi. All rights reserved.</p>
-            </div>
-        </footer>
-    </main>
-
-    <!-- Smooth scroll handler -->
-    <script>
+  <!-- Corrected script -->
+  <script>
+    // Smooth scroll for the scroll cue (works even if default behavior differs)
     document.addEventListener('DOMContentLoaded', function () {
       const btn = document.querySelector('.scroll-frame');
       const target = document.querySelector('#about');
@@ -354,6 +370,6 @@
         });
       }
     });
-    </script>
+  </script>
 </body>
 </html>
