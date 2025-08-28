@@ -184,19 +184,39 @@
             text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
         }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--dark-bg);
-            padding: 12px 25px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-            font-weight: bold;
+        /* New Floating Button */
+        .scroll-btn {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: block;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            transition: all 0.3s ease-in-out;
+            z-index: 101; /* Ensure it's above everything */
+            cursor: pointer;
         }
 
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-            text-decoration: none;
+        .scroll-btn span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: var(--primary-color);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .scroll-btn:hover {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+        }
+
+        .scroll-btn:hover span {
+            color: var(--dark-bg);
         }
 
         /* Main Content Section that Scrolls Over the Welcome Page */
@@ -446,7 +466,7 @@
         <div class="hero-content">
             <h1>Mohammad Hossein Behboudi</h1>
             <p>Applied Scientist in Neuroscience & Signal Processing</p>
-            <a href="#main-content" class="btn-primary">&dArr;</a>
+            <a href="#main-content" class="scroll-btn"><span>&darr;</span></a>
         </div>
     </section>
     
