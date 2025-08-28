@@ -44,46 +44,44 @@
     a{color:var(--primary-color);text-decoration:none;transition:color .2s ease}
     a:hover{color:var(--secondary-color);text-decoration:underline}
     strong{color:var(--secondary-color)}
-    section{scroll-margin-top:80px} /* safe anchor offset */
 
-    /* -------- Welcome / Hero (normal flow) -------- */
-    #welcome{
-      position:relative;
-      overflow:hidden;
-      height:100vh; /* fallback */
+    /* ===== Fixed background layer (video stays put; content scrolls over it) ===== */
+    #bg-layer{
+      position:fixed; inset:0; z-index:0; pointer-events:none;
     }
-    @supports (height: 100svh){
-      #welcome{height:100svh;} /* better on mobile browsers */
-    }
-    #welcome .hero-video{
-      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    #bg-layer .bg-video{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       filter:brightness(.5) contrast(1.1);
-      z-index:-1;pointer-events:none; /* do not intercept clicks */
     }
-    #welcome .overlay{
-      position:absolute;inset:0;
-      background:radial-gradient(80% 60% at 50% 40%, rgba(0,0,0,.2), rgba(0,0,0,.6));
-      pointer-events:none;
+    #bg-layer .bg-overlay{
+      position:absolute; inset:0;
+      background:radial-gradient(80% 60% at 50% 40%, rgba(0,0,0,.25), rgba(0,0,0,.65));
     }
-    #welcome .hero-content{
-      position:relative;height:100%;width:100%;
-      display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
+
+    /* ===== Welcome / Hero (full screen, above video, below main when scrolled) ===== */
+    #welcome{
+      position:relative; z-index:1;
+      min-height:100vh; /* fallback */
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      padding:20px;
     }
+    @supports (min-height: 100svh){ #welcome{ min-height:100svh; } }
+
     .hero-card{
       width:min(1000px,94%);
-      padding:28px 28px 34px;border-radius:18px;
+      padding:28px 28px 34px; border-radius:18px;
       background:rgba(44,44,44,.55);
       backdrop-filter:saturate(140%) blur(10px);
       -webkit-backdrop-filter:saturate(140%) blur(10px);
       border:1px solid rgba(255,255,255,.12);
       box-shadow:0 30px 60px rgba(0,0,0,.45);
-      container-type:inline-size; /* enable container-relative sizing */
+      container-type:inline-size;
     }
     .hero-greeting{
       font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;
       color:var(--text-muted);margin-bottom:6px
     }
-    /* Responsive name wrap */
+    /* Responsive name */
     .hero-name{
       font-size:clamp(1.9rem,12cqi,4rem);
       line-height:1.05;letter-spacing:-0.01em;margin:0 0 10px;
@@ -98,22 +96,6 @@
     .hero-subtitle{
       font-size:clamp(1rem,2.2vw,1.15rem);
       color:var(--text-muted);margin:0 auto 16px;max-width:44ch
-    }
-
-    /* Tag grid — ONLY the six requested */
-    .hero-tags{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-      gap:10px;
-      justify-items:stretch;
-      margin:16px 0 20px;
-    }
-    .tag{
-      padding:8px 10px;border-radius:12px;font-size:.9rem;
-      border:1px solid rgba(255,255,255,.14);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      color:#EAEAEA; text-align:center;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
 
     .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:6px}
@@ -148,11 +130,11 @@
     .icon-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.12);color:var(--secondary-color)}
     .icon-btn svg{width:22px;height:22px;display:block}
 
-    /* Scroll cue (clickable) */
+    /* Scroll cue */
     .scroll-frame{
       position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
       width:34px;height:56px;border:2px solid var(--primary-color);border-radius:20px;
-      cursor:pointer;display:block;transition:all .2s ease
+      cursor:pointer;display:block;transition:all .2s ease; z-index:2;
     }
     .scroll-frame::before{
       content:'';position:absolute;left:50%;top:10px;transform:translateX(-50%);
@@ -171,8 +153,11 @@
       clip:rect(0,0,0,0);white-space:nowrap;border:0
     }
 
-    /* Main content follows hero */
-    #main-content{position:relative;background:var(--main-bg)}
+    /* ===== Main content sits ABOVE the video and can visually cover the welcome ===== */
+    #main-content{
+      position:relative; z-index:2; /* above fixed video and welcome layer */
+      background:var(--main-bg);
+    }
 
     /* Sections */
     .section-box{background:var(--section-bg);padding:30px 40px;margin-bottom:30px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.5);overflow:auto}
@@ -205,81 +190,65 @@
 </head>
 <body>
 
-  <!-- Welcome / Name section (navbar removed as requested) -->
-  <section id="welcome" aria-label="Intro">
-    <video autoplay muted loop playsinline class="hero-video">
+  <!-- Fixed background video layer -->
+  <div id="bg-layer" aria-hidden="true">
+    <video autoplay muted loop playsinline class="bg-video">
       <source src="Headmap_Plot.mp4" type="video/mp4"/>
-      Your browser does not support the video tag.
     </video>
-    <div class="overlay" aria-hidden="true"></div>
+    <div class="bg-overlay"></div>
+  </div>
 
-    <div class="hero-content">
-      <div class="hero-card" role="region" aria-label="Introduction">
-        <div class="hero-greeting">Welcome — nice to meet you!</div>
-        <h1 class="hero-name">Mohammad Hossein<wbr> Behboudi</h1>
-        <p class="hero-subtitle">Ph.D. Researcher in Cognition & Neuroscience</p>
+  <!-- Full-screen welcome section -->
+  <section id="welcome" aria-label="Intro">
+    <div class="hero-card" role="region" aria-label="Introduction">
+      <div class="hero-greeting">Welcome — nice to meet you!</div>
+      <h1 class="hero-name">Mohammad Hossein<wbr> Behboudi</h1>
+      <p class="hero-subtitle">Ph.D. Researcher in Cognition & Neuroscience</p>
 
-        <!-- Only the six tags you asked to keep -->
-        <div class="hero-tags" aria-label="Areas of focus">
-          <span class="tag">Signal Processing</span>
-          <span class="tag">EEG Pipelines</span>
-          <span class="tag">ML &amp; DL Pipelines</span>
-          <span class="tag">Neural Decoding</span>
-          <span class="tag">LLMs for Health and Education</span>
-          <span class="tag">Statistical Analysis</span>
-        </div>
-
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#about" aria-label="About Mohammad">About Me</a>
-          <a class="btn btn-secondary" href="mailto:Behboudi@UTDallas.edu" aria-label="Email Mohammad">Email Me</a>
-        </div>
-
-        <!-- Social icons row (replace hrefs as needed) -->
-        <div class="social-row" aria-label="Profiles">
-          <a class="icon-btn" href="https://github.com/REPLACE_WITH_USERNAME" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
-            <!-- simple <> code icon -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="8 9 5 12 8 15"></polyline>
-              <polyline points="16 9 19 12 16 15"></polyline>
-              <line x1="10" y1="19" x2="14" y2="5"></line>
-            </svg>
-          </a>
-
-          <a class="icon-btn" href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
-            <!-- simple 'in' badge -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
-              <circle cx="8" cy="9" r="1.5" fill="currentColor" stroke="none"></circle>
-              <line x1="8" y1="11" x2="8" y2="17"></line>
-              <path d="M12 17v-3.2a2.2 2.2 0 0 1 4.4 0V17"></path>
-            </svg>
-          </a>
-
-          <a class="icon-btn" href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener" aria-label="ORCID" title="ORCID">
-            <!-- 'iD' in circle -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-              <circle cx="12" cy="12" r="9"></circle>
-              <line x1="9" y1="8" x2="9" y2="16"></line>
-              <path d="M13 16v-5.5h2.1a2.75 2.75 0 1 1 0 5.5H13z"></path>
-            </svg>
-          </a>
-
-          <a class="icon-btn" href="https://scholar.google.com/citations?user=REPLACE_WITH_USER_ID" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar">
-            <!-- simple scholar cap -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polygon points="12 5 3 9 12 13 21 9 12 5"></polygon>
-              <path d="M7 12v4a5 5 0 0 0 10 0v-4"></path>
-              <line x1="21" y1="9" x2="21" y2="14"></line>
-            </svg>
-          </a>
-        </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#about" aria-label="About Mohammad">About Me</a>
+        <a class="btn btn-secondary" href="mailto:Behboudi@UTDallas.edu" aria-label="Email Mohammad">Email Me</a>
       </div>
 
-      <!-- Clickable scroll cue -->
-      <a href="#about" class="scroll-frame" aria-label="Scroll to About section" title="Scroll to About">
-        <span class="sr-only">Scroll to About</span>
-      </a>
+      <!-- Social icons -->
+      <div class="social-row" aria-label="Profiles">
+        <a class="icon-btn" href="https://github.com/REPLACE_WITH_USERNAME" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+          <!-- simple <> code icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="8 9 5 12 8 15"></polyline>
+            <polyline points="16 9 19 12 16 15"></polyline>
+            <line x1="10" y1="19" x2="14" y2="5"></line>
+          </svg>
+        </a>
+        <a class="icon-btn" href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+            <circle cx="8" cy="9" r="1.5" fill="currentColor" stroke="none"></circle>
+            <line x1="8" y1="11" x2="8" y2="17"></line>
+            <path d="M12 17v-3.2a2.2 2.2 0 0 1 4.4 0V17"></path>
+          </svg>
+        </a>
+        <a class="icon-btn" href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener" aria-label="ORCID" title="ORCID">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <line x1="9" y1="8" x2="9" y2="16"></line>
+            <path d="M13 16v-5.5h2.1a2.75 2.75 0 1 1 0 5.5H13z"></path>
+          </svg>
+        </a>
+        <a class="icon-btn" href="https://scholar.google.com/citations?user=REPLACE_WITH_USER_ID" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="12 5 3 9 12 13 21 9 12 5"></polygon>
+            <path d="M7 12v4a5 5 0 0 0 10 0v-4"></path>
+            <line x1="21" y1="9" x2="21" y2="14"></line>
+          </svg>
+        </a>
+      </div>
     </div>
+
+    <!-- Clickable scroll cue -->
+    <a href="#about" class="scroll-frame" aria-label="Scroll to About section" title="Scroll to About">
+      <span class="sr-only">Scroll to About</span>
+    </a>
   </section>
 
   <main id="main-content">
