@@ -3,90 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Neuroscience Portfolio</title>
+    <title>Neuroscience & Bio-Signal Analysis</title>
     <style>
+        /* General Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #121212; /* Dark background */
+            color: #E0E0E0; /* Light text */
         }
         .container {
-            width: 80%;
+            width: 85%;
             margin: auto;
             overflow: hidden;
             padding: 20px;
         }
-        header {
-            background: #507DBC;
-            color: #ffffff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #4a6a9b 3px solid;
-            text-align: center;
+
+        /* Navigation Bar */
+        .navbar {
+            overflow: hidden;
+            background-color: #1F1F1F;
+            border-bottom: 2px solid #507DBC;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        header h1 {
+        .navbar a {
+            float: left;
+            display: block;
+            color: #E0E0E0;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover, .dropdown:hover .dropbtn {
+            background-color: #333;
+            color: #507DBC;
+        }
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+        .dropdown .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: #E0E0E0;
+            padding: 14px 20px;
+            background-color: inherit;
+            font-family: inherit;
             margin: 0;
         }
-        .main-content {
-            padding: 20px;
-            background: #ffffff;
-            margin-top: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #2D2D2D;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1;
         }
-        footer {
+        .dropdown-content a {
+            float: none;
+            color: #E0E0E0;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: #507DBC;
+            color: #ffffff;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* Main Content and Figures */
+        .section-box {
+            background-color: #1F1F1F;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        h2, h3 {
+            color: #507DBC;
+            border-bottom: 2px solid #507DBC;
+            padding-bottom: 5px;
+        }
+        .figure {
             text-align: center;
-            padding: 20px;
-            margin-top: 20px;
-            color: #777;
+            margin: 20px 0;
+        }
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+        .figure-caption {
+            font-style: italic;
+            color: #B0B0B0;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <h1>Your Name | Neuroscience & Biological Signal Processing</h1>
-            <p>PhD Student / Researcher / Data Scientist</p>
+    <div class="navbar">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <div class="dropdown">
+            <button class="dropbtn">Figures</button>
+            <div class="dropdown-content">
+                <a href="#figure1">Signal Analysis</a>
+                <a href="#figure2">Statistical Results</a>
+            </div>
         </div>
-    </header>
+        <a href="#contact">Contact</a>
+    </div>
 
-    <div class="container main-content">
-        <section id="about">
+    <div class="container">
+        <section id="about" class="section-box">
             <h2>About Me</h2>
-            <p>Welcome! I am a researcher specializing in **neuroscience**, with a focus on **biological signal processing** and **statistical analysis**. My work involves using EEG, MEG, and other physiological data to understand brain function and develop new analytical methods.</p>
+            <p>Welcome! I'm a researcher specializing in <strong>neuroscience</strong>, with a focus on <strong>biological signal processing</strong> and <strong>statistical analysis</strong>. My work involves using EEG, MEG, and other physiological data to understand brain function and develop new analytical methods.</p>
         </section>
 
-        <section id="projects">
+        <section id="projects" class="section-box">
             <h2>Projects</h2>
+            <p>Here are some of my key projects.</p>
             <ul>
-                <li>
-                    <h3>Project Title 1</h3>
-                    <p>Brief description of your first project. Mention the methods used (e.g., wavelet analysis, machine learning) and the key findings.</p>
-                </li>
-                <li>
-                    <h3>Project Title 2</h3>
-                    <p>Brief description of your second project. This could be a statistical model, a new software tool, or a research study.</p>
-                </li>
+                <li><strong>Project Title 1:</strong> A brief description of the first project.</li>
+                <li><strong>Project Title 2:</strong> A brief description of the second project.</li>
             </ul>
         </section>
 
-        <section id="publications">
-            <h2>Publications</h2>
-            <p>List your key publications here in a standard citation format.</p>
+        <section id="figures" class="section-box">
+            <h2>Figures</h2>
+            <div class="figure" id="figure1">
+                <img src="https://via.placeholder.com/600x400.png?text=Placeholder+for+your+EEG+Signal+Plot" alt="EEG Signal Plot">
+                <p class="figure-caption">Figure 1: Example of a processed EEG signal showing a specific brain response.</p>
+            </div>
+            <div class="figure" id="figure2">
+                <img src="https://via.placeholder.com/600x400.png?text=Placeholder+for+your+Statistical+Graph" alt="Statistical Analysis Graph">
+                <p class="figure-caption">Figure 2: Statistical plot demonstrating the significant difference in signal power between two conditions.</p>
+            </div>
         </section>
         
-        <section id="contact">
+        <section id="contact" class="section-box">
             <h2>Contact</h2>
-            <p>You can reach me at: **[Your Email]** | **[Link to your LinkedIn or ORCID]**</p>
+            <p>You can reach me at: <strong>[Your Email]</strong> | <strong>[Link to your LinkedIn or ORCID]</strong></p>
         </section>
     </div>
-
-    <footer>
-        <p>&copy; 2025 Your Name. All Rights Reserved.</p>
-    </footer>
 
 </body>
 </html>
