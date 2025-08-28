@@ -26,6 +26,51 @@
     }
     .container{width:90%;max-width:1200px;margin:auto;padding:20px 0}
     h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:600;margin:0 0 15px}
+    .about-lead{
+  font-size:1.05em;
+  color:var(--text-light);
+  margin-bottom:14px;
+}
+
+  .about-checklist{
+    list-style:none; padding-left:0; margin:12px 0 18px;
+  }
+  .about-checklist li{
+    position:relative; padding-left:28px; margin:10px 0; color:var(--text-muted);
+  }
+  .about-checklist li::before{
+    content:""; position:absolute; left:0; top:.45em;
+    width:16px; height:16px; border-radius:4px;
+    border:1px solid rgba(255,255,255,.35);
+    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+    box-shadow:inset 0 0 0 2px rgba(0,0,0,.15);
+  }
+  .about-checklist li span{
+    color:var(--text-light);
+  }
+  
+  .about-now-grid{
+    display:grid; gap:12px; margin:10px 0 14px;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .about-now-card{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:12px; padding:14px 14px;
+  }
+  .about-now-card h4{
+    margin:0 0 6px; color:var(--primary-color); font-size:1rem; text-transform:uppercase; letter-spacing:.04em;
+  }
+  
+  .about-values{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 6px; }
+  .pill{
+    padding:6px 10px; border-radius:999px; font-size:.85rem;
+    border:1px solid rgba(255,255,255,.16);
+    background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+    color:#EAEAEA;
+  }
+  
+  .about-outro{ margin-top:10px; color:var(--text-light); }
 
     /* Headings */
     h1{
@@ -261,9 +306,49 @@
       <section id="about" class="section-box" aria-labelledby="about-title">
         <h2 id="about-title">About Me</h2>
         <img src="profile.jpg" alt="Portrait of Mohammad H. Behboudi" class="profile-pic">
-        <p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in <strong>Electrical Engineering</strong>. My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development. I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes.</p>
-        <p>My expertise spans <strong>MATLAB, Python, and R</strong>, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets. My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis.</p>
+      
+        <p class="about-lead">
+          I’m a Ph.D. researcher in Cognition &amp; Neuroscience who speaks both <strong>brain</strong> and <strong>engineering</strong>.
+          I build end-to-end EEG pipelines—from careful data collection to explainable models—to turn signals into insights that can
+          improve people’s health.
+        </p>
+      
+        <ul class="about-checklist">
+          <li><span>Robust EEG pipelines:</span> artifact handling, time–frequency analysis, connectivity, and graph metrics.</li>
+          <li><span>ML &amp; DL that ship:</span> clean features, reproducible training, and fair evaluation (SVM/KNN → deep models).</li>
+          <li><span>Thoughtful studies:</span> stimuli &amp; protocol design, QA, and statistics (ANOVA, permutation tests, mixed-effects).</li>
+          <li><span>Better biosignals:</span> collaborate with hardware/firmware/software to raise signal quality and reliability.</li>
+          <li><span>Clear communication:</span> tidy plots, readable code, and findings that non-experts can act on.</li>
+        </ul>
+      
+        <div class="about-now-grid">
+          <div class="about-now-card">
+            <h4>Right now</h4>
+            <p><em>Ph.D. thesis:</em> <strong>Development of Large-Scale Brain Networks During Semantic and Syntactic Error Processing: An EEG Connectivity and Graph Theory Analysis</strong> at UT Dallas.</p>
+          </div>
+          <div class="about-now-card">
+            <h4>Recent work</h4>
+            <p>Neural oscillations in children’s predictive language processing, and practical pipelines for EEG connectivity &amp; graph theory.</p>
+          </div>
+          <div class="about-now-card">
+            <h4>Excited to tackle</h4>
+            <p>Wearable biosensing, on-device signal control/processing, neural decoding for speech &amp; cognition, and safe LLMs for health.</p>
+          </div>
+        </div>
+      
+        <div class="about-values">
+          <span class="pill">Curiosity</span>
+          <span class="pill">Clarity</span>
+          <span class="pill">Kindness</span>
+          <span class="pill">Rigor</span>
+          <span class="pill">Reproducibility</span>
+        </div>
+      
+        <p class="about-outro">
+          If you like building useful, human-centered neurotech—or you just want to nerd out about filters and feature stability—<a href="mailto:Behboudi@UTDallas.edu">let’s talk</a>.
+        </p>
       </section>
+
 
       <section id="education" class="section-box">
         <h2>Education</h2>
