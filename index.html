@@ -44,10 +44,11 @@
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 5em; /* Made even bigger */
+            font-weight: 800; /* Bolder font */
             margin-bottom: 15px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-            background: linear-gradient(to right, #FFB74D, #40C4FF, #FFB74D); /* Brighter gradient */
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--primary-color), 0 0 40px var(--primary-color), 0 0 50px var(--primary-color); /* Added glowing effect */
+            background: linear-gradient(to right, #FFDAB9, #00BFFF, #FFDAB9); /* Brighter gradient */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -171,7 +172,7 @@
 
         #welcome .hero-content {
             position: relative;
-            z-index: 102;
+            z-index: 102; /* Higher z-index to ensure it's clickable */
             color: var(--text-light);
             text-align: center;
             display: flex;
@@ -202,7 +203,7 @@
             height: 60px;
             border-radius: 50%;
             transition: all 0.3s ease-in-out;
-            z-index: 103;
+            z-index: 103; /* Highest z-index for button */
             cursor: pointer;
         }
 
@@ -478,6 +479,9 @@
         <div class="hero-content">
             <h1>Mohammad Hossein Behboudi</h1>
             <p>Applied Scientist in Neuroscience & Signal Processing</p>
+            <a href="#about" class="scroll-btn">
+                <img src="Scroll_Down.png" alt="Scroll Down">
+            </a>
         </div>
     </section>
     
