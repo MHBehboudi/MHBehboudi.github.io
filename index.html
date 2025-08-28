@@ -171,10 +171,24 @@
 
         #welcome .hero-content {
             position: relative;
-            z-index: 2;
+            z-index: 102; /* Higher z-index to ensure it's clickable */
             color: var(--text-light);
             text-align: center;
             padding-top: 30vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        #welcome .hero-content h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         #welcome .hero-content p {
@@ -195,28 +209,23 @@
             justify-content: center;
             width: 60px;
             height: 60px;
-            border: 2px solid var(--primary-color);
             border-radius: 50%;
             transition: all 0.3s ease-in-out;
-            z-index: 101; /* Ensure it's above everything */
+            z-index: 103; /* Highest z-index for button */
             cursor: pointer;
         }
 
-        .scroll-btn svg {
-            width: 30px;
-            height: 30px;
-            fill: var(--primary-color);
-            transition: fill 0.3s ease-in-out;
+        .scroll-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .scroll-btn:hover img {
+            transform: scale(1.1);
         }
 
-        .scroll-btn:hover {
-            background-color: var(--primary-color);
-            box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
-        }
-
-        .scroll-btn:hover svg {
-            fill: var(--dark-bg);
-        }
 
         /* Main Content Section that Scrolls Over the Welcome Page */
         #main-content {
@@ -275,7 +284,7 @@
             background-color: var(--dark-bg);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4-box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -478,10 +487,8 @@
         <div class="hero-content">
             <h1>Mohammad Hossein Behboudi</h1>
             <p>Applied Scientist in Neuroscience & Signal Processing</p>
-            <a href="#about" class="scroll-btn" aria-label="Scroll down">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 20c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm0-15c-3.859 0-7 3.14-7 7s3.141 7 7 7 7-3.14 7-7-3.141-7-7-7zM11 12.001L8 9h3V6h2v3h3l-3 3.001V15h-2v-2.999z"/>
-                </svg>
+            <a href="#about" class="scroll-btn">
+                <img src="Scroll_Down.png" alt="Scroll Down">
             </a>
         </div>
     </section>
