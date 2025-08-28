@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Neuroscience Portfolio</title>
+    <title>Mohammad H. Behboudi | Neuroscience & Signal Processing</title>
     <style>
         /* New Color Palette & General Styles */
         :root {
-            --dark-bg: #151515;
-            --section-bg: #212121;
-            --card-bg: #2a2a2a;
-            --primary-color: #007bff; /* Vibrant Blue */
-            --accent-color: #ffc107; /* Energetic Orange */
+            --dark-bg: #1f1f1f;
+            --main-bg: #2b2b2b;
+            --section-bg: #333;
+            --primary-color: #f9a825; /* Warm Orange */
+            --accent-color: #00796b; /* Deep Teal */
             --text-light: #f0f0f0;
-            --text-muted: #a0a0a0;
+            --text-muted: #c0c0c0;
         }
 
         body {
@@ -22,6 +22,8 @@
             margin: 0;
             padding: 0;
             background-color: var(--dark-bg);
+            background-image: radial-gradient(circle, var(--main-bg) 1px, transparent 1px);
+            background-size: 20px 20px;
             color: var(--text-light);
             scroll-behavior: smooth;
         }
@@ -43,7 +45,7 @@
         h2 {
             text-align: center;
             padding-bottom: 15px;
-            border-bottom: 2px solid rgba(0, 123, 255, 0.3);
+            border-bottom: 2px solid rgba(249, 168, 37, 0.3);
             margin-top: 40px;
             margin-bottom: 30px;
             text-transform: uppercase;
@@ -216,7 +218,13 @@
         }
 
         .section-box:hover {
-            box-shadow: 0 6px 25px rgba(0, 123, 255, 0.2);
+            box-shadow: 0 6px 25px rgba(249, 168, 37, 0.2);
+        }
+        
+        #about.section-box {
+            background: var(--section-bg);
+            background: linear-gradient(145deg, var(--section-bg), #222);
+            border-left: 5px solid var(--accent-color);
         }
 
         /* Project Cards */
@@ -438,7 +446,7 @@
             Your browser does not support the video tag.
         </video>
         <div class="hero-content">
-            <h1>Welcome! My Neuroscience Portfolio</h1>
+            <h1>Hi, I'm Mohammad. Welcome to My Portfolio!</h1>
             <p>Exploring the electrical language of the brain with a passion for signal processing, statistical analysis, and data science.</p>
             <a href="#projects" class="btn-primary">Explore My Work &rarr;</a>
         </div>
