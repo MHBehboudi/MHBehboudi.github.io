@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohammad H. Behboudi | Neuroscience & Signal Processing</title>
     <style>
-        /* Professional Color Palette & General Styles */
+        /* New Color Palette & General Styles */
         :root {
             --dark-bg: #121212;
-            --main-bg: #1e1e1e;
-            --section-bg: #2a2a2a;
-            --primary-color: #007bff; /* Professional Blue */
-            --text-light: #e0e0e0;
-            --text-muted: #a0a0a0;
+            --main-bg: #212121;
+            --section-bg: #2c2c2c;
+            --primary-color: #00FFFF; /* Electric Blue */
+            --secondary-color: #FF00FF; /* Vibrant Pink */
+            --text-light: #FFFFFF;
+            --text-muted: #d0d0d0;
         }
 
         body {
@@ -20,7 +21,7 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: var(--dark-bg);
+            background-color: var(--main-bg);
             color: var(--text-light);
             scroll-behavior: smooth;
         }
@@ -42,14 +43,14 @@
         h2 {
             text-align: center;
             padding-bottom: 15px;
-            border-bottom: 2px solid rgba(0, 123, 255, 0.3);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
             margin-top: 40px;
             margin-bottom: 30px;
             text-transform: uppercase;
         }
         
         strong {
-            color: var(--text-light);
+            color: var(--secondary-color);
         }
 
         a {
@@ -59,14 +60,14 @@
         }
 
         a:hover {
-            color: var(--text-light);
+            color: var(--secondary-color);
             text-decoration: underline;
         }
 
         /* Navbar */
         .navbar {
             background-color: var(--section-bg);
-            border-bottom: 3px solid var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -87,7 +88,7 @@
         }
 
         .navbar a:hover, .dropdown:hover .dropbtn {
-            background-color: var(--main-bg);
+            background-color: var(--dark-bg);
             color: var(--primary-color);
         }
 
@@ -185,7 +186,7 @@
         }
 
         .btn-primary:hover {
-            background-color: var(--text-light);
+            background-color: var(--secondary-color);
             text-decoration: none;
         }
 
@@ -268,7 +269,7 @@
             background-color: var(--main-bg);
             padding: 20px;
             margin-bottom: 15px;
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             transition: transform 0.2s ease;
@@ -346,7 +347,7 @@
         .glossary-item {
             background-color: var(--main-bg);
             padding: 15px;
-            border-left: 3px solid var(--primary-color);
+            border-left: 3px solid var(--secondary-color);
             border-radius: 5px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
@@ -381,7 +382,7 @@
         }
 
         footer .social-links a:hover {
-            color: var(--text-light);
+            color: var(--secondary-color);
         }
 
         /* Responsive Design */
@@ -413,6 +414,7 @@
 
     <div class="navbar">
         <a href="#about">About</a>
+        <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
         <a href="#publications">Publications</a>
         <div class="dropdown">
@@ -441,8 +443,8 @@
     <div class="container">
         <section id="about" class="section-box">
             <h2>About Me</h2>
-            [cite_start]<p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in **Electrical Engineering**[cite: 3, 288]. [cite_start]My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development[cite: 5, 290]. [cite_start]I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes[cite: 5, 218].</p>
-            [cite_start]<p>My expertise spans **MATLAB, Python, and R**, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets[cite: 4, 16, 25, 289, 302, 311]. [cite_start]My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis[cite: 18, 26, 253].</p>
+            <p>I am a Ph.D. researcher in Cognition and Neuroscience with a strong foundation in **Electrical Engineering**. My work focuses on leveraging signal processing, statistical analysis, and engineering expertise to advance digital health products through innovative research and development. I specialize in applying computational methods and data analytics to extract meaningful insights from biosignals, with the goal of improving health outcomes. [cite_start]I have a proven track record of leading and contributing to research projects in this domain[cite: 72].</p>
+            <p>My expertise spans **MATLAB, Python, and R**, and I am proficient in developing, implementing, and optimizing signal processing and machine learning pipelines for large-scale neurophysiological datasets. [cite_start]My background includes a focus on EEG signal processing, connectivity analysis, and developing innovative tools for real-time neural data collection and analysis. [cite: 72, 84, 85, 86, 87, 88, 89, 90]</p>
         </section>
 
         <section id="skills" class="section-box">
@@ -451,25 +453,25 @@
                 <div class="project-card">
                     <div class="project-card-content">
                         <h3>Signal Processing & Analysis</h3>
-                        [cite_start]<p>EEG, EMG, Time-Domain and Frequency-Domain Analysis, Feature Extraction, Event-Related Spectral Perturbation (ERSP), Connectivity Analysis, Graph Theory, Artifact Rejection[cite: 18, 304].</p>
+                        [cite_start]<p>EEG, EMG, Time-Domain and Frequency-Domain Analysis, Feature Extraction, Event-Related Spectral Perturbation (ERSP), Connectivity Analysis, Graph Theory, Artifact Rejection. [cite: 86]</p>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-card-content">
                         <h3>Machine Learning & AI</h3>
-                        [cite_start]<p>Support Vector Machine (SVM), K-Nearest Neighbors (KNN), Deep Learning, Neural Networks, Automated Speech Recognition (ASR), Diarization, LLMs, and Sentiment Analysis[cite: 19, 92, 235, 305].</p>
+                        [cite_start]<p>Support Vector Machine (SVM), K-Nearest Neighbors (KNN), Deep Learning, Neural Networks, Automated Speech Recognition (ASR), Diarization, LLMs, and Sentiment Analysis. [cite: 87]</p>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-card-content">
                         <h3>Programming & Tools</h3>
-                        [cite_start]<p>MATLAB, Python, R, TensorFlow, Scikit-learn, EEGLAB, FieldTrip, NumPy, SciPy, Matplotlib, Pandas, SQL[cite: 16, 17, 91, 230, 302, 303].</p>
+                        [cite_start]<p>MATLAB (Signal Processing, Statistics, Wavelet, EEGLAB, FieldTrip), Python (NumPy, SciPy, Pandas, TensorFlow), R, and SQL. [cite: 84, 85, 157]</p>
                     </div>
                 </div>
                 <div class="project-card">
                     <div class="project-card-content">
                         <h3>Experimental Design & Statistics</h3>
-                        [cite_start]<p>Human-in-the-loop experimentation, Statistical Analysis, ANOVA, MANOVA, Permutation Testing, Linear Mixed-Effect Models[cite: 20, 93, 232, 306].</p>
+                        [cite_start]<p>Human-in-the-loop experimentation, Statistical Analysis, ANOVA, MANOVA, Permutation Testing, Linear Mixed-Effect Models (lme4), multilevel modeling, structural equation modeling, and longitudinal analysis. [cite: 88, 159]</p>
                     </div>
                 </div>
             </div>
@@ -481,8 +483,8 @@
                 <div class="project-card">
                     <img src="neurofeedback_project.png" alt="Real-time EEG Neurofeedback project">
                     <div class="project-card-content">
-                        <h3>Real-time EEG Stimuli & Signal System</h3>
-                        [cite_start]<p>Led the development of a mobile system for real-time stimulus delivery and EEG data acquisition, applying time-frequency analysis and artifact rejection[cite: 26, 312].</p>
+                        <h3>Mobile EEG Stimuli & Signal System</h3>
+                        <p>Led the development of a mobile system for real-time stimulus delivery and EEG data acquisition. [cite_start]This system significantly enhanced the investigation of auditory and cognitive processes in children aged 5 to 15, across various socioeconomic backgrounds. [cite: 94, 180, 181, 182, 250, 251, 252]</p>
                         <a href="#" class="read-more">Learn More &rarr;</a>
                     </div>
                 </div>
@@ -490,15 +492,15 @@
                     <img src="meg_localization_project.png" alt="MEG Source Localization project">
                     <div class="project-card-content">
                         <h3>Connectivity & Graph Theory Analysis</h3>
-                        [cite_start]<p>Created pipelines for connectivity and graph theory analysis to study EEG-based neural interactions in language processing tasks[cite: 29, 315].</p>
+                        <p>Created pipelines for connectivity and graph theory analysis to study EEG-based neural interactions in language processing tasks. [cite_start]I developed custom MATLAB scripts to compute the Phase Lag Index (PLI) to capture phase synchronization between EEG channels. [cite: 97, 98, 312, 313]</p>
                         <a href="#" class="read-more">Learn More &rarr;</a>
                     </div>
                 </div>
                 <div class="project-card">
                     <img src="sleep_classification_project.png" alt="Sleep Stage Classification project">
                     <div class="project-card-content">
-                        <h3>Sleep Apnea Diagnosis System</h3>
-                        [cite_start]<p>Developed a computer-aided diagnosis system using EEG signals and machine learning to detect sleep apnea, achieving high sensitivity and specificity[cite: 14, 39, 262, 325].</p>
+                        <h3>Computer-Aided Sleep Apnea Diagnosis System</h3>
+                        <p>Developed a diagnosis system for detecting sleep apnea using EEG signals, focusing on complexity features and entropy measures. [cite_start]I utilized the mRMR algorithm for feature selection and SVM and KNN classifiers for high-accuracy event detection. [cite: 107, 108, 109, 189, 190, 191, 259, 260, 261]</p>
                         <a href="#" class="read-more">Learn More &rarr;</a>
                     </div>
                 </div>
@@ -510,21 +512,21 @@
             <div class="publication-list">
                 <div class="publication-item">
                     <h3>Development of Gamma Oscillation during Sentence Processing in Early Adolescence...</h3>
-                    <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., Chalamalasetty, P., & Maguire, M. J. (2023). [cite_start]<em>Brain Sciences</em>, 13(12), 1639. [cite: 59, 134, 173, 337]</p>
+                    <p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., Chalamalasetty, P., & Maguire, M. J. (2023). [cite_start]<em>Brain Sciences</em>, 13(12), 1639. [cite: 26, 27, 28, 127, 128, 129, 199, 200, 201, 334, 335, 336]</p>
                     <div class="pub-links">
                         <a href="https://doi.org/10.3390/brainsci13121639">[DOI]</a>
                     </div>
                 </div>
                 <div class="publication-item">
                     <h3>Neural oscillations during predictive sentence processing in young children.</h3>
-                    <p class="pub-meta">Benítez-Barrera, C. R., **Behboudi, M. H.**, & Maguire, M. J. (2024). [cite_start]<em>Brain and Language</em>, 254, 105437. [cite: 54, 129, 168, 267, 332]</p>
+                    <p class="pub-meta">Benítez-Barrera, C. R., **Behboudi, M. H.**, & Maguire, M. J. (2024). [cite_start]<em>Brain and Language</em>, 254, 105437. [cite: 21, 22, 122, 123, 194, 195, 264, 265, 329, 330]</p>
                     <div class="pub-links">
                         <a href="https://doi.org/10.1016/j.bandl.2024.105437">[DOI]</a>
                     </div>
                 </div>
                 <div class="publication-item">
                     <h3>Sleep Apnea Diagnosis Using Complexity Features of EEG Signals.</h3>
-                    <p class="pub-meta">Gholami, B., **Behboudi, M.H.**, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). [cite_start]<em>IWINAC 2022. Lecture Notes in Computer Science</em>. [cite: 65, 139, 178, 277, 343]</p>
+                    <p class="pub-meta">Gholami, B., **Behboudi, M.H.**, Khadem, A., Shoeibi, A., Gorriz, J.M. (2022). [cite_start]<em>IWINAC 2022. Lecture Notes in Computer Science</em>. [cite: 31, 32, 33, 133, 134, 135, 204, 205, 206, 274, 275, 276, 340, 341, 342]</p>
                     <div class="pub-links">
                         <a href="https://doi.org/10.1007/978-3-031-06242-1_8">[DOI]</a>
                     </div>
@@ -537,11 +539,11 @@
             <div class="toolbox-list">
                 <div class="toolbox-item">
                     <h3>MATLAB & EEGLAB Pipelines</h3>
-                    [cite_start]<p>Designed a robust preprocessing workflow in MATLAB and EEGLAB to improve data quality and remove artifacts from electrophysiology data[cite: 28, 314].</p>
+                    [cite_start]<p>Designed a robust preprocessing workflow in MATLAB and EEGLAB to improve data quality and remove artifacts, including channel removal, filtering, and ICA-based rejection. [cite: 96, 311]</p>
                 </div>
                 <div class="toolbox-item">
                     <h3>NeuroPy & BioStats (Python/R)</h3>
-                    [cite_start]<p>Proficient in Python libraries like **SciPy, Pandas, and TensorFlow** and statistical analysis in R using `lme4`[cite: 17, 92, 230, 303].</p>
+                    [cite_start]<p>Proficient in Python libraries like SciPy, Pandas, and TensorFlow and statistical analysis in R using `lme4`. [cite: 85, 157]</p>
                 </div>
             </div>
         </section>
@@ -549,9 +551,9 @@
         <section id="contact" class="section-box">
             <h2>Contact</h2>
             <p>For collaborations or inquiries about my research, please feel free to reach out:</p>
-            [cite_start]<p><strong>Email:</strong> Behboudi@UTDallas.edu [cite: 2, 76, 149, 217, 287, 356]</p>
-            [cite_start]<p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank">mohammad-hossein-behboudi-m-sc-a5b592168</a> [cite: 2]</p>
-            [cite_start]<p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank">0000-0003-1335-3617</a> [cite: 150]</p>
+            [cite_start]<p><strong>Email:</strong> Behboudi@UTDallas.edu [cite: 2, 70, 144, 214, 284, 353]</p>
+            [cite_start]<p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi-m-sc-a5b592168" target="_blank">mohammad-hossein-behboudi-m-sc-a5b592168</a> [cite: 70, 144, 214, 284, 353]</p>
+            [cite_start]<p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank">0000-0003-1335-3617</a> [cite: 3]</p>
         </section>
     </div>
 
