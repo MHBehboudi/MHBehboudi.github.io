@@ -240,6 +240,62 @@
     .publication-item,.toolbox-item{background:var(--dark-bg);padding:20px;margin-bottom:15px;border-left:4px solid var(--secondary-color);border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
     .pub-meta{font-size:.95em;color:var(--text-muted)}
 
+    /* ===== Gallery ===== */
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:18px;
+      margin-top:14px;
+    }
+    .gallery-item{
+      background: var(--dark-bg);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,.35);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .gallery-item:hover{ transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,.45); }
+    .gallery-thumb{
+      all: unset; display:block; width:100%; cursor:pointer; line-height:0;
+    }
+    .gallery-item img{
+      width:100%; height:180px; object-fit:cover; display:block;
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .gallery-item figcaption{
+      padding:10px 12px; font-size:.95rem; color: var(--text-muted);
+    }
+
+    /* ===== Lightbox ===== */
+    .lightbox{ position: fixed; inset: 0; z-index: 9999; display: none; }
+    .lightbox[aria-hidden="false"]{ display: block; }
+    .lightbox-backdrop{
+      position:absolute; inset:0; background: rgba(0,0,0,.7); backdrop-filter: blur(2px);
+    }
+    .lightbox-content{ position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; }
+    .lightbox-img{
+      max-width: min(92vw, 1200px); max-height: 80vh;
+      width: auto; height: auto;
+      border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.15); background: #000;
+    }
+    .lightbox-caption{
+      margin-top:10px; text-align:center; color: var(--text-muted); font-size:.95rem;
+    }
+    .lightbox-close{
+      position:absolute; top: 16px; right: 16px;
+      width:40px; height:40px; border-radius: 10px;
+      border:1px solid rgba(255,255,255,.25);
+      background: rgba(255,255,255,.08);
+      color: var(--text-light);
+      font-size:24px; line-height: 0;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      transition: transform .15s ease, background .15s ease, color .15s ease;
+    }
+    .lightbox-close:hover{ transform: translateY(-1px); background: rgba(255,255,255,.14); color: var(--secondary-color); }
+
     footer{background:var(--section-bg);color:var(--text-muted);text-align:center;padding:30px 20px;margin-top:40px;border-top:3px solid var(--primary-color);font-size:.9em}
 
     /* Mobile tweaks */
@@ -247,6 +303,7 @@
       .container{width:95%;padding:15px 0}
       h2{font-size:1.25rem}
       .project-grid{grid-template-columns:1fr}
+      .gallery-item img{ height:150px; }
     }
     /* Reduced motion */
     @media (prefers-reduced-motion:reduce){
@@ -268,12 +325,13 @@
   <!-- Full-screen welcome section -->
   <section id="welcome" aria-label="Intro">
     <div class="hero-card" role="region" aria-label="Introduction">
-      <div class="hero-greeting"> </div>
+      <div class="hero-greeting">Signals → Insight</div>
       <h1 class="hero-name">Mohammad Hossein<wbr> Behboudi</h1>
       <p class="hero-subtitle">Ph.D. Researcher in Cognition & Neuroscience</p>
 
       <div class="cta-row">
         <a class="btn btn-primary" href="#about" aria-label="About Mohammad">About Me</a>
+        <a class="btn btn-secondary" href="#gallery" aria-label="Open Gallery">Gallery</a>
         <a class="btn btn-secondary" href="mailto:Behboudi@UTDallas.edu" aria-label="Email Mohammad">Email Me</a>
       </div>
 
@@ -321,23 +379,15 @@
   <main id="main-content">
     <div class="container">
 
-      <!-- About Me (engaging, informative, friendly) -->
+      <!-- About Me -->
       <section id="about" class="section-box" aria-labelledby="about-title">
         <h2 id="about-title">About Me</h2>
         <img src="profile.jpg" alt="Portrait of Mohammad H. Behboudi" class="profile-pic">
       
-      <p>
-        Hi, I’m <strong>Mohammad Hossein Behboudi</strong>—a Ph.D. student in <strong>Cognition &amp; Neuroscience</strong> at <strong>UT Dallas</strong> with an <strong>Electrical Engineering</strong> foundation. I work at the intersection of <strong>biosignals</strong> and <strong>behavioral data</strong>. My expertise includes designing well-controlled experiments, signal processing, and building ML-driven, statistically sound pipelines that turn real-world EEG/MEG and behavioral data into reliable, explainable insights. Recent projects span BCI explorations using end-to-end foundational models and the use of large language models to analyze the home language environment, with practical impact in health and education. I collaborate across multidisciplinary teams to transform raw, noisy data into practical tools and clear findings, enhancing people’s lives and deepening our understanding of child development and learning.
-      </p>
-
-
-
-
+        <p>
+          Hi, I’m <strong>Mohammad Hossein Behboudi</strong>—a Ph.D. student in <strong>Cognition &amp; Neuroscience</strong> at <strong>UT Dallas</strong> with an <strong>Electrical Engineering</strong> foundation. I work at the intersection of <strong>biosignals</strong> and <strong>behavioral data</strong>. My expertise includes designing well-controlled experiments, signal processing, and building ML-driven, statistically sound pipelines that turn real-world EEG/MEG and behavioral data into reliable, explainable insights. Recent projects span BCI explorations using end-to-end foundational models and the use of large language models to analyze the home language environment, with practical impact in health and education. I collaborate across multidisciplinary teams to transform raw, noisy data into practical tools and clear findings, enhancing people’s lives and deepening our understanding of child development and learning.
+        </p>
       </section>
-
-
-
-
 
       <!-- Education -->
       <section id="education" class="section-box">
@@ -360,7 +410,7 @@
         </div>
       </section>
 
-      <!-- Skills (kept from earlier) -->
+      <!-- Skills -->
       <section id="skills" class="section-box">
         <h2>Skills & Expertise</h2>
         <div class="project-grid">
@@ -383,7 +433,7 @@
         </div>
       </section>
 
-      <!-- Projects (kept) -->
+      <!-- Projects -->
       <section id="projects" class="section-box">
         <h2>Featured Projects</h2>
         <div class="project-grid">
@@ -414,7 +464,7 @@
         </div>
       </section>
 
-      <!-- Publications (DOIs inline) -->
+      <!-- Publications -->
       <section id="publications" class="section-box">
         <h2>Publications</h2>
 
@@ -477,13 +527,35 @@
         </div>
       </section>
 
-      <!-- Contact -->
-      <section id="contact" class="section-box">
-        <h2>Contact</h2>
-        <p>For collaborations or inquiries about my research:</p>
-        <p><strong>Email:</strong> <a href="mailto:Behboudi@UTDallas.edu">Behboudi@UTDallas.edu</a></p>
-        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" target="_blank" rel="noopener">mohammad-hossein-behboudi-m-sc-a5b592168</a></p>
-        <p><strong>ORCID:</strong> <a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener">0000-0003-1335-3617</a></p>
+      <!-- ===== Gallery (replaces Contact) ===== -->
+      <section id="gallery" class="section-box" aria-labelledby="gallery-title">
+        <h2 id="gallery-title">Gallery</h2>
+
+        <div class="gallery-grid">
+          <!-- Item 1 -->
+          <figure class="gallery-item">
+            <button class="gallery-thumb" data-full="neurofeedback_project.png" aria-label="Open image: Mobile EEG stimuli & signal system">
+              <img src="neurofeedback_project.png" alt="Mobile EEG stimuli & signal system overview" loading="lazy">
+            </button>
+            <figcaption>Mobile EEG stimuli & signal system</figcaption>
+          </figure>
+
+          <!-- Item 2 -->
+          <figure class="gallery-item">
+            <button class="gallery-thumb" data-full="meg_localization_project.png" aria-label="Open image: Connectivity & graph theory visualization">
+              <img src="meg_localization_project.png" alt="Connectivity & graph theory visualization" loading="lazy">
+            </button>
+            <figcaption>Connectivity & graph theory</figcaption>
+          </figure>
+
+          <!-- Item 3 -->
+          <figure class="gallery-item">
+            <button class="gallery-thumb" data-full="sleep_classification_project.png" aria-label="Open image: Sleep EEG classification">
+              <img src="sleep_classification_project.png" alt="Sleep EEG classification example" loading="lazy">
+            </button>
+            <figcaption>Sleep EEG classification</figcaption>
+          </figure>
+        </div>
       </section>
 
     </div>
@@ -494,6 +566,16 @@
       </div>
     </footer>
   </main>
+
+  <!-- Lightbox (placed once, near end of body) -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <div class="lightbox-backdrop" data-close></div>
+    <div class="lightbox-content" role="document">
+      <button class="lightbox-close" aria-label="Close image" data-close>&times;</button>
+      <img class="lightbox-img" alt="">
+      <div class="lightbox-caption"></div>
+    </div>
+  </div>
 
   <!-- Smooth scrolling -->
   <script>
@@ -514,7 +596,48 @@
       };
       smoothLink('.scroll-frame', '#about');
       smoothLink('.btn.btn-primary[href="#about"]', '#about');
+      smoothLink('.btn.btn-secondary[href="#gallery"]', '#gallery');
     });
+  </script>
+
+  <!-- Lightbox script -->
+  <script>
+    (function(){
+      const lb = document.getElementById('lightbox');
+      if(!lb) return;
+      const imgEl = lb.querySelector('.lightbox-img');
+      const capEl = lb.querySelector('.lightbox-caption');
+
+      function openLightbox(src, caption){
+        imgEl.src = src;
+        imgEl.alt = caption || '';
+        capEl.textContent = caption || '';
+        lb.setAttribute('aria-hidden','false');
+        document.documentElement.style.overflow = 'hidden';
+      }
+      function closeLightbox(){
+        lb.setAttribute('aria-hidden','true');
+        imgEl.src = '';
+        capEl.textContent = '';
+        document.documentElement.style.overflow = '';
+      }
+
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.gallery-thumb');
+        if(btn){
+          const fig = btn.closest('figure');
+          const caption = fig?.querySelector('figcaption')?.textContent?.trim() || '';
+          openLightbox(btn.dataset.full || btn.querySelector('img')?.src, caption);
+        }
+      });
+
+      lb.addEventListener('click', (e) => {
+        if(e.target.hasAttribute('data-close') || e.target === lb) closeLightbox();
+      });
+      document.addEventListener('keydown', (e) => {
+        if(lb.getAttribute('aria-hidden') === 'false' && (e.key === 'Escape' || e.key === 'Esc')) closeLightbox();
+      });
+    })();
   </script>
 </body>
 </html>
