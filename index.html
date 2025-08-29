@@ -193,6 +193,24 @@
     .project-card-content{padding:20px}
     .project-card h3{margin-top:0;font-size:1.2em;color:var(--primary-color)}
     .project-card p{font-size:.95em;color:var(--text-muted)}
+    /* Project card footer for skills used */
+    .project-card-footer{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      padding:12px 16px;
+      border-top:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+    }
+    .tag{
+      font-size:.8rem;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      color:#EAEAEA;
+      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      white-space:nowrap;
+    }
 
     /* Publications list item */
     .publication-item,.toolbox-item{background:var(--dark-bg);padding:20px;margin-bottom:15px;border-left:4px solid var(--secondary-color);border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
@@ -435,16 +453,29 @@
       <section id="projects" class="section-box">
         <h2>Featured Projects</h2>
         <div class="project-grid">
+
           <div class="project-card">
             <img src="mdpc_project.png" alt="Cross-Frequency EEG Connectivity Pipeline project">
             <div class="project-card-content">
               <h3>Cross-Frequency EEG Connectivity Pipeline</h3>
-                This project investigates how the brain understands speech in noisy environments by orchestrating a symphony of neural rhythms. 
-                End-to-end MATLAB, Python, and R pipeline for preprocessing and analyzing EEG data. Implements Cross-Frequency Multidimensional Pattern Connectivity (MDPC) to study neural oscillations during speech perception.
+              <p>
+                End-to-end MATLAB, Python, and R pipeline for preprocessing and analyzing EEG data. Implements Cross-Frequency
+                Multidimensional Pattern Connectivity (MDPC) to study neural oscillations during speech perception in noise.
               </p>
               <a href="https://github.com/MHBehboudi/EEG_CrossFrequency_MDPC" target="_blank" rel="noopener" class="read-more">View on GitHub &rarr;</a>
             </div>
+            <div class="project-card-footer" aria-label="Skills used">
+              <span class="tag">Python</span>
+              <span class="tag">MATLAB</span>
+              <span class="tag">R</span>
+              <span class="tag">MNE-Python</span>
+              <span class="tag">Wavelets/ERSP</span>
+              <span class="tag">MDPC</span>
+              <span class="tag">Connectivity</span>
+              <span class="tag">Graph Metrics</span>
+            </div>
           </div>
+
           <div class="project-card">
             <img src="meg_localization_project.png" alt="MEG/EEG Connectivity project">
             <div class="project-card-content">
@@ -452,7 +483,16 @@
               <p>Custom pipelines for connectivity and graph metrics (e.g., PLI) to examine neural interactions during language processing.</p>
               <a href="#" class="read-more">Learn More &rarr;</a>
             </div>
+            <div class="project-card-footer" aria-label="Skills used">
+              <span class="tag">Python</span>
+              <span class="tag">MNE-Python</span>
+              <span class="tag">PLI</span>
+              <span class="tag">Network Neuroscience</span>
+              <span class="tag">Graph Theory</span>
+              <span class="tag">Visualization</span>
+            </div>
           </div>
+
           <div class="project-card">
             <img src="sleep_classification_project.png" alt="Sleep Apnea EEG Classification project">
             <div class="project-card-content">
@@ -460,7 +500,17 @@
               <p>Entropy-based features + mRMR selection with SVM/KNN for accurate apnea event identification from EEG.</p>
               <a href="#" class="read-more">Learn More &rarr;</a>
             </div>
+            <div class="project-card-footer" aria-label="Skills used">
+              <span class="tag">EEG</span>
+              <span class="tag">Entropy Features</span>
+              <span class="tag">mRMR</span>
+              <span class="tag">SVM</span>
+              <span class="tag">KNN</span>
+              <span class="tag">MATLAB</span>
+              <span class="tag">Signal Processing</span>
+            </div>
           </div>
+
         </div>
       </section>
 
