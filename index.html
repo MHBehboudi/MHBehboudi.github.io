@@ -46,9 +46,7 @@
     strong{color:var(--secondary-color)}
 
     /* ===== Fixed background layer (video stays; content scrolls over) ===== */
-    #bg-layer{
-      position:fixed; inset:0; z-index:0; pointer-events:none;
-    }
+    #bg-layer{ position:fixed; inset:0; z-index:0; pointer-events:none; }
     #bg-layer .bg-video{
       position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
       filter:brightness(.5) contrast(1.1);
@@ -153,55 +151,14 @@
     }
 
     /* ===== Main content (over background) ===== */
-    #main-content{
-      position:relative; z-index:2;
-      background:var(--main-bg);
-    }
+    #main-content{ position:relative; z-index:2; background:var(--main-bg); }
 
     /* Sections */
     .section-box{background:var(--section-bg);padding:30px 40px;margin-bottom:30px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.5);overflow:auto}
     .profile-pic{width:150px;height:150px;border-radius:50%;object-fit:cover;border:4px solid var(--primary-color);float:left;margin:0 30px 20px 0}
 
     /* ===== About styles ===== */
-    .about-lead{
-      font-size:1.05em;
-      color:var(--text-light);
-      margin-bottom:14px;
-    }
-    .about-checklist{
-      list-style:none; padding-left:0; margin:12px 0 18px;
-    }
-    .about-checklist li{
-      position:relative; padding-left:28px; margin:10px 0; color:var(--text-muted);
-    }
-    .about-checklist li::before{
-      content:""; position:absolute; left:0; top:.45em;
-      width:16px; height:16px; border-radius:4px;
-      border:1px solid rgba(255,255,255,.35);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-      box-shadow:inset 0 0 0 2px rgba(0,0,0,.15);
-    }
-    .about-checklist li span{ color:var(--text-light); }
-    .about-now-grid{
-      display:grid; gap:12px; margin:10px 0 14px;
-      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
-    }
-    .about-now-card{
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:12px; padding:14px 14px;
-    }
-    .about-now-card h4{
-      margin:0 0 6px; color:var(--primary-color); font-size:1rem; text-transform:uppercase; letter-spacing:.04em;
-    }
-    .about-values{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 6px; }
-    .pill{
-      padding:6px 10px; border-radius:999px; font-size:.85rem;
-      border:1px solid rgba(255,255,255,.16);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      color:#EAEAEA;
-    }
-    .about-outro{ margin-top:10px; color:var(--text-light); }
+    .about-lead{ font-size:1.05em; color:var(--text-light); margin-bottom:14px; }
 
     /* Education extras */
     .edu-detail { margin-top:8px; color:var(--text-muted); font-style:italic; }
@@ -228,7 +185,7 @@
       border-bottom-color: transparent;
     }
 
-    /* Cards etc. */
+    /* Projects */
     .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:30px}
     .project-card{background:var(--dark-bg);border-radius:8px;overflow:hidden;box-shadow:0 4px 10px rgba(0,0,0,.4);transition:transform .2s ease,box-shadow .2s ease}
     .project-card:hover{transform:translateY(-6px);box-shadow:0 10px 22px rgba(0,0,0,.55)}
@@ -237,64 +194,58 @@
     .project-card h3{margin-top:0;font-size:1.2em;color:var(--primary-color)}
     .project-card p{font-size:.95em;color:var(--text-muted)}
 
+    /* Publications list item */
     .publication-item,.toolbox-item{background:var(--dark-bg);padding:20px;margin-bottom:15px;border-left:4px solid var(--secondary-color);border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
     .pub-meta{font-size:.95em;color:var(--text-muted)}
+
+    /* ===== Skills matrix ===== */
+    .skill-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:20px;
+      margin-top:14px;
+    }
+    .skill-card{
+      background:var(--dark-bg);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;
+      padding:16px 18px;
+      box-shadow:0 2px 10px rgba(0,0,0,.35);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .skill-card:hover{ transform:translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,.45); }
+    .skill-card h3{
+      margin:0 0 8px;
+      color:var(--primary-color);
+      font-size:1.05rem;
+      letter-spacing:.02em;
+    }
+    .skill-list{ list-style:none; padding-left:0; margin:0; }
+    .skill-list li{
+      position:relative; padding-left:24px; margin:8px 0; color:var(--text-muted);
+    }
+    .skill-list li::before{
+      content:"✓";
+      position:absolute; left:0; top:0;
+      line-height:1.2; color:var(--secondary-color); opacity:.9;
+    }
 
     /* ===== Gallery ===== */
     .gallery-grid{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-      gap:18px;
+      gap:16px;
       margin-top:14px;
     }
     .gallery-item{
-      background: var(--dark-bg);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,.35);
-      transition: transform .18s ease, box-shadow .18s ease;
+      background:var(--dark-bg);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 2px 10px rgba(0,0,0,.35);
     }
-    .gallery-item:hover{ transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,.45); }
-    .gallery-thumb{
-      all: unset; display:block; width:100%; cursor:pointer; line-height:0;
-    }
-    .gallery-item img{
-      width:100%; height:180px; object-fit:cover; display:block;
-      border-bottom:1px solid rgba(255,255,255,.12);
-    }
-    .gallery-item figcaption{
-      padding:10px 12px; font-size:.95rem; color: var(--text-muted);
-    }
-
-    /* ===== Lightbox ===== */
-    .lightbox{ position: fixed; inset: 0; z-index: 9999; display: none; }
-    .lightbox[aria-hidden="false"]{ display: block; }
-    .lightbox-backdrop{
-      position:absolute; inset:0; background: rgba(0,0,0,.7); backdrop-filter: blur(2px);
-    }
-    .lightbox-content{ position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; }
-    .lightbox-img{
-      max-width: min(92vw, 1200px); max-height: 80vh;
-      width: auto; height: auto;
-      border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.55);
-      border: 1px solid rgba(255,255,255,.15); background: #000;
-    }
-    .lightbox-caption{
-      margin-top:10px; text-align:center; color: var(--text-muted); font-size:.95rem;
-    }
-    .lightbox-close{
-      position:absolute; top: 16px; right: 16px;
-      width:40px; height:40px; border-radius: 10px;
-      border:1px solid rgba(255,255,255,.25);
-      background: rgba(255,255,255,.08);
-      color: var(--text-light);
-      font-size:24px; line-height: 0;
-      display:flex; align-items:center; justify-content:center;
-      cursor:pointer;
-      transition: transform .15s ease, background .15s ease, color .15s ease;
-    }
-    .lightbox-close:hover{ transform: translateY(-1px); background: rgba(255,255,255,.14); color: var(--secondary-color); }
+    .gallery-item img{ width:100%; height:180px; object-fit:cover; display:block; }
+    .gallery-item .caption{ padding:10px 12px; color:var(--text-muted); font-size:.9rem; }
 
     footer{background:var(--section-bg);color:var(--text-muted);text-align:center;padding:30px 20px;margin-top:40px;border-top:3px solid var(--primary-color);font-size:.9em}
 
@@ -303,7 +254,6 @@
       .container{width:95%;padding:15px 0}
       h2{font-size:1.25rem}
       .project-grid{grid-template-columns:1fr}
-      .gallery-item img{ height:150px; }
     }
     /* Reduced motion */
     @media (prefers-reduced-motion:reduce){
@@ -325,7 +275,7 @@
   <!-- Full-screen welcome section -->
   <section id="welcome" aria-label="Intro">
     <div class="hero-card" role="region" aria-label="Introduction">
-      <div class="hero-greeting">Signals → Insight</div>
+      <div class="hero-greeting"></div>
       <h1 class="hero-name">Mohammad Hossein<wbr> Behboudi</h1>
       <p class="hero-subtitle">Ph.D. Researcher in Cognition & Neuroscience</p>
 
@@ -382,7 +332,6 @@
       <section id="about" class="section-box" aria-labelledby="about-title">
         <h2 id="about-title">About Me</h2>
         <img src="profile.jpg" alt="Portrait of Mohammad H. Behboudi" class="profile-pic">
-      
         <p>
           Hi, I’m <strong>Mohammad Hossein Behboudi</strong>—a Ph.D. student in <strong>Cognition &amp; Neuroscience</strong> at <strong>UT Dallas</strong> with an <strong>Electrical Engineering</strong> foundation. I work at the intersection of <strong>biosignals</strong> and <strong>behavioral data</strong>. My expertise includes designing well-controlled experiments, signal processing, and building ML-driven, statistically sound pipelines that turn real-world EEG/MEG and behavioral data into reliable, explainable insights. Recent projects span BCI explorations using end-to-end foundational models and the use of large language models to analyze the home language environment, with practical impact in health and education. I collaborate across multidisciplinary teams to transform raw, noisy data into practical tools and clear findings, enhancing people’s lives and deepening our understanding of child development and learning.
         </p>
@@ -409,26 +358,132 @@
         </div>
       </section>
 
-      <!-- Skills -->
+      <!-- Skills (upgraded matrix) -->
       <section id="skills" class="section-box">
-        <h2>Skills & Expertise</h2>
-        <div class="project-grid">
-          <div class="project-card"><div class="project-card-content">
-            <h3>Signal Processing & Analysis</h3>
-            <p>EEG, EMG, Time/Frequency Analysis, ERSP, Connectivity, Graph Theory, Artifact Rejection.</p>
-          </div></div>
-          <div class="project-card"><div class="project-card-content">
-            <h3>Machine Learning & AI</h3>
-            <p>SVM, KNN, Deep Learning, ASR, Diarization, LLMs, Sentiment Analysis.</p>
-          </div></div>
-          <div class="project-card"><div class="project-card-content">
-            <h3>Programming & Tools</h3>
-            <p>MATLAB, Python, R, TensorFlow, Scikit-learn, EEGLAB, FieldTrip, NumPy, SciPy, Pandas, SQL.</p>
-          </div></div>
-          <div class="project-card"><div class="project-card-content">
-            <h3>Experimental Design & Statistics</h3>
-            <p>Human-in-the-loop, ANOVA/MANOVA, Permutation Tests, LME (lme4), multilevel & longitudinal analysis.</p>
-          </div></div>
+        <h2>Skills &amp; Expertise</h2>
+
+        <div class="skill-grid">
+
+          <div class="skill-card">
+            <h3>Biosignal Processing &amp; Time-Series</h3>
+            <ul class="skill-list">
+              <li>EEG/MEG/ECG/PPG/IMU preprocessing; referencing &amp; re-referencing</li>
+              <li>FIR/IIR design (Butterworth/Chebyshev), bandpass/notch, zero-phase</li>
+              <li>Adaptive &amp; state-space filters (LMS/RLS, Kalman/RKF)</li>
+              <li>Artifact removal (ICA/MARA, ASR), baseline/drift correction</li>
+              <li>FFT, STFT, Morlet wavelets, ERSP; connectivity (coherence, PLV/PLI), graph metrics</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Signal Quality, QA &amp; Validation</h3>
+            <ul class="skill-list">
+              <li>SNR/HRV/PRV metrics; motion/noise modeling for wearables</li>
+              <li>On-device &amp; offline QC; outlier detection &amp; data audits</li>
+              <li>Repeatability/robustness tests; Bland-Altman, calibration curves</li>
+              <li>Sync &amp; timestamp hygiene; labeling &amp; ground-truth alignment</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Wearables &amp; Sensing</h3>
+            <ul class="skill-list">
+              <li>PPG, ECG, EDA, IMU characterization; sampling &amp; optics trade-offs</li>
+              <li>Prototype bring-up, bench tests, firmware log parsing</li>
+              <li>Hardware-in-the-loop capture; field studies &amp; IRB workflows</li>
+              <li>Cross-functional work with HW/FW/optics/product teams</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>ML for Biosignals</h3>
+            <ul class="skill-list">
+              <li>Feature engineering (time/freq/time-freq; entropy/complexity)</li>
+              <li>Classical models: SVM/KNN, HMMs, tree ensembles</li>
+              <li>Sequence models: 1D-CNN, LSTM/GRU, TCN; sensor-fusion pipelines</li>
+              <li>Rigorous eval: cross-subject vs. within-subject CV; imbalance handling</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Deep Learning &amp; Foundation Models</h3>
+            <ul class="skill-list">
+              <li>PyTorch/TensorFlow; Lightning; mixed-precision &amp; profiling</li>
+              <li>Self-supervised contrastive learning for time-series</li>
+              <li>Graph ML (GNNs) for sensor topology; transformers for long sequences</li>
+              <li>Deployment: ONNX/TensorRT, quantization/pruning</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>NLP &amp; LLMs (Health/Edu)</h3>
+            <ul class="skill-list">
+              <li>Prompting, fine-tuning (LoRA/PEFT), RAG for domain context</li>
+              <li>Safety/guardrails; hallucination/bias evaluation &amp; red-teaming</li>
+              <li>Conversation analytics: ASR, diarization, sentiment/intent</li>
+              <li>Privacy &amp; data: de-identification; FHIR/HL7 familiarity</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Statistics, Causal &amp; Measurement</h3>
+            <ul class="skill-list">
+              <li>GLM/GLMM; linear mixed-effects; repeated-measures &amp; longitudinal models</li>
+              <li>Quasi-experimental design: matching/weighting, DiD, ITS</li>
+              <li>Psychometrics: reliability/validity, basics of IRT</li>
+              <li>Power analysis, permutation tests, multiple-comparison control</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Experimental &amp; Study Design</h3>
+            <ul class="skill-list">
+              <li>Protocol design, instrumentation, counterbalancing, randomization</li>
+              <li>Sample-size planning; preregistration &amp; analysis plans</li>
+              <li>Data dictionaries &amp; codebooks; reproducible reporting</li>
+              <li>Stakeholder-ready visualizations &amp; actionable summaries</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Real-Time Systems &amp; Edge</h3>
+            <ul class="skill-list">
+              <li>Low-latency streaming, windowing &amp; buffering; real-time inference</li>
+              <li>Async/multiprocessing; serial/BLE/USB ingestion; sensor fusion</li>
+              <li>State-estimation (Kalman/particle); watchdogs &amp; telemetry</li>
+              <li>Robustness for mobile &amp; embedded environments</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Data Engineering &amp; MLOps</h3>
+            <ul class="skill-list">
+              <li>Git/GitHub, code review, unit/integration tests</li>
+              <li>DVC/MLflow; experiment tracking; reproducible pipelines</li>
+              <li>Docker, CI/CD, packaging, pre-commit hooks</li>
+              <li>Cloud: AWS (S3, EC2, SageMaker), GCP (BigQuery/GCS); SQL</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Tools &amp; Ecosystem</h3>
+            <ul class="skill-list">
+              <li>Python (NumPy, SciPy, pandas, statsmodels, scikit-learn, PyTorch)</li>
+              <li>MNE-Python, EEGLAB, FieldTrip; MATLAB; R (tidyverse, lme4)</li>
+              <li>Visualization: matplotlib, Plotly; Dash/Streamlit internal tools</li>
+              <li>JAX (basics), SQL, shell scripting</li>
+            </ul>
+          </div>
+
+          <div class="skill-card">
+            <h3>Collaboration &amp; Communication</h3>
+            <ul class="skill-list">
+              <li>Tech specs, study reports, and peer-reviewed publications</li>
+              <li>Partnering with HW/FW/optics/clinical/product across time zones</li>
+              <li>Agile rituals; clear async communication; mentorship &amp; code reviews</li>
+            </ul>
+          </div>
+
         </div>
       </section>
 
@@ -463,7 +518,7 @@
         </div>
       </section>
 
-      <!-- Publications -->
+      <!-- Publications (DOIs inline) -->
       <section id="publications" class="section-box">
         <h2>Publications</h2>
 
@@ -526,33 +581,33 @@
         </div>
       </section>
 
-      <!-- ===== Gallery (replaces Contact) ===== -->
-      <section id="gallery" class="section-box" aria-labelledby="gallery-title">
-        <h2 id="gallery-title">Gallery</h2>
-
+      <!-- Gallery (replaces Contact) -->
+      <section id="gallery" class="section-box">
+        <h2>Gallery</h2>
         <div class="gallery-grid">
-          <!-- Item 1 -->
           <figure class="gallery-item">
-            <button class="gallery-thumb" data-full="neurofeedback_project.png" aria-label="Open image: Mobile EEG stimuli & signal system">
-              <img src="neurofeedback_project.png" alt="Mobile EEG stimuli & signal system overview" loading="lazy">
-            </button>
-            <figcaption>Mobile EEG stimuli & signal system</figcaption>
+            <img src="gallery1.jpg" alt="EEG setup and instrumentation">
+            <figcaption class="caption">EEG setup &amp; instrumentation</figcaption>
           </figure>
-
-          <!-- Item 2 -->
           <figure class="gallery-item">
-            <button class="gallery-thumb" data-full="meg_localization_project.png" aria-label="Open image: Connectivity & graph theory visualization">
-              <img src="meg_localization_project.png" alt="Connectivity & graph theory visualization" loading="lazy">
-            </button>
-            <figcaption>Connectivity & graph theory</figcaption>
+            <img src="gallery2.jpg" alt="Real-time signal monitoring dashboard">
+            <figcaption class="caption">Real-time signal dashboard</figcaption>
           </figure>
-
-          <!-- Item 3 -->
           <figure class="gallery-item">
-            <button class="gallery-thumb" data-full="sleep_classification_project.png" aria-label="Open image: Sleep EEG classification">
-              <img src="sleep_classification_project.png" alt="Sleep EEG classification example" loading="lazy">
-            </button>
-            <figcaption>Sleep EEG classification</figcaption>
+            <img src="gallery3.jpg" alt="Connectivity and graph metrics visualization">
+            <figcaption class="caption">Connectivity &amp; graph metrics</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="gallery4.jpg" alt="Wearable sensor prototype testing">
+            <figcaption class="caption">Wearable prototype testing</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="gallery5.jpg" alt="Data collection session with mobile sensors">
+            <figcaption class="caption">Mobile data collection</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img src="gallery6.jpg" alt="Cleaned signal vs. raw signal comparison">
+            <figcaption class="caption">Raw vs. cleaned signal</figcaption>
           </figure>
         </div>
       </section>
@@ -565,16 +620,6 @@
       </div>
     </footer>
   </main>
-
-  <!-- Lightbox (placed once, near end of body) -->
-  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
-    <div class="lightbox-backdrop" data-close></div>
-    <div class="lightbox-content" role="document">
-      <button class="lightbox-close" aria-label="Close image" data-close>&times;</button>
-      <img class="lightbox-img" alt="">
-      <div class="lightbox-caption"></div>
-    </div>
-  </div>
 
   <!-- Smooth scrolling -->
   <script>
@@ -596,46 +641,6 @@
       smoothLink('.scroll-frame', '#about');
       smoothLink('.btn.btn-primary[href="#about"]', '#about');
     });
-  </script>
-
-  <!-- Lightbox script -->
-  <script>
-    (function(){
-      const lb = document.getElementById('lightbox');
-      if(!lb) return;
-      const imgEl = lb.querySelector('.lightbox-img');
-      const capEl = lb.querySelector('.lightbox-caption');
-
-      function openLightbox(src, caption){
-        imgEl.src = src;
-        imgEl.alt = caption || '';
-        capEl.textContent = caption || '';
-        lb.setAttribute('aria-hidden','false');
-        document.documentElement.style.overflow = 'hidden';
-      }
-      function closeLightbox(){
-        lb.setAttribute('aria-hidden','true');
-        imgEl.src = '';
-        capEl.textContent = '';
-        document.documentElement.style.overflow = '';
-      }
-
-      document.addEventListener('click', (e) => {
-        const btn = e.target.closest('.gallery-thumb');
-        if(btn){
-          const fig = btn.closest('figure');
-          const caption = fig?.querySelector('figcaption')?.textContent?.trim() || '';
-          openLightbox(btn.dataset.full || btn.querySelector('img')?.src, caption);
-        }
-      });
-
-      lb.addEventListener('click', (e) => {
-        if(e.target.hasAttribute('data-close') || e.target === lb) closeLightbox();
-      });
-      document.addEventListener('keydown', (e) => {
-        if(lb.getAttribute('aria-hidden') === 'false' && (e.key === 'Escape' || e.key === 'Esc')) closeLightbox();
-      });
-    })();
   </script>
 </body>
 </html>
