@@ -3,694 +3,502 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>M.H. Behboudi</title>
+  <title>behboudi — biosignal ML</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #fafaf8;
-      --bg-alt: #f2f1ee;
-      --surface: #fff;
-      --text: #1a1a18;
-      --text-2: #555550;
-      --text-3: #8a8a82;
-      --accent: #2563eb;
-      --accent-light: #dbeafe;
-      --warm: #c2410c;
-      --warm-bg: #fff7ed;
-      --warm-border: #fed7aa;
-      --border: #e5e5e0;
-      --font-display: 'Sora', sans-serif;
-      --font-body: 'Source Serif 4', Georgia, serif;
-      --max-w: 920px;
-      --r: 10px;
+    @font-face{font-family:'Geist';src:local('Geist')}
+    @font-face{font-family:'Geist Mono';src:local('Geist Mono')}
+    :root{
+      --bg:#0a0a0c;--s1:#111114;--s2:#17171b;--s3:#1e1e24;
+      --b:rgba(255,255,255,.06);--bh:rgba(255,255,255,.12);
+      --t:#ededed;--t2:#888;--t3:#555;
+      --blue:#5b9aff;--green:#3ddc84;--orange:#ffab40;--pink:#f472b6;--red:#ef4444;
+      --f:'Geist',system-ui,sans-serif;--m:'Geist Mono','Fira Code',monospace;
+      --sidebar:240px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{font-family:var(--f);background:var(--bg);color:var(--t);line-height:1.65;overflow-x:hidden}
+    ::selection{background:var(--blue);color:#000}
+    img{max-width:100%;display:block}
+    a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+
+    /* ═══ IDE SHELL ═══ */
+    .ide{display:flex;min-height:100vh}
+
+    /* Sidebar — file tree */
+    .sidebar{
+      width:var(--sidebar);position:fixed;top:0;left:0;bottom:0;
+      background:var(--s1);border-right:1px solid var(--b);
+      padding:16px 0;overflow-y:auto;z-index:50;
+      display:flex;flex-direction:column;
+    }
+    .sb-brand{
+      padding:0 16px 16px;border-bottom:1px solid var(--b);
+      margin-bottom:12px;
+    }
+    .sb-brand h1{font-family:var(--m);font-size:.8rem;font-weight:600;color:var(--t);letter-spacing:-.01em}
+    .sb-brand p{font-size:.65rem;color:var(--t3);margin-top:2px;font-family:var(--m)}
+    .sb-section{padding:0 8px;margin-bottom:4px}
+    .sb-label{
+      font-family:var(--m);font-size:.6rem;font-weight:500;color:var(--t3);
+      letter-spacing:.05em;text-transform:uppercase;padding:8px 8px 4px;
+    }
+    .sb-link{
+      display:flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:6px;
+      font-size:.78rem;font-weight:400;color:var(--t2);
+      text-decoration:none;transition:all .12s;cursor:pointer;
+    }
+    .sb-link:hover{background:rgba(255,255,255,.04);color:var(--t);text-decoration:none}
+    .sb-link.active{background:rgba(91,154,255,.1);color:var(--blue)}
+    .sb-icon{font-size:.7rem;width:16px;text-align:center;flex-shrink:0}
+    .sb-spacer{flex:1}
+    .sb-foot{
+      padding:12px 16px;border-top:1px solid var(--b);
+      font-family:var(--m);font-size:.65rem;color:var(--t3);
+    }
+    .sb-foot a{color:var(--t3);text-decoration:none}
+    .sb-foot a:hover{color:var(--blue)}
+    .sb-links{display:flex;gap:12px;margin-top:6px}
+
+    /* Main content area */
+    .main{margin-left:var(--sidebar);flex:1;min-height:100vh}
+
+    /* Tab bar */
+    .tabs{
+      position:sticky;top:0;z-index:40;
+      display:flex;align-items:center;
+      background:var(--s1);border-bottom:1px solid var(--b);
+      padding:0;height:38px;
+    }
+    .tab{
+      font-family:var(--m);font-size:.72rem;color:var(--t2);
+      padding:0 18px;height:100%;display:flex;align-items:center;
+      border-right:1px solid var(--b);cursor:default;
+      background:var(--s2);
+    }
+    .tab.active{background:var(--bg);color:var(--t);border-bottom:2px solid var(--blue);margin-bottom:-1px}
+    .tab-icon{margin-right:6px;font-size:.65rem}
+
+    /* Content */
+    .content{max-width:780px;margin:0 auto;padding:60px 40px 80px}
+
+    /* ═══ HERO CELL ═══ */
+    .hero-cell{margin-bottom:64px}
+    .hero-cell h2{
+      font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;
+      letter-spacing:-.04em;line-height:1;margin-bottom:16px;
+    }
+    .hero-cell h2 .dim{color:var(--t2);font-weight:400}
+    .hero-cell .tagline{
+      font-size:1.05rem;color:var(--t2);max-width:520px;line-height:1.75;margin-bottom:28px;
+    }
+    .hero-cell .tagline strong{color:var(--t);font-weight:600}
+    .hero-btns{display:flex;gap:8px;flex-wrap:wrap}
+    .hb{
+      font-family:var(--m);font-size:.78rem;font-weight:500;
+      padding:8px 18px;border-radius:6px;text-decoration:none;transition:.15s;
+      display:inline-flex;align-items:center;gap:6px;
+    }
+    .hb-p{background:var(--t);color:var(--bg)}.hb-p:hover{opacity:.85;text-decoration:none}
+    .hb-s{border:1px solid var(--bh);color:var(--t2)}.hb-s:hover{color:var(--t);background:rgba(255,255,255,.03);text-decoration:none}
+
+    /* ═══ CODE BLOCK (real code from notebook) ═══ */
+    .code-block{
+      background:var(--s2);border:1px solid var(--b);border-radius:8px;
+      overflow:hidden;margin:32px 0;
+    }
+    .code-head{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px 16px;border-bottom:1px solid var(--b);
+      background:var(--s1);
+    }
+    .code-file{font-family:var(--m);font-size:.68rem;color:var(--t2)}
+    .code-lang{font-family:var(--m);font-size:.6rem;color:var(--t3);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:4px}
+    .code-body{
+      padding:16px 20px;font-family:var(--m);font-size:.75rem;line-height:1.8;
+      overflow-x:auto;color:var(--t2);
+    }
+    .code-body .kw{color:var(--pink)} .code-body .fn{color:var(--blue)}
+    .code-body .st{color:var(--green)} .code-body .cm{color:var(--t3)}
+    .code-body .nb{color:var(--orange)} .code-body .op{color:var(--t)}
+    .code-out{
+      padding:12px 20px;border-top:1px solid var(--b);
+      font-family:var(--m);font-size:.72rem;color:var(--green);
+      background:rgba(61,220,132,.03);
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
+    /* ═══ SECTION CELLS ═══ */
+    .cell{padding:48px 0;border-top:1px solid var(--b)}
+    .cell-label{
+      font-family:var(--m);font-size:.65rem;font-weight:500;
+      color:var(--t3);letter-spacing:.06em;text-transform:uppercase;
+      margin-bottom:20px;
     }
-    ::selection { background: var(--accent); color: #fff; }
-    img { max-width:100%; display:block; }
+    .cell h3{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
+    .cell p{font-size:.95rem;color:var(--t2);line-height:1.8;max-width:600px}
+    .cell p strong{color:var(--t);font-weight:600}
+    .cell p+p{margin-top:12px}
 
-    .wrap { width: 88%; max-width: var(--max-w); margin: 0 auto; }
+    /* Metrics inline */
+    .metrics-inline{
+      display:flex;gap:24px;margin:24px 0;flex-wrap:wrap;
+    }
+    .mi{text-align:left}
+    .mi-v{font-family:var(--m);font-size:1.4rem;font-weight:700;color:var(--t)}
+    .mi-l{font-size:.7rem;color:var(--t3);margin-top:1px}
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* Case study */
+    .case{
+      background:var(--s2);border:1px solid var(--b);border-radius:8px;
+      overflow:hidden;margin:32px 0;
+    }
+    .case-header{
+      padding:28px 28px 24px;
+      border-bottom:1px solid var(--b);
+    }
+    .case-badge{
+      font-family:var(--m);font-size:.68rem;font-weight:500;
+      color:var(--orange);background:rgba(255,171,64,.08);
+      border:1px solid rgba(255,171,64,.15);
+      padding:3px 10px;border-radius:999px;display:inline-block;margin-bottom:12px;
+    }
+    .case-header h3{font-size:1.15rem;font-weight:700;letter-spacing:-.015em;margin-bottom:8px}
+    .case-header p{font-size:.9rem;color:var(--t2);line-height:1.75}
+    .case-header p strong{color:var(--t);font-weight:600}
+    .case-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b)}
+    .case-item{background:var(--s2);padding:20px 24px}
+    .case-item h4{font-family:var(--m);font-size:.65rem;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+    .case-item p{font-size:.85rem;color:var(--t2);line-height:1.65}
+    .case-item .big{font-size:1.2rem;font-weight:700;color:var(--t)}
+    .case-foot{
+      padding:14px 28px;border-top:1px solid var(--b);
+      display:flex;justify-content:space-between;align-items:center;
+      font-family:var(--m);font-size:.72rem;
+    }
+    .case-foot .tools{color:var(--t3)}
+    .case-foot a{font-weight:600}
 
-    /* ─── NAV ─── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 16px 0;
-      background: rgba(250,250,248,.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner { display:flex; align-items:center; justify-content:space-between; }
-    .nav-logo {
-      font-family: var(--font-display);
-      font-weight: 700; font-size: .85rem; color: var(--text);
-      letter-spacing: -.02em;
-    }
-    .nav-links { display:flex; gap:4px; }
-    .nav-links a {
-      font-family: var(--font-display);
-      font-size: .78rem; font-weight: 500; color: var(--text-2);
-      padding: 5px 12px; border-radius: 6px;
-      text-decoration: none; transition: all .15s;
-    }
-    .nav-links a:hover { color: var(--text); background: rgba(0,0,0,.04); text-decoration:none; }
+    /* Research items - minimal */
+    .ri{padding:20px 0;border-bottom:1px solid var(--b)}
+    .ri:last-child{border-bottom:none}
+    .ri h4{font-size:.92rem;font-weight:600;color:var(--t);margin-bottom:5px}
+    .ri p{font-size:.85rem;color:var(--t2);line-height:1.7;margin-bottom:8px}
+    .ri-t{font-family:var(--m);font-size:.7rem;color:var(--t3);margin-bottom:6px}
+    .ri a{font-family:var(--m);font-size:.75rem;font-weight:500}
 
-    /* ─── HERO ─── */
-    #hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex; align-items: center;
-      overflow: hidden;
-    }
-    /* Cursor-following ambient glow */
-    .hero-glow {
-      position: absolute;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(37,99,235,.07) 0%, transparent 70%);
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: left .6s ease-out, top .6s ease-out;
-      will-change: left, top;
-    }
+    /* Expertise — simple prose */
+    .exp-block{margin-bottom:20px}
+    .exp-block h4{font-size:.82rem;font-weight:600;color:var(--t);margin-bottom:6px}
+    .exp-block p{font-size:.88rem;color:var(--t2);line-height:1.75}
 
-    .hero-inner { position:relative; z-index:2; padding: 160px 0 100px; }
+    /* Pubs */
+    .pub{padding:12px 0;border-bottom:1px solid var(--b)}
+    .pub:last-child{border-bottom:none}
+    .pub h4{font-size:.85rem;font-weight:600;line-height:1.5;color:var(--t);margin-bottom:2px}
+    .pub-m{font-size:.78rem;color:var(--t3)}
+    .pub-m strong{color:var(--blue);font-weight:500}
+    .pub-cat{
+      font-family:var(--m);font-size:.62rem;font-weight:500;color:var(--t3);
+      letter-spacing:.04em;text-transform:uppercase;
+      padding:8px 0 4px;border-bottom:1px solid var(--b);margin-top:20px;
+    }
+    .pub-cat:first-child{margin-top:0}
 
-    .hero-name {
-      font-family: var(--font-display);
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      font-weight: 800;
-      letter-spacing: -.045em;
-      line-height: .95;
-      color: var(--text);
-      margin-bottom: 20px;
-    }
+    /* Edu */
+    .edu{padding:16px 0;border-bottom:1px solid var(--b)}
+    .edu:last-child{border-bottom:none}
+    .edu h4{font-size:.9rem;font-weight:600;color:var(--t);margin-bottom:1px}
+    .edu-sub{font-size:.82rem;color:var(--t2)}
+    .edu-yr{font-family:var(--m);font-size:.72rem;color:var(--t3);margin-top:3px}
 
-    .hero-tagline {
-      font-size: clamp(1.05rem, 2.2vw, 1.3rem);
-      color: var(--text-2);
-      max-width: 520px;
-      line-height: 1.7;
-      margin-bottom: 40px;
-    }
+    /* Gallery */
+    .gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:16px}
+    .gal figure{border-radius:6px;overflow:hidden;border:1px solid var(--b)}
+    .gal img{width:100%;height:130px;object-fit:cover}
+    .gal figcaption{padding:6px 8px;font-family:var(--m);font-size:.62rem;color:var(--t3)}
 
-    .hero-row {
-      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    }
-    .hero-btn {
-      font-family: var(--font-display);
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 10px 22px; border-radius: 8px;
-      font-size: .85rem; font-weight: 600;
-      text-decoration: none; transition: all .2s;
-    }
-    .hero-btn-fill {
-      background: var(--text); color: var(--bg);
-    }
-    .hero-btn-fill:hover { background: #333; text-decoration:none; }
-    .hero-btn-ghost {
-      color: var(--text-2); border: 1px solid var(--border);
-    }
-    .hero-btn-ghost:hover { border-color: #bbb; color: var(--text); text-decoration:none; }
-
-    .hero-links {
-      display: flex; gap: 10px; margin-top: 28px;
-    }
-    .hero-link {
-      font-family: var(--font-display);
-      font-size: .78rem; font-weight: 500; color: var(--text-3);
-      text-decoration: none; transition: color .15s;
-    }
-    .hero-link:hover { color: var(--accent); text-decoration:none; }
-    .hero-sep { color: var(--border); }
-
-    /* ─── HIGHLIGHT STRIP ─── */
-    .highlights {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-      margin-bottom: 100px;
-    }
-    .hl-item {
-      background: var(--surface);
-      padding: 28px 24px;
-      text-align: center;
-    }
-    .hl-val {
-      font-family: var(--font-display);
-      font-size: 1.7rem; font-weight: 700;
-      letter-spacing: -.02em; color: var(--text);
-    }
-    .hl-label {
-      font-family: var(--font-display);
-      font-size: .72rem; font-weight: 500;
-      color: var(--text-3); margin-top: 4px;
-      letter-spacing: .01em;
+    /* Footer */
+    .foot{
+      border-top:1px solid var(--b);padding:24px 0;margin-top:40px;
+      font-family:var(--m);font-size:.68rem;color:var(--t3);
     }
 
-    /* ─── SECTIONS ─── */
-    section { padding: 80px 0; }
+    /* Animations */
+    .rv{opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s}
+    .rv.v{opacity:1;transform:none}
 
-    .sec-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.4rem, 3vw, 1.8rem);
-      font-weight: 700; letter-spacing: -.03em;
-      margin-bottom: 40px;
-      color: var(--text);
+    /* ═══ MOBILE ═══ */
+    @media(max-width:860px){
+      .sidebar{display:none}
+      .main{margin-left:0}
+      .content{padding:48px 20px 60px}
+      .case-grid{grid-template-columns:1fr}
+      .hero-cell h2{font-size:clamp(1.8rem,8vw,2.8rem)}
     }
-    .sec-title::after {
-      content: '';
-      display: block;
-      width: 32px; height: 3px;
-      background: var(--accent);
-      border-radius: 2px;
-      margin-top: 12px;
-    }
-
-    /* ─── ABOUT ─── */
-    .about-grid {
-      display: grid; grid-template-columns: 160px 1fr;
-      gap: 40px; align-items: start;
-    }
-    .about-photo {
-      width: 160px; height: 160px;
-      border-radius: var(--r);
-      object-fit: cover;
-      border: 1px solid var(--border);
-    }
-    .about-text {
-      font-size: 1.08rem; color: var(--text-2); line-height: 1.85;
-    }
-    .about-text strong { color: var(--text); font-weight: 600; }
-    .about-text p + p { margin-top: 16px; }
-
-    /* ─── RESEARCH HIGHLIGHTS (the centerpiece) ─── */
-    .rh-card {
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-      background: var(--surface);
-      margin-bottom: 20px;
-      transition: box-shadow .25s, transform .25s;
-    }
-    .rh-card:hover {
-      box-shadow: 0 12px 40px rgba(0,0,0,.06);
-      transform: translateY(-2px);
-    }
-
-    /* Featured card — Foundation Models + LibriBrain */
-    .rh-featured {
-      display: grid; grid-template-columns: 1fr 1fr;
-      border: 2px solid var(--warm-border);
-      background: var(--warm-bg);
-    }
-    .rh-featured:hover {
-      box-shadow: 0 16px 48px rgba(194,65,12,.08);
-    }
-    .rh-featured-img {
-      width: 100%; height: 100%; min-height: 280px;
-      object-fit: cover;
-    }
-    .rh-featured-body { padding: 36px 40px; display: flex; flex-direction: column; justify-content: center; }
-    .rh-badge {
-      font-family: var(--font-display);
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: .72rem; font-weight: 600;
-      color: var(--warm); background: #fff;
-      padding: 5px 14px; border-radius: 999px;
-      border: 1px solid var(--warm-border);
-      width: fit-content; margin-bottom: 16px;
-    }
-    .rh-featured-body h3 {
-      font-family: var(--font-display);
-      font-size: 1.25rem; font-weight: 700;
-      letter-spacing: -.02em; color: var(--text);
-      margin-bottom: 12px; line-height: 1.3;
-    }
-    .rh-featured-body p {
-      font-size: .98rem; color: var(--text-2); line-height: 1.75;
-      margin-bottom: 18px;
-    }
-    .rh-featured-body .tools {
-      font-family: var(--font-display);
-      font-size: .75rem; font-weight: 500;
-      color: var(--text-3); margin-bottom: 16px;
-    }
-    .rh-link {
-      font-family: var(--font-display);
-      font-size: .82rem; font-weight: 600;
-      color: var(--warm);
-      display: inline-flex; align-items: center; gap: 4px;
-    }
-    .rh-link:hover { text-decoration: underline; }
-
-    /* Standard research cards */
-    .rh-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .rh-std { padding: 32px; }
-    .rh-std h3 {
-      font-family: var(--font-display);
-      font-size: 1.05rem; font-weight: 600;
-      letter-spacing: -.01em; color: var(--text);
-      margin-bottom: 10px; line-height: 1.35;
-    }
-    .rh-std p {
-      font-size: .92rem; color: var(--text-2); line-height: 1.7;
-      margin-bottom: 14px;
-    }
-    .rh-std .tools {
-      font-family: var(--font-display);
-      font-size: .73rem; font-weight: 500;
-      color: var(--text-3); margin-bottom: 14px;
-    }
-    .rh-std-link {
-      font-family: var(--font-display);
-      font-size: .8rem; font-weight: 600;
-      color: var(--accent);
-      display: inline-flex; align-items: center; gap: 4px;
-    }
-
-    /* ─── SKILLS — clean, minimal ─── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-      background: var(--border);
-    }
-    .skill-cell {
-      background: var(--surface);
-      padding: 28px 32px;
-    }
-    .skill-cell h3 {
-      font-family: var(--font-display);
-      font-size: .82rem; font-weight: 600;
-      color: var(--text); margin-bottom: 10px;
-      letter-spacing: -.01em;
-    }
-    .skill-cell p {
-      font-size: .88rem; color: var(--text-2); line-height: 1.7;
-    }
-
-    /* ─── PROJECTS (cleaner grid) ─── */
-    .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .proj-card {
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      overflow: hidden;
-      background: var(--surface);
-      transition: box-shadow .25s, transform .25s;
-    }
-    .proj-card:hover {
-      box-shadow: 0 8px 28px rgba(0,0,0,.05);
-      transform: translateY(-2px);
-    }
-    .proj-card img {
-      width: 100%; height: 170px; object-fit: cover;
-      border-bottom: 1px solid var(--border);
-    }
-    .proj-card-body { padding: 22px 24px; }
-    .proj-card-body h3 {
-      font-family: var(--font-display);
-      font-size: .92rem; font-weight: 600;
-      color: var(--text); margin-bottom: 8px;
-      letter-spacing: -.01em;
-    }
-    .proj-card-body p {
-      font-size: .85rem; color: var(--text-2); line-height: 1.65;
-      margin-bottom: 12px;
-    }
-    .proj-card-body a {
-      font-family: var(--font-display);
-      font-size: .78rem; font-weight: 600;
-    }
-
-    /* ─── PUBLICATIONS ─── */
-    .pub-group {
-      font-family: var(--font-display);
-      font-size: .7rem; font-weight: 600;
-      color: var(--text-3); letter-spacing: .06em;
-      text-transform: uppercase;
-      padding-bottom: 8px; border-bottom: 1px solid var(--border);
-      margin-bottom: 0; margin-top: 32px;
-    }
-    .pub-group:first-of-type { margin-top: 0; }
-    .pub-item { padding: 16px 0; border-bottom: 1px solid var(--border); }
-    .pub-item:last-child { border-bottom: none; }
-    .pub-item h3 {
-      font-family: var(--font-display);
-      font-size: .88rem; font-weight: 600; line-height: 1.5;
-      color: var(--text); margin-bottom: 4px;
-    }
-    .pub-meta {
-      font-size: .82rem; color: var(--text-3); line-height: 1.6;
-    }
-    .pub-meta strong { color: var(--accent); font-weight: 600; }
-
-    /* ─── EDUCATION ─── */
-    .edu-item {
-      display: grid; grid-template-columns: 110px 1fr;
-      gap: 24px; padding: 20px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .edu-item:last-child { border-bottom: none; }
-    .edu-year {
-      font-family: var(--font-display);
-      font-size: .78rem; font-weight: 500; color: var(--text-3); padding-top: 3px;
-    }
-    .edu-info h3 {
-      font-family: var(--font-display);
-      font-size: .95rem; font-weight: 600; color: var(--text); margin-bottom: 2px;
-    }
-    .edu-school { font-size: .88rem; color: var(--text-2); }
-    .edu-thesis { font-size: .82rem; color: var(--text-3); font-style: italic; margin-top: 6px; }
-
-    /* ─── GALLERY ─── */
-    .gal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-    .gal-item {
-      border-radius: var(--r); overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .gal-item img { width: 100%; height: 160px; object-fit: cover; }
-    .gal-cap {
-      padding: 8px 12px;
-      font-family: var(--font-display);
-      font-size: .72rem; color: var(--text-3);
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 0; text-align: center;
-      font-family: var(--font-display);
-      font-size: .75rem; color: var(--text-3);
-    }
-
-    /* ─── SCROLL REVEAL ─── */
-    .rv { opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
-    .rv.vis { opacity: 1; transform: none; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; text-align: center; justify-items: center; }
-      .about-photo { width: 120px; height: 120px; }
-      .rh-featured { grid-template-columns: 1fr; }
-      .rh-featured-img { min-height: 200px; }
-      .rh-row { grid-template-columns: 1fr; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .highlights { grid-template-columns: repeat(2, 1fr); }
-      .edu-item { grid-template-columns: 1fr; gap: 4px; }
-      .nav-links { display: none; }
-      .hero-name { font-size: clamp(2.2rem, 10vw, 3.6rem); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-      .hero-glow { display: none; }
-    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap nav-inner">
-    <div class="nav-logo">M.H. Behboudi</div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#research">Research</a>
-      <a href="#projects">Projects</a>
-      <a href="#publications">Publications</a>
-    </div>
-  </div>
-</nav>
+<div class="ide">
 
-<!-- ═══ HERO ═══ -->
-<section id="hero">
-  <div class="hero-glow" id="glow"></div>
-  <div class="wrap hero-inner">
-    <h1 class="hero-name">Mohammad<br>Hossein<br>Behboudi</h1>
-    <p class="hero-tagline">
-      Neuroscientist and engineer building pipelines that decode how the brain processes language—from raw EEG/MEG to validated biomarkers.
-    </p>
-    <div class="hero-row">
-      <a class="hero-btn hero-btn-fill" href="#research">Research Highlights</a>
-      <a class="hero-btn hero-btn-ghost" href="mailto:Behboudi@UTDallas.edu">Get in Touch</a>
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <h1>M.H. Behboudi</h1>
+      <p>Ph.D. Candidate (ABD)</p>
     </div>
-    <div class="hero-links">
-      <a class="hero-link" href="https://github.com/MHBehboudi" target="_blank" rel="noopener">GitHub</a>
-      <span class="hero-sep">/</span>
-      <a class="hero-link" href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" target="_blank" rel="noopener">LinkedIn</a>
-      <span class="hero-sep">/</span>
-      <a class="hero-link" href="https://scholar.google.com/citations?user=e81fVS0AAAAJ&hl=en" target="_blank" rel="noopener">Scholar</a>
-      <span class="hero-sep">/</span>
-      <a class="hero-link" href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener">ORCID</a>
-    </div>
-  </div>
-</section>
 
-<!-- ═══ HIGHLIGHT STRIP ═══ -->
-<div class="wrap rv">
-  <div class="highlights">
-    <div class="hl-item">
-      <div class="hl-val">1st</div>
-      <div class="hl-label">LibriBrain Competition</div>
+    <div class="sb-section">
+      <div class="sb-label">Explorer</div>
+      <a class="sb-link active" href="#hero" data-section="hero"><span class="sb-icon">◈</span> README.md</a>
+      <a class="sb-link" href="#foundation" data-section="foundation"><span class="sb-icon">◆</span> foundation_models.py</a>
+      <a class="sb-link" href="#research" data-section="research"><span class="sb-icon">▸</span> research/</a>
+      <a class="sb-link" href="#expertise" data-section="expertise"><span class="sb-icon">▸</span> expertise/</a>
+      <a class="sb-link" href="#publications" data-section="publications"><span class="sb-icon">▸</span> publications/</a>
+      <a class="sb-link" href="#education" data-section="education"><span class="sb-icon">○</span> education.md</a>
+      <a class="sb-link" href="#gallery" data-section="gallery"><span class="sb-icon">□</span> gallery/</a>
     </div>
-    <div class="hl-item">
-      <div class="hl-val">6+</div>
-      <div class="hl-label">Publications</div>
+
+    <div class="sb-spacer"></div>
+
+    <div class="sb-foot">
+      <div>UT Dallas · Callier Center</div>
+      <div class="sb-links">
+        <a href="https://github.com/MHBehboudi" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" target="_blank">LinkedIn</a>
+        <a href="https://scholar.google.com/citations?user=e81fVS0AAAAJ&hl=en" target="_blank">Scholar</a>
+      </div>
     </div>
-    <div class="hl-item">
-      <div class="hl-val">95%</div>
-      <div class="hl-label">Classification Accuracy</div>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+    <div class="tabs">
+      <div class="tab active"><span class="tab-icon">◈</span> README.md</div>
+      <div class="tab"><span class="tab-icon">◆</span> foundation_models.py</div>
     </div>
-    <div class="hl-item">
-      <div class="hl-val">500 GB+</div>
-      <div class="hl-label">EEG Data Processed</div>
+
+    <div class="content">
+
+      <!-- HERO -->
+      <div class="hero-cell" id="hero">
+        <h2>Mohammad Hossein Behboudi<br><span class="dim">Biosignal × ML × Foundation Models</span></h2>
+        <p class="tagline">
+          I build the computational infrastructure that turns raw physiological signals into <strong>foundation model representations</strong> transferable across subjects, devices, and downstream tasks—from <strong>BCI</strong> to clinical diagnostics to wearable health.
+        </p>
+        <div class="hero-btns">
+          <a class="hb hb-p" href="#foundation">→ See Foundation Model Work</a>
+          <a class="hb hb-s" href="mailto:Behboudi@UTDallas.edu">Contact</a>
+        </div>
+
+        <div class="metrics-inline" style="margin-top:36px">
+          <div class="mi"><div class="mi-v">1st</div><div class="mi-l">LibriBrain · Long Acquisition Track</div></div>
+          <div class="mi"><div class="mi-v">6+</div><div class="mi-l">Publications</div></div>
+          <div class="mi"><div class="mi-v">95%</div><div class="mi-l">Diagnostic Accuracy</div></div>
+          <div class="mi"><div class="mi-v">500GB+</div><div class="mi-l">Signal Data Processed</div></div>
+        </div>
+      </div>
+
+      <!-- REAL CODE from their notebook -->
+      <div class="code-block rv" id="foundation">
+        <div class="code-head">
+          <span class="code-file">foundation_dataset.py</span>
+          <span class="code-lang">Python · PyTorch</span>
+        </div>
+        <div class="code-body"><span class="kw">class</span> <span class="fn">EEGFoundationDataset</span>(Dataset):
+    <span class="cm">"""Unified loader for heterogeneous biosignal data.</span>
+    <span class="cm">   Handles variable channels, sampling rates, and devices."""</span>
+
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, h5_files, window_sec=<span class="nb">10.0</span>, overlap=<span class="nb">0.5</span>):
+        self.window_samples = <span class="fn">int</span>(window_sec <span class="op">*</span> target_sfreq)
+        self.index = []
+
+        <span class="kw">for</span> f <span class="kw">in</span> h5_files:
+            <span class="kw">with</span> h5py.<span class="fn">File</span>(f, <span class="st">'r'</span>) <span class="kw">as</span> h5:
+                n_chan, n_samp = h5[grp][<span class="st">'data'</span>].shape
+                <span class="kw">for</span> start <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">0</span>, n_samp - self.window_samples, step):
+                    self.index.<span class="fn">append</span>({
+                        <span class="st">'filepath'</span>: f, <span class="st">'start'</span>: start,
+                        <span class="st">'n_channels'</span>: n_chan
+                    })
+
+<span class="kw">def</span> <span class="fn">eeg_collate_fn</span>(batch):
+    <span class="cm">"""Pad to max channels, create attention mask."""</span>
+    max_ch = <span class="fn">max</span>(b[<span class="st">'n_channels'</span>] <span class="kw">for</span> b <span class="kw">in</span> batch)
+    padded = torch.<span class="fn">zeros</span>(len(batch), max_ch, window_samples)
+    mask   = torch.<span class="fn">zeros</span>(len(batch), max_ch)
+    <span class="kw">for</span> i, item <span class="kw">in</span> <span class="fn">enumerate</span>(batch):
+        padded[i, :item[<span class="st">'n_channels'</span>]] = item[<span class="st">'data'</span>]
+        mask[i, :item[<span class="st">'n_channels'</span>]] = <span class="nb">1.0</span>
+    <span class="kw">return</span> {<span class="st">'data'</span>: padded, <span class="st">'channel_mask'</span>: mask}</div>
+        <div class="code-out">▸ Built index: 5794 windows from 6 files
+▸ Batch shape: torch.Size([4, 14, 1000]) · Mask: torch.Size([4, 14])</div>
+      </div>
+
+      <!-- Foundation Models Case Study -->
+      <div class="cell rv">
+        <div class="case">
+          <div class="case-header">
+            <div class="case-badge">🏆 LibriBrain — Long Acquisition Track Winner</div>
+            <h3>Foundation Models for Neural Signal Decoding</h3>
+            <p>
+              End-to-end deep learning system: <strong>self-supervised pretraining</strong> on unlabeled biosignal data to learn transferable representations, then fine-tuned with <strong>Transformer encoders</strong> and <strong>Graph Neural Networks</strong> (capturing sensor topology) for downstream neural state classification. Designed to generalize across subjects, recording devices, and signal conditions.
+            </p>
+          </div>
+          <div class="case-grid">
+            <div class="case-item"><h4>Architecture</h4><p>Self-supervised pretraining → 1D-CNN tokenizer → Transformer encoder → GNN spatial module</p></div>
+            <div class="case-item"><h4>Result</h4><div class="big">Macro-F1 = 0.85</div><p>Competitive international benchmark</p></div>
+            <div class="case-item"><h4>Data Challenges</h4><p>Cross-subject normalization, variable-length recordings, noisy labels, heterogeneous sessions</p></div>
+            <div class="case-item"><h4>Infrastructure</h4><p>PyTorch distributed training, SLURM HPC, versioned preprocessing, experiment tracking</p></div>
+          </div>
+          <div class="case-foot">
+            <span class="tools">PyTorch · Self-Supervised · Transformers · GNNs · HPC</span>
+            <a href="https://github.com/MHBehboudi/Neural-Decoding-of-Speech/tree/main" target="_blank">GitHub →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="cell rv" id="about-cell">
+        <div class="cell-label">about</div>
+        <p>
+          Ph.D. candidate in <strong>Cognition &amp; Neuroscience</strong> at UT Dallas with an <strong>Electrical Engineering</strong> foundation. I specialize in the full computational stack for physiological signals: universal data readers across formats (EDF, BDF, HDF5, BrainVision), automated preprocessing that handles cross-device variability, and foundation model architectures that learn transferable representations from unlabeled data for any downstream task.
+        </p>
+        <p>
+          I've built a <strong>novel cross-frequency connectivity algorithm (MDPC)</strong> adopted by multiple research groups, engineered automated pipelines processing <strong>500+ GB</strong> of data across heterogeneous recording systems, and designed a <strong>clinical diagnostic system achieving 95% accuracy</strong> from single-channel recordings. My work spans lab-grade and portable devices, pediatric through adult populations, and real-world signal conditions where nothing is clean.
+        </p>
+      </div>
+
+      <!-- RESEARCH -->
+      <div class="cell rv" id="research">
+        <div class="cell-label">research</div>
+        <h3>Selected Work</h3>
+
+        <div class="ri">
+          <h4>Novel Cross-Frequency Connectivity Algorithm</h4>
+          <p>Developed Time-Lagged Cross-Frequency MDPC to characterize dynamic information flow across brain networks. Full tri-language pipeline (Python, MATLAB, R) with automated preprocessing, spectral decomposition, and mixed-effects statistical modeling.</p>
+          <div class="ri-t">MDPC · Wavelets · PLV/wPLI · Graph Theory · Mixed-Effects</div>
+          <a href="https://github.com/MHBehboudi/EEG_CrossFrequency_MDPC" target="_blank">GitHub →</a>
+        </div>
+
+        <div class="ri">
+          <h4>AI-Driven Sleep Apnea Diagnosis</h4>
+          <p>Clinical diagnostic system using complexity features (fractals, Hurst exponent, entropy measures) with mRMR feature selection and SVM/KNN from single-channel recordings. 95% accuracy. Two peer-reviewed publications.</p>
+          <div class="ri-t">Entropy · Complexity · mRMR · SVM · Clinical EEG</div>
+          <a href="https://doi.org/10.1007/978-3-031-06242-1_8" target="_blank">Paper →</a>
+        </div>
+
+        <div class="ri">
+          <h4>Unified Biosignal Data Infrastructure</h4>
+          <p>Built universal data readers and preprocessing pipelines handling EDF, BDF, BrainVision, and HDF5 formats across multiple recording systems (Neuroscan, Neuroelectrics) with different sampling rates, channel counts, and reference schemes. Automated artifact detection for 100+ participants.</p>
+          <div class="ri-t">Python · MNE · HDF5 · Multi-format · Cross-device</div>
+          <a href="https://github.com/MHBehboudi" target="_blank">GitHub →</a>
+        </div>
+
+        <div class="ri">
+          <h4>Mobile Biosignal Collection Platform</h4>
+          <p>Portable stimulus and data synchronization system for collecting neural recordings outside controlled lab environments.</p>
+          <div class="ri-t">Python · Tkinter · Portable Hardware · Data Sync</div>
+          <a href="https://github.com/MHBehboudi/mobile-eeg-stimulus-presenter" target="_blank">GitHub →</a>
+        </div>
+      </div>
+
+      <!-- EXPERTISE -->
+      <div class="cell rv" id="expertise">
+        <div class="cell-label">expertise</div>
+        <h3>Technical Stack</h3>
+
+        <div class="exp-block">
+          <h4>Signal Processing &amp; Data Engineering</h4>
+          <p>Multi-channel preprocessing, artifact detection (ICA, spectral, threshold), cross-device normalization, montage mapping, time-frequency decomposition (FFT, STFT, Morlet wavelets), connectivity measures (coherence, PLV, wPLI), cross-frequency coupling, graph theory network metrics, complexity &amp; entropy features. Universal data readers for EDF/BDF/HDF5/BrainVision.</p>
+        </div>
+        <div class="exp-block">
+          <h4>Foundation Models &amp; Deep Learning</h4>
+          <p>Self-supervised pretraining (masked modeling, contrastive learning), VQ-VAE tokenization, Transformer encoders, Graph Neural Networks, 1D-CNNs, LSTMs. Cross-subject generalization, variable-channel handling via attention masks, mixed-precision training, experiment tracking.</p>
+        </div>
+        <div class="exp-block">
+          <h4>Classical ML &amp; Statistics</h4>
+          <p>SVM, KNN, ensemble methods (RUSBoost), feature engineering &amp; selection (mRMR, mutual information), mixed-effects models, ANOVA/MANOVA, permutation &amp; bootstrap inference, power analysis, IRB-compliant protocol design.</p>
+        </div>
+        <div class="exp-block">
+          <h4>Languages &amp; Infrastructure</h4>
+          <p>Python (PyTorch, MNE, scikit-learn, SciPy, pandas, h5py), MATLAB (EEGLAB, FieldTrip), R (lme4, tidyverse), Git, Bash, SLURM HPC, FreeSurfer, SPM.</p>
+        </div>
+      </div>
+
+      <!-- PUBLICATIONS -->
+      <div class="cell rv" id="publications">
+        <div class="cell-label">publications</div>
+        <h3>Research Output</h3>
+
+        <div class="pub-cat">Published</div>
+        <div class="pub"><h4>Neural oscillations during predictive sentence processing in young children.</h4><p class="pub-m">Benítez-Barrera, <strong>Behboudi</strong>, Maguire (2024). <em>Brain &amp; Language</em> · <a href="https://doi.org/10.1016/j.bandl.2024.105437" target="_blank">doi</a></p></div>
+        <div class="pub"><h4>Taking culture and context into account: SES and brain development.</h4><p class="pub-m">Schneider, <strong>Behboudi</strong>, Maguire (2024). <em>Brain Sciences</em> · <a href="https://doi.org/10.3390/brainsci14040392" target="_blank">doi</a></p></div>
+        <div class="pub"><h4>Rethinking household size and children's language environment.</h4><p class="pub-m">Poudel et al. incl. <strong>Behboudi</strong> (2024). <em>Dev. Psychology</em> · <a href="https://doi.org/10.1037/dev0001650" target="_blank">doi</a></p></div>
+        <div class="pub"><h4>Gamma oscillation during sentence processing in early adolescence.</h4><p class="pub-m"><strong>Behboudi</strong>, Castro, Chalamalasetty, Maguire (2023). <em>Brain Sciences</em> · <a href="https://doi.org/10.3390/brainsci13121639" target="_blank">doi</a></p></div>
+        <div class="pub"><h4>Sleep apnea diagnosis using complexity features.</h4><p class="pub-m">Gholami, <strong>Behboudi</strong> et al. (2022). <em>Springer LNCS</em> · <a href="https://doi.org/10.1007/978-3-031-06242-1_8" target="_blank">doi</a></p></div>
+        <div class="pub"><h4>Diagnosis of Sleep Apnea using different entropy measures.</h4><p class="pub-m">Gholami, <strong>Behboudi</strong> et al. (2021). <em>IEEE ICSPIS</em> · <a href="https://doi.org/10.1109/ICSPIS54653.2021.9729367" target="_blank">doi</a></p></div>
+        <div class="pub-cat">Under Review / In Prep</div>
+        <div class="pub"><h4>Novel word inferencing in noisy environments for non-native speakers.</h4><p class="pub-m">Benítez-Barrera, <strong>Behboudi</strong> et al. <em>Language and Speech</em></p></div>
+        <div class="pub"><h4>Time-Lagged Multi-Oscillatory Network during speech perception.</h4><p class="pub-m"><strong>Behboudi</strong>, Benítez-Barrera, Maguire</p></div>
+        <div class="pub"><h4>Large-Scale Brain Networks during semantic &amp; syntactic error processing.</h4><p class="pub-m"><strong>Behboudi</strong>, Schneider, Maguire</p></div>
+      </div>
+
+      <!-- EDUCATION -->
+      <div class="cell rv" id="education">
+        <div class="cell-label">education</div>
+        <div class="edu"><h4>Ph.D., Cognition &amp; Neuroscience</h4><div class="edu-sub">University of Texas at Dallas · Callier Center</div><div class="edu-yr">2021 — 2026 (expected)</div></div>
+        <div class="edu"><h4>M.Sc., Applied Cognition &amp; Neuroscience</h4><div class="edu-sub">University of Texas at Dallas</div><div class="edu-yr">2021 — 2024</div></div>
+        <div class="edu"><h4>B.Sc., Electrical Engineering</h4><div class="edu-sub">K. N. Toosi University of Technology, Tehran</div><div class="edu-yr">2015 — 2020</div></div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="cell rv" id="gallery">
+        <div class="cell-label">conferences</div>
+        <div class="gal">
+          <figure><img src="SFN_2024.jpg" alt="SfN 2024"><figcaption>SfN 2024 · Chicago</figcaption></figure>
+          <figure><img src="profile.jpg" alt="Flux 2023"><figcaption>Flux 2023</figcaption></figure>
+          <figure><img src="CDS_2022.jpg" alt="CDS 2022"><figcaption>CDS 2022</figcaption></figure>
+          <figure><img src="Mobile_EEG_Setup.jpg" alt="Mobile Setup"><figcaption>Mobile Setup</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="foot">&copy; 2025 M.H. Behboudi</div>
+
     </div>
   </div>
 </div>
 
-<!-- ═══ ABOUT ═══ -->
-<section id="about">
-  <div class="wrap">
-    <div class="about-grid rv">
-      <img src="profile.jpg" alt="Mohammad H. Behboudi" class="about-photo">
-      <div>
-        <h2 class="sec-title">About</h2>
-        <div class="about-text">
-          <p>
-            I'm a Ph.D. candidate in <strong>Cognition &amp; Neuroscience</strong> at <strong>UT Dallas</strong> with an <strong>Electrical Engineering</strong> background. My dissertation maps how children's large-scale brain networks develop during language processing using EEG connectivity and graph theory.
-          </p>
-          <p>
-            I've developed a novel cross-frequency connectivity algorithm (MDPC), won an international neural decoding competition using foundation model architectures, and built automated pipelines processing 500+ GB of neural data. My work sits at the intersection of signal processing, machine learning, and experimental neuroscience.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ RESEARCH HIGHLIGHTS ═══ -->
-<section id="research">
-  <div class="wrap">
-    <h2 class="sec-title rv">Research Highlights</h2>
-
-    <!-- Featured: Foundation Models + LibriBrain -->
-    <div class="rh-card rh-featured rv">
-      <img class="rh-featured-img" src="Speech_Neural_Decoding_Flow_Chart.png" alt="Neural Decoding Architecture">
-      <div class="rh-featured-body">
-        <div class="rh-badge">&#x1F3C6; 1st Place — LibriBrain Long Acquisition Track</div>
-        <h3>Foundation Models for Neural Decoding of Speech</h3>
-        <p>
-          Designed an end-to-end deep learning pipeline leveraging <strong>self-supervised pretraining</strong> on unlabeled MEG data, followed by supervised fine-tuning with 1D-CNNs, <strong>Transformer encoders</strong>, and <strong>Graph Neural Networks</strong> to classify speech vs. silence from high-dimensional recordings. Achieved Macro-F1 = 0.85 against international teams.
-        </p>
-        <div class="tools">PyTorch · Self-Supervised Learning · Transformers · GNNs · SLURM HPC</div>
-        <a class="rh-link" href="https://github.com/MHBehboudi/Neural-Decoding-of-Speech/tree/main" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-      </div>
-    </div>
-
-    <div class="rh-row">
-      <div class="rh-card rh-std rv">
-        <h3>Novel Cross-Frequency Connectivity Algorithm</h3>
-        <p>
-          Developed Time-Lagged Cross-Frequency Multidimensional Pattern Connectivity (MDPC) to characterize dynamic information flow across brain networks during speech perception in noise. Full tri-language pipeline in Python, MATLAB, and R.
-        </p>
-        <div class="tools">MDPC · Morlet Wavelets · PLV/wPLI · Graph Theory · Mixed-Effects Models</div>
-        <a class="rh-std-link" href="https://github.com/MHBehboudi/EEG_CrossFrequency_MDPC" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-      </div>
-      <div class="rh-card rh-std rv">
-        <h3>AI-Driven Sleep Apnea Diagnosis</h3>
-        <p>
-          Built a computer-aided diagnostic system using complexity features (fractals, Hurst exponent, entropy measures) with mRMR feature selection and SVM/KNN classification from single-channel clinical EEG. Two peer-reviewed publications.
-        </p>
-        <div class="tools">EEG · Entropy · mRMR · SVM · 95% Accuracy</div>
-        <a class="rh-std-link" href="#">Read the Paper &rarr;</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SKILLS ═══ -->
-<section id="skills">
-  <div class="wrap">
-    <h2 class="sec-title rv">Expertise</h2>
-    <div class="skills-grid rv">
-      <div class="skill-cell">
-        <h3>Signal Processing</h3>
-        <p>EEG/MEG preprocessing, ICA, spectral &amp; wavelet analysis, time-frequency decomposition, connectivity (coherence, PLV, wPLI), cross-frequency coupling, CSD, graph theory</p>
-      </div>
-      <div class="skill-cell">
-        <h3>Machine Learning</h3>
-        <p>Self-supervised &amp; supervised learning, Transformers, GNNs, LSTMs, 1D-CNNs, SVM, ensemble methods, feature engineering &amp; selection, cross-validation, imbalance handling</p>
-      </div>
-      <div class="skill-cell">
-        <h3>Statistics &amp; Experimental Design</h3>
-        <p>Mixed-effects models, ANOVA/MANOVA, permutation &amp; bootstrap tests, power analysis, preregistration, IRB protocol design, longitudinal analysis</p>
-      </div>
-      <div class="skill-cell">
-        <h3>Tools &amp; Languages</h3>
-        <p>Python (PyTorch, MNE, scikit-learn, pandas), MATLAB (EEGLAB, FieldTrip), R (lme4, tidyverse), Git, SLURM HPC, FreeSurfer, SPM</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PROJECTS ═══ -->
-<section id="projects">
-  <div class="wrap">
-    <h2 class="sec-title rv">More Projects</h2>
-    <div class="proj-grid">
-      <div class="proj-card rv">
-        <img src="stimulus_presenter_project.png" alt="Mobile EEG Stimulus Presenter">
-        <div class="proj-card-body">
-          <h3>Mobile EEG Stimulus Presenter</h3>
-          <p>Portable Python/Tkinter platform enabling EEG research outside the lab with diverse communities.</p>
-          <a href="https://github.com/MHBehboudi/mobile-eeg-stimulus-presenter" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-        </div>
-      </div>
-      <div class="proj-card rv">
-        <img src="Pre_Processing_App_Demo.PNG" alt="MATLAB EEG GUI">
-        <div class="proj-card-body">
-          <h3>MATLAB GUI for EEG Preprocessing</h3>
-          <p>Guided step-by-step application for EEG cleaning with integrated ICA and MARA artifact rejection.</p>
-          <a href="https://github.com/MHBehboudi/matlab-eeg-app" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-        </div>
-      </div>
-      <div class="proj-card rv">
-        <img src="mdpc_project.png" alt="EEG Connectivity Pipeline">
-        <div class="proj-card-body">
-          <h3>Automated EEG Processing Pipeline</h3>
-          <p>End-to-end infrastructure processing 500+ GB from multiple recording systems with reproducible versioned workflows.</p>
-          <a href="https://github.com/MHBehboudi/EEG_CrossFrequency_MDPC" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PUBLICATIONS ═══ -->
-<section id="publications">
-  <div class="wrap">
-    <h2 class="sec-title rv">Publications</h2>
-    <div class="rv">
-      <div class="pub-group">Published</div>
-      <div class="pub-item"><h3>Neural oscillations during predictive sentence processing in young children.</h3><p class="pub-meta">Benítez-Barrera, C. R., <strong>Behboudi, M. H.</strong>, &amp; Maguire, M. J. (2024). <em>Brain and Language</em>, 254 · <a href="https://doi.org/10.1016/j.bandl.2024.105437" target="_blank">doi</a></p></div>
-      <div class="pub-item"><h3>The necessity of taking culture and context into account when studying SES and brain development.</h3><p class="pub-meta">Schneider, J. M., <strong>Behboudi, M. H.</strong>, &amp; Maguire, M. J. (2024). <em>Brain Sciences</em>, 14(4) · <a href="https://doi.org/10.3390/brainsci14040392" target="_blank">doi</a></p></div>
-      <div class="pub-item"><h3>Rethinking household size and children's language environment.</h3><p class="pub-meta">Poudel, S., et al. incl. <strong>Behboudi, M. H.</strong> (2024). <em>Developmental Psychology</em>, 60(1) · <a href="https://doi.org/10.1037/dev0001650" target="_blank">doi</a></p></div>
-      <div class="pub-item"><h3>Development of gamma oscillation during sentence processing in early adolescence.</h3><p class="pub-meta"><strong>Behboudi, M. H.</strong>, Castro, S., et al. (2023). <em>Brain Sciences</em>, 13(12) · <a href="https://doi.org/10.3390/brainsci13121639" target="_blank">doi</a></p></div>
-      <div class="pub-item"><h3>Sleep apnea diagnosis using complexity features of EEG signals.</h3><p class="pub-meta">Gholami, B., <strong>Behboudi, M. H.</strong>, et al. (2022). <em>IWINAC, LNCS</em> vol 13258 · <a href="https://doi.org/10.1007/978-3-031-06242-1_8" target="_blank">doi</a></p></div>
-      <div class="pub-item"><h3>Diagnosis of Sleep Apnea Syndrome from EEG signals using different entropy measures.</h3><p class="pub-meta">Gholami, B., <strong>Behboudi, M. H.</strong>, et al. (2021). <em>ICSPIS</em> · <a href="https://doi.org/10.1109/ICSPIS54653.2021.9729367" target="_blank">doi</a></p></div>
-
-      <div class="pub-group">Under Review</div>
-      <div class="pub-item"><h3>Non-native English-Speaking Young Adults Experience Difficulties Inferencing Novel Words in Noisy Environments.</h3><p class="pub-meta">Benítez-Barrera, C. R., <strong>Behboudi, M. H.</strong>, et al. <em>Language and Speech</em>.</p></div>
-
-      <div class="pub-group">In Preparation</div>
-      <div class="pub-item"><h3>A Time-Lagged Multi-Oscillatory Network: Alpha, Theta, and Beta Coordination During Speech Perception.</h3><p class="pub-meta"><strong>Behboudi, M. H.</strong>, Benítez-Barrera, C. R., &amp; Maguire, M. J.</p></div>
-      <div class="pub-item"><h3>Development of Large-Scale Brain Networks During Semantic and Syntactic Error Processing.</h3><p class="pub-meta"><strong>Behboudi, M. H.</strong>, Schneider, C. J. M., &amp; Maguire, M. J.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ EDUCATION ═══ -->
-<section id="education">
-  <div class="wrap">
-    <h2 class="sec-title rv">Education</h2>
-    <div class="rv">
-      <div class="edu-item">
-        <div class="edu-year">2021 – 2026</div>
-        <div class="edu-info">
-          <h3>Ph.D. in Cognition and Neuroscience</h3>
-          <div class="edu-school">University of Texas at Dallas · Callier Center</div>
-          <div class="edu-thesis">Thesis: Development of Large-Scale Brain Networks During Semantic and Syntactic Error Processing</div>
-        </div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-year">2021 – 2024</div>
-        <div class="edu-info">
-          <h3>M.Sc. in Applied Cognition and Neuroscience</h3>
-          <div class="edu-school">University of Texas at Dallas</div>
-        </div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-year">2015 – 2020</div>
-        <div class="edu-info">
-          <h3>B.Sc. in Electrical Engineering</h3>
-          <div class="edu-school">K. N. Toosi University of Technology, Tehran</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ GALLERY ═══ -->
-<section id="gallery">
-  <div class="wrap">
-    <h2 class="sec-title rv">Conferences</h2>
-    <div class="gal-grid rv">
-      <figure class="gal-item"><img src="SFN_2024.jpg" alt="SfN 2024"><figcaption class="gal-cap">SfN 2024 · Chicago</figcaption></figure>
-      <figure class="gal-item"><img src="profile.jpg" alt="Flux 2023"><figcaption class="gal-cap">Flux 2023 · Santa Rosa</figcaption></figure>
-      <figure class="gal-item"><img src="CDS_2022.jpg" alt="CDS 2022"><figcaption class="gal-cap">CDS 2022 · Madison</figcaption></figure>
-      <figure class="gal-item"><img src="Mobile_EEG_Setup.jpg" alt="Mobile EEG"><figcaption class="gal-cap">Mobile EEG Setup</figcaption></figure>
-      <figure class="gal-item"><img src="OKC.jpg" alt="Oklahoma"><figcaption class="gal-cap">Oklahoma Hike</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<footer><div class="wrap">&copy; 2025 Mohammad Hossein Behboudi</div></footer>
-
 <script>
-// Cursor-following glow
-const glow = document.getElementById('glow');
-const hero = document.getElementById('hero');
-hero.addEventListener('mousemove', e => {
-  glow.style.left = e.clientX + 'px';
-  glow.style.top = e.clientY + 'px';
+// Active sidebar link tracking
+const links = document.querySelectorAll('.sb-link[data-section]');
+const sections = {};
+links.forEach(l => {
+  const id = l.dataset.section;
+  const el = document.getElementById(id);
+  if (el) sections[id] = { el, link: l };
 });
 
-// Scroll reveal
 const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
-}, { threshold: .08 });
-document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  entries.forEach(e => {
+    if (e.isIntersecting && sections[e.target.id]) {
+      links.forEach(l => l.classList.remove('active'));
+      sections[e.target.id].link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-40% 0px -50% 0px' });
+Object.values(sections).forEach(s => obs.observe(s.el));
+
+// Scroll reveal
+const robs = new IntersectionObserver(e => {
+  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('v'); });
+}, { threshold: .06 });
+document.querySelectorAll('.rv').forEach(el => robs.observe(el));
 </script>
 
 </body>
