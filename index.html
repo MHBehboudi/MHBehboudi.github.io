@@ -28,7 +28,7 @@
     /* ═══ BACKGROUND CANVAS ═══ */
     #bg-canvas{
       position:fixed;inset:0;width:100%;height:100%;z-index:0;
-      pointer-events:none;opacity:.15;
+      pointer-events:none;opacity:.22;
     }
 
     /* ═══ IDE SHELL ═══ */
@@ -344,6 +344,7 @@
               <div class="hm"><div class="hm-v">6+</div><div class="hm-l">Publications</div></div>
               <div class="hm"><div class="hm-v">95%</div><div class="hm-l">Diagnostic Acc.</div></div>
               <div class="hm"><div class="hm-v">500GB+</div><div class="hm-l">Data Processed</div></div>
+              <div class="hm"><div class="hm-v">200+</div><div class="hm-l">IRB-Compliant Recording<br>Sessions Conducted</div></div>
             </div>
           </div>
 
@@ -642,71 +643,123 @@ function typ(){
 }
 setTimeout(typ,300);
 
-// ═══ BACKGROUND CANVAS — signals + faint matrix ═══
+// ═══ BACKGROUND — neural network graph + biosignal traces ═══
 (function(){
   const c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
   let w,h;
-
-  // Signal traces (initialized after resize)
   let traces=[];
-  function initTraces(){
-    traces=[];
-    for(let i=0;i<8;i++){
-      traces.push({
-        y:h*.08+Math.random()*h*.84,
-        speed:.12+Math.random()*.4,
-        freq:.006+Math.random()*.02,
-        amp:3+Math.random()*10,
-        phase:Math.random()*6.28,
-        alpha:.02+Math.random()*.04,
-        color:i%3===0?'61,220,132':'91,154,255',
-      });
-    }
-  }
+  let nodes=[];
+  let cols,drops;
+  const chars='01αβθδγλπ{}()def→∫';
 
-  function resize(){
+  function init(){
     w=c.width=c.offsetWidth;
     h=c.height=c.offsetHeight;
-    initTraces();
+
+    // Biosignal traces
+    traces=[];
+    for(let i=0;i<6;i++){
+      traces.push({
+        y:h*.1+Math.random()*h*.8,
+        speed:.1+Math.random()*.35,
+        freq:.005+Math.random()*.018,
+        amp:4+Math.random()*10,
+        phase:Math.random()*6.28,
+        alpha:.04+Math.random()*.06,
+        hue:i%2===0?'91,154,255':'61,220,132',
+      });
+    }
+
+    // Neural network nodes — arranged in loose layers like a DL diagram
+    nodes=[];
+    var layers=[4,6,8,6,4,3];
+    var xStep=w/(layers.length+1);
+    for(var L=0;L<layers.length;L++){
+      var count=layers[L];
+      var yStep=h/(count+1);
+      for(var n=0;n<count;n++){
+        nodes.push({
+          x:xStep*(L+1)+(Math.random()-.5)*40,
+          y:yStep*(n+1)+(Math.random()-.5)*30,
+          layer:L,
+          r:1.5+Math.random()*1.5,
+          pulse:Math.random()*6.28,
+        });
+      }
+    }
+
+    // Matrix rain
+    cols=Math.floor(w/20);
+    drops=[];
+    for(var i=0;i<cols;i++) drops[i]=Math.random()*h;
   }
-  window.addEventListener('resize',resize);
-  resize();
 
-  // Matrix rain columns
-  const cols=Math.floor(w/18);
-  const drops=Array(cols).fill(0).map(()=>Math.random()*h);
-  const chars='01αβθδγ∫λ→π{};()def';
+  window.addEventListener('resize',init);
+  init();
 
-  let t=0;
+  var t=0;
   function draw(){
-    ctx.fillStyle='rgba(10,10,12,.09)';
+    ctx.fillStyle='rgba(10,10,12,.07)';
     ctx.fillRect(0,0,w,h);
 
-    // Faint matrix rain
+    t+=.5;
+
+    // 1) Neural network edges between adjacent layers
+    for(var i=0;i<nodes.length;i++){
+      var a=nodes[i];
+      for(var j=i+1;j<nodes.length;j++){
+        var b=nodes[j];
+        if(Math.abs(a.layer-b.layer)===1){
+          var dx=a.x-b.x,dy=a.y-b.y;
+          var dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<300){
+            // Traveling pulse along the edge
+            var pulse=(Math.sin(t*.02+a.pulse+b.pulse)*.5+.5);
+            ctx.beginPath();
+            ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+            ctx.strokeStyle='rgba(91,154,255,'+(0.02+pulse*0.04)+')';
+            ctx.lineWidth=.4;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    // 2) Neural network nodes
+    for(var i=0;i<nodes.length;i++){
+      var nd=nodes[i];
+      var glow=Math.sin(t*.03+nd.pulse)*.5+.5;
+      ctx.beginPath();
+      ctx.arc(nd.x,nd.y,nd.r+glow,0,Math.PI*2);
+      ctx.fillStyle='rgba(91,154,255,'+(0.06+glow*0.06)+')';
+      ctx.fill();
+    }
+
+    // 3) Biosignal traces flowing across
+    for(var i=0;i<traces.length;i++){
+      var tr=traces[i];
+      ctx.beginPath();
+      ctx.strokeStyle='rgba('+tr.hue+','+tr.alpha+')';
+      ctx.lineWidth=.7;
+      for(var x=0;x<w;x+=3){
+        var n=x+t*tr.speed;
+        var y=tr.y+Math.sin(n*tr.freq+tr.phase)*tr.amp+
+          Math.sin(n*tr.freq*3.3)*tr.amp*.25;
+        if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    }
+
+    // 4) Faint matrix rain
     ctx.font='11px monospace';
-    for(let i=0;i<cols;i++){
+    for(var i=0;i<cols;i++){
       if(Math.random()>.96){
-        const ch=chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillStyle=`rgba(91,154,255,${.025+Math.random()*.04})`;
-        ctx.fillText(ch,i*18,drops[i]);
+        var ch=chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillStyle='rgba(91,154,255,'+(0.02+Math.random()*.04)+')';
+        ctx.fillText(ch,i*20,drops[i]);
         drops[i]+=14;
         if(drops[i]>h&&Math.random()>.97)drops[i]=0;
       }
-    }
-
-    // Signal traces
-    t+=.6;
-    for(const tr of traces){
-      ctx.beginPath();
-      ctx.strokeStyle=`rgba(${tr.color},${tr.alpha})`;
-      ctx.lineWidth=.6;
-      for(let x=0;x<w;x+=3){
-        const n=x+t*tr.speed;
-        const y=tr.y+Math.sin(n*tr.freq+tr.phase)*tr.amp+
-          Math.sin(n*tr.freq*3.7)*tr.amp*.2;
-        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-      }
-      ctx.stroke();
     }
 
     requestAnimationFrame(draw);
