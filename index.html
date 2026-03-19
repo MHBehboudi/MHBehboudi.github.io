@@ -25,22 +25,36 @@
     img{max-width:100%;display:block}
     a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 
-    /* ═══ IDE SHELL ═══ */
-    .ide{display:flex;min-height:100vh}
+    /* ═══ BACKGROUND CANVAS ═══ */
+    #bg-canvas{
+      position:fixed;inset:0;width:100%;height:100%;z-index:0;
+      pointer-events:none;opacity:.12;
+    }
 
-    /* Sidebar — file tree */
+    /* ═══ IDE SHELL ═══ */
+    .ide{display:flex;min-height:100vh;position:relative;z-index:1}
+
+    /* Sidebar */
     .sidebar{
       width:var(--sidebar);position:fixed;top:0;left:0;bottom:0;
-      background:var(--s1);border-right:1px solid var(--b);
+      background:rgba(17,17,20,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border-right:1px solid var(--b);
       padding:16px 0;overflow-y:auto;z-index:50;
       display:flex;flex-direction:column;
     }
-    .sb-brand{
-      padding:0 16px 16px;border-bottom:1px solid var(--b);
-      margin-bottom:12px;
-    }
+    .sb-brand{padding:0 16px 14px;border-bottom:1px solid var(--b);margin-bottom:12px}
     .sb-brand h1{font-family:var(--m);font-size:.8rem;font-weight:600;color:var(--t);letter-spacing:-.01em}
     .sb-brand p{font-size:.65rem;color:var(--t3);margin-top:2px;font-family:var(--m)}
+    /* Social icons in sidebar brand */
+    .sb-socials{display:flex;gap:8px;margin-top:10px}
+    .sb-social{
+      width:28px;height:28px;border-radius:6px;border:1px solid var(--b);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--t3);transition:all .15s;
+    }
+    .sb-social:hover{color:var(--blue);border-color:var(--bh);background:rgba(255,255,255,.03)}
+    .sb-social svg{width:14px;height:14px}
+
     .sb-section{padding:0 8px;margin-bottom:4px}
     .sb-label{
       font-family:var(--m);font-size:.6rem;font-weight:500;color:var(--t3);
@@ -60,106 +74,123 @@
       padding:12px 16px;border-top:1px solid var(--b);
       font-family:var(--m);font-size:.65rem;color:var(--t3);
     }
-    .sb-foot a{color:var(--t3);text-decoration:none}
-    .sb-foot a:hover{color:var(--blue)}
-    .sb-links{display:flex;gap:12px;margin-top:6px}
 
-    /* Main content area */
+    /* Main */
     .main{margin-left:var(--sidebar);flex:1;min-height:100vh}
 
     /* Tab bar */
     .tabs{
       position:sticky;top:0;z-index:40;
       display:flex;align-items:center;
-      background:var(--s1);border-bottom:1px solid var(--b);
-      padding:0;height:38px;
+      background:rgba(17,17,20,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--b);height:38px;
     }
     .tab{
-      font-family:var(--m);font-size:.72rem;color:var(--t2);
+      font-family:var(--m);font-size:.72rem;color:var(--t3);
       padding:0 18px;height:100%;display:flex;align-items:center;
-      border-right:1px solid var(--b);cursor:default;
-      background:var(--s2);
+      border-right:1px solid var(--b);cursor:pointer;
+      background:var(--s2);transition:all .15s;
     }
+    .tab:hover{color:var(--t2)}
     .tab.active{background:var(--bg);color:var(--t);border-bottom:2px solid var(--blue);margin-bottom:-1px}
     .tab-icon{margin-right:6px;font-size:.65rem}
 
-    /* Content */
+    /* Content panels */
     .content{max-width:780px;margin:0 auto;padding:60px 40px 80px}
+    .panel{display:none}.panel.active{display:block}
 
-    /* ═══ HERO CELL ═══ */
-    .hero-cell{margin-bottom:64px}
-    .hero-cell h2{
-      font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;
-      letter-spacing:-.04em;line-height:1;margin-bottom:16px;
+    /* ═══ HERO — split layout with terminal ═══ */
+    .hero-split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;min-height:calc(100vh - 100px);padding:40px 0}
+    .hero-left{}
+    .hero-name{
+      font-size:clamp(1.9rem,4vw,2.8rem);font-weight:900;
+      letter-spacing:-.04em;line-height:.95;margin-bottom:16px;
     }
-    .hero-cell h2 .dim{color:var(--t2);font-weight:400}
-    .hero-cell .tagline{
-      font-size:1.05rem;color:var(--t2);max-width:520px;line-height:1.75;margin-bottom:28px;
-    }
-    .hero-cell .tagline strong{color:var(--t);font-weight:600}
-    .hero-btns{display:flex;gap:8px;flex-wrap:wrap}
+    .hero-name .dim{color:var(--t2);font-weight:400;font-size:.6em}
+    .hero-tagline{font-size:.95rem;color:var(--t2);max-width:400px;line-height:1.75;margin-bottom:24px}
+    .hero-tagline strong{color:var(--t);font-weight:600}
+    .hero-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
     .hb{
-      font-family:var(--m);font-size:.78rem;font-weight:500;
-      padding:8px 18px;border-radius:6px;text-decoration:none;transition:.15s;
+      font-family:var(--m);font-size:.75rem;font-weight:500;
+      padding:8px 16px;border-radius:6px;text-decoration:none;transition:.15s;
       display:inline-flex;align-items:center;gap:6px;
     }
     .hb-p{background:var(--t);color:var(--bg)}.hb-p:hover{opacity:.85;text-decoration:none}
     .hb-s{border:1px solid var(--bh);color:var(--t2)}.hb-s:hover{color:var(--t);background:rgba(255,255,255,.03);text-decoration:none}
 
-    /* ═══ CODE BLOCK (real code from notebook) ═══ */
+    .hero-metrics{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px}
+    .hm{text-align:left}
+    .hm-v{font-family:var(--m);font-size:1.2rem;font-weight:700;color:var(--t)}
+    .hm-l{font-size:.65rem;color:var(--t3);margin-top:1px}
+
+    /* Hero social row */
+    .hero-socials{display:flex;gap:8px;margin-top:16px}
+    .hs{
+      width:32px;height:32px;border-radius:7px;border:1px solid var(--b);
+      display:flex;align-items:center;justify-content:center;
+      color:var(--t3);transition:all .15s;
+    }
+    .hs:hover{color:var(--blue);border-color:var(--bh);background:rgba(255,255,255,.03)}
+    .hs svg{width:16px;height:16px}
+
+    /* Terminal */
+    .term{
+      background:rgba(17,17,20,.85);backdrop-filter:blur(8px);
+      border:1px solid var(--b);border-radius:10px;
+      overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);
+    }
+    .term-bar{
+      display:flex;align-items:center;gap:7px;padding:10px 14px;
+      border-bottom:1px solid var(--b);background:rgba(30,30,36,.8);
+    }
+    .term-dot{width:9px;height:9px;border-radius:50%}
+    .term-dot.r{background:#ff5f57}.term-dot.y{background:#febc2e}.term-dot.g{background:#28c840}
+    .term-title{font-family:var(--m);font-size:.6rem;color:var(--t3);margin-left:auto}
+    .term-body{
+      padding:16px 18px;font-family:var(--m);font-size:.7rem;line-height:1.85;
+      min-height:320px;max-height:420px;overflow:hidden;color:var(--t2);
+    }
+    .term-body .pr{color:var(--green)}.term-body .cm{color:var(--t3)}
+    .term-body .kw{color:var(--pink)}.term-body .fn{color:var(--blue)}
+    .term-body .st{color:var(--green)}.term-body .nb{color:var(--orange)}.term-body .op{color:var(--t)}
+    .term-cursor{display:inline-block;width:7px;height:14px;background:var(--t);vertical-align:text-bottom;animation:blink 1s step-end infinite}
+    @keyframes blink{50%{opacity:0}}
+
+    /* ═══ FOUNDATION MODELS PANEL (code + case study) ═══ */
     .code-block{
       background:var(--s2);border:1px solid var(--b);border-radius:8px;
-      overflow:hidden;margin:32px 0;
+      overflow:hidden;margin:24px 0;
     }
     .code-head{
       display:flex;justify-content:space-between;align-items:center;
-      padding:10px 16px;border-bottom:1px solid var(--b);
-      background:var(--s1);
+      padding:10px 16px;border-bottom:1px solid var(--b);background:var(--s1);
     }
     .code-file{font-family:var(--m);font-size:.68rem;color:var(--t2)}
     .code-lang{font-family:var(--m);font-size:.6rem;color:var(--t3);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:4px}
     .code-body{
-      padding:16px 20px;font-family:var(--m);font-size:.75rem;line-height:1.8;
+      padding:16px 20px;font-family:var(--m);font-size:.72rem;line-height:1.8;
       overflow-x:auto;color:var(--t2);
     }
-    .code-body .kw{color:var(--pink)} .code-body .fn{color:var(--blue)}
-    .code-body .st{color:var(--green)} .code-body .cm{color:var(--t3)}
-    .code-body .nb{color:var(--orange)} .code-body .op{color:var(--t)}
+    .code-body .kw{color:var(--pink)}.code-body .fn{color:var(--blue)}
+    .code-body .st{color:var(--green)}.code-body .cm{color:var(--t3)}
+    .code-body .nb{color:var(--orange)}.code-body .op{color:var(--t)}
     .code-out{
       padding:12px 20px;border-top:1px solid var(--b);
-      font-family:var(--m);font-size:.72rem;color:var(--green);
+      font-family:var(--m);font-size:.7rem;color:var(--green);
       background:rgba(61,220,132,.03);
     }
 
-    /* ═══ SECTION CELLS ═══ */
+    /* ═══ SHARED CELL STYLES ═══ */
     .cell{padding:48px 0;border-top:1px solid var(--b)}
-    .cell-label{
-      font-family:var(--m);font-size:.65rem;font-weight:500;
-      color:var(--t3);letter-spacing:.06em;text-transform:uppercase;
-      margin-bottom:20px;
-    }
+    .cell-label{font-family:var(--m);font-size:.65rem;font-weight:500;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
     .cell h3{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
     .cell p{font-size:.95rem;color:var(--t2);line-height:1.8;max-width:600px}
     .cell p strong{color:var(--t);font-weight:600}
     .cell p+p{margin-top:12px}
 
-    /* Metrics inline */
-    .metrics-inline{
-      display:flex;gap:24px;margin:24px 0;flex-wrap:wrap;
-    }
-    .mi{text-align:left}
-    .mi-v{font-family:var(--m);font-size:1.4rem;font-weight:700;color:var(--t)}
-    .mi-l{font-size:.7rem;color:var(--t3);margin-top:1px}
-
     /* Case study */
-    .case{
-      background:var(--s2);border:1px solid var(--b);border-radius:8px;
-      overflow:hidden;margin:32px 0;
-    }
-    .case-header{
-      padding:28px 28px 24px;
-      border-bottom:1px solid var(--b);
-    }
+    .case{background:var(--s2);border:1px solid var(--b);border-radius:8px;overflow:hidden;margin:24px 0}
+    .case-header{padding:28px 28px 24px;border-bottom:1px solid var(--b)}
     .case-badge{
       font-family:var(--m);font-size:.68rem;font-weight:500;
       color:var(--orange);background:rgba(255,171,64,.08);
@@ -176,13 +207,12 @@
     .case-item .big{font-size:1.2rem;font-weight:700;color:var(--t)}
     .case-foot{
       padding:14px 28px;border-top:1px solid var(--b);
-      display:flex;justify-content:space-between;align-items:center;
-      font-family:var(--m);font-size:.72rem;
+      display:flex;justify-content:space-between;align-items:center;font-family:var(--m);font-size:.72rem;
     }
     .case-foot .tools{color:var(--t3)}
     .case-foot a{font-weight:600}
 
-    /* Research items - minimal */
+    /* Research items */
     .ri{padding:20px 0;border-bottom:1px solid var(--b)}
     .ri:last-child{border-bottom:none}
     .ri h4{font-size:.92rem;font-weight:600;color:var(--t);margin-bottom:5px}
@@ -190,7 +220,7 @@
     .ri-t{font-family:var(--m);font-size:.7rem;color:var(--t3);margin-bottom:6px}
     .ri a{font-family:var(--m);font-size:.75rem;font-weight:500}
 
-    /* Expertise — simple prose */
+    /* Expertise */
     .exp-block{margin-bottom:20px}
     .exp-block h4{font-size:.82rem;font-weight:600;color:var(--t);margin-bottom:6px}
     .exp-block p{font-size:.88rem;color:var(--t2);line-height:1.75}
@@ -201,11 +231,7 @@
     .pub h4{font-size:.85rem;font-weight:600;line-height:1.5;color:var(--t);margin-bottom:2px}
     .pub-m{font-size:.78rem;color:var(--t3)}
     .pub-m strong{color:var(--blue);font-weight:500}
-    .pub-cat{
-      font-family:var(--m);font-size:.62rem;font-weight:500;color:var(--t3);
-      letter-spacing:.04em;text-transform:uppercase;
-      padding:8px 0 4px;border-bottom:1px solid var(--b);margin-top:20px;
-    }
+    .pub-cat{font-family:var(--m);font-size:.62rem;font-weight:500;color:var(--t3);letter-spacing:.04em;text-transform:uppercase;padding:8px 0 4px;border-bottom:1px solid var(--b);margin-top:20px}
     .pub-cat:first-child{margin-top:0}
 
     /* Edu */
@@ -221,284 +247,473 @@
     .gal img{width:100%;height:130px;object-fit:cover}
     .gal figcaption{padding:6px 8px;font-family:var(--m);font-size:.62rem;color:var(--t3)}
 
-    /* Footer */
-    .foot{
-      border-top:1px solid var(--b);padding:24px 0;margin-top:40px;
-      font-family:var(--m);font-size:.68rem;color:var(--t3);
-    }
+    .foot{border-top:1px solid var(--b);padding:24px 0;margin-top:40px;font-family:var(--m);font-size:.68rem;color:var(--t3)}
 
     /* Animations */
     .rv{opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s}
     .rv.v{opacity:1;transform:none}
 
-    /* ═══ MOBILE ═══ */
-    @media(max-width:860px){
+    @media(max-width:900px){
       .sidebar{display:none}
       .main{margin-left:0}
       .content{padding:48px 20px 60px}
+      .hero-split{grid-template-columns:1fr;gap:32px}
+      .term{max-height:300px}
       .case-grid{grid-template-columns:1fr}
-      .hero-cell h2{font-size:clamp(1.8rem,8vw,2.8rem)}
     }
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
   </style>
 </head>
 <body>
 
+<!-- ═══ BACKGROUND ═══ -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
 <div class="ide">
 
-  <!-- ═══ SIDEBAR ═══ -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-brand">
       <h1>M.H. Behboudi</h1>
       <p>Ph.D. Candidate (ABD)</p>
+      <div class="sb-socials">
+        <a class="sb-social" href="https://github.com/MHBehboudi" target="_blank" rel="noopener" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="8 9 5 12 8 15"/><polyline points="16 9 19 12 16 15"/><line x1="10" y1="19" x2="14" y2="5"/></svg>
+        </a>
+        <a class="sb-social" href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" target="_blank" rel="noopener" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="9" r="1.5" fill="currentColor" stroke="none"/><line x1="8" y1="11" x2="8" y2="17"/><path d="M12 17v-3.2a2.2 2.2 0 0 1 4.4 0V17"/></svg>
+        </a>
+        <a class="sb-social" href="https://scholar.google.com/citations?user=e81fVS0AAAAJ&hl=en" target="_blank" rel="noopener" title="Scholar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="12 5 3 9 12 13 21 9 12 5"/><path d="M7 12v4a5 5 0 0 0 10 0v-4"/><line x1="21" y1="9" x2="21" y2="14"/></svg>
+        </a>
+        <a class="sb-social" href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener" title="ORCID">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="9" y1="8" x2="9" y2="16"/><path d="M13 16v-5.5h2.1a2.75 2.75 0 1 1 0 5.5H13z"/></svg>
+        </a>
+      </div>
     </div>
-
     <div class="sb-section">
       <div class="sb-label">Explorer</div>
-      <a class="sb-link active" href="#hero" data-section="hero"><span class="sb-icon">◈</span> README.md</a>
-      <a class="sb-link" href="#foundation" data-section="foundation"><span class="sb-icon">◆</span> foundation_models.py</a>
+      <a class="sb-link active" href="#" data-tab="readme" onclick="switchTab('readme');return false"><span class="sb-icon">◈</span> README.md</a>
+      <a class="sb-link" href="#" data-tab="foundation" onclick="switchTab('foundation');return false"><span class="sb-icon">◆</span> foundation_models.py</a>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Sections</div>
       <a class="sb-link" href="#research" data-section="research"><span class="sb-icon">▸</span> research/</a>
       <a class="sb-link" href="#expertise" data-section="expertise"><span class="sb-icon">▸</span> expertise/</a>
       <a class="sb-link" href="#publications" data-section="publications"><span class="sb-icon">▸</span> publications/</a>
       <a class="sb-link" href="#education" data-section="education"><span class="sb-icon">○</span> education.md</a>
-      <a class="sb-link" href="#gallery" data-section="gallery"><span class="sb-icon">□</span> gallery/</a>
     </div>
-
     <div class="sb-spacer"></div>
-
-    <div class="sb-foot">
-      <div>UT Dallas · Callier Center</div>
-      <div class="sb-links">
-        <a href="https://github.com/MHBehboudi" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" target="_blank">LinkedIn</a>
-        <a href="https://scholar.google.com/citations?user=e81fVS0AAAAJ&hl=en" target="_blank">Scholar</a>
-      </div>
-    </div>
+    <div class="sb-foot">UT Dallas · Callier Center</div>
   </aside>
 
-  <!-- ═══ MAIN ═══ -->
+  <!-- MAIN -->
   <div class="main">
     <div class="tabs">
-      <div class="tab active"><span class="tab-icon">◈</span> README.md</div>
-      <div class="tab"><span class="tab-icon">◆</span> foundation_models.py</div>
+      <div class="tab active" data-tab="readme" onclick="switchTab('readme')"><span class="tab-icon">◈</span> README.md</div>
+      <div class="tab" data-tab="foundation" onclick="switchTab('foundation')"><span class="tab-icon">◆</span> foundation_models.py</div>
     </div>
 
-    <div class="content">
+    <!-- ═══ PANEL 1: README ═══ -->
+    <div class="panel active" id="panel-readme">
+      <div class="content">
 
-      <!-- HERO -->
-      <div class="hero-cell" id="hero">
-        <h2>Mohammad Hossein Behboudi<br><span class="dim">Biosignal × ML × Foundation Models</span></h2>
-        <p class="tagline">
-          I build the computational infrastructure that turns raw physiological signals into <strong>foundation model representations</strong> transferable across subjects, devices, and downstream tasks—from <strong>BCI</strong> to clinical diagnostics to wearable health.
-        </p>
-        <div class="hero-btns">
-          <a class="hb hb-p" href="#foundation">→ See Foundation Model Work</a>
-          <a class="hb hb-s" href="mailto:Behboudi@UTDallas.edu">Contact</a>
+        <!-- HERO split -->
+        <div class="hero-split" id="hero">
+          <div class="hero-left">
+            <h2 class="hero-name">Mohammad Hossein<br>Behboudi<br><span class="dim">Biosignal × ML × Foundation Models</span></h2>
+            <p class="hero-tagline">
+              I build the computational infrastructure that turns raw physiological signals into <strong>foundation model representations</strong> transferable across subjects, devices, and any downstream task.
+            </p>
+            <div class="hero-btns">
+              <a class="hb hb-p" href="#" onclick="switchTab('foundation');return false">→ Foundation Model Work</a>
+              <a class="hb hb-s" href="mailto:Behboudi@UTDallas.edu">Contact</a>
+            </div>
+            <div class="hero-socials">
+              <a class="hs" href="https://github.com/MHBehboudi" target="_blank" title="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="8 9 5 12 8 15"/><polyline points="16 9 19 12 16 15"/><line x1="10" y1="19" x2="14" y2="5"/></svg></a>
+              <a class="hs" href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="9" r="1.5" fill="currentColor" stroke="none"/><line x1="8" y1="11" x2="8" y2="17"/><path d="M12 17v-3.2a2.2 2.2 0 0 1 4.4 0V17"/></svg></a>
+              <a class="hs" href="https://scholar.google.com/citations?user=e81fVS0AAAAJ&hl=en" target="_blank" title="Scholar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="12 5 3 9 12 13 21 9 12 5"/><path d="M7 12v4a5 5 0 0 0 10 0v-4"/><line x1="21" y1="9" x2="21" y2="14"/></svg></a>
+              <a class="hs" href="https://orcid.org/0000-0003-1335-3617" target="_blank" title="ORCID"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="9" y1="8" x2="9" y2="16"/><path d="M13 16v-5.5h2.1a2.75 2.75 0 1 1 0 5.5H13z"/></svg></a>
+            </div>
+            <div class="hero-metrics">
+              <div class="hm"><div class="hm-v">1st</div><div class="hm-l">LibriBrain · Long Acq.</div></div>
+              <div class="hm"><div class="hm-v">6+</div><div class="hm-l">Publications</div></div>
+              <div class="hm"><div class="hm-v">95%</div><div class="hm-l">Diagnostic Acc.</div></div>
+              <div class="hm"><div class="hm-v">500GB+</div><div class="hm-l">Data Processed</div></div>
+            </div>
+          </div>
+
+          <!-- TYPING TERMINAL -->
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
+              <div class="term-title">foundation_pipeline.py</div>
+            </div>
+            <div class="term-body" id="terminal"></div>
+          </div>
         </div>
 
-        <div class="metrics-inline" style="margin-top:36px">
-          <div class="mi"><div class="mi-v">1st</div><div class="mi-l">LibriBrain · Long Acquisition Track</div></div>
-          <div class="mi"><div class="mi-v">6+</div><div class="mi-l">Publications</div></div>
-          <div class="mi"><div class="mi-v">95%</div><div class="mi-l">Diagnostic Accuracy</div></div>
-          <div class="mi"><div class="mi-v">500GB+</div><div class="mi-l">Signal Data Processed</div></div>
+        <!-- ABOUT -->
+        <div class="cell rv">
+          <div class="cell-label">about</div>
+          <p>Ph.D. candidate in <strong>Cognition &amp; Neuroscience</strong> at UT Dallas with an <strong>Electrical Engineering</strong> foundation. I specialize in the full computational stack for physiological signals: universal data readers across formats (EDF, BDF, HDF5, BrainVision), automated preprocessing handling cross-device variability, and foundation model architectures that learn transferable representations from unlabeled data for any downstream task—BCI, clinical diagnostics, or wearable health.</p>
+          <p>I've built a <strong>novel connectivity algorithm (MDPC)</strong> adopted by multiple research groups, engineered automated pipelines processing <strong>500+ GB</strong> across heterogeneous recording systems, and designed a <strong>clinical diagnostic system achieving 95% accuracy</strong> from single-channel recordings.</p>
         </div>
+
+        <!-- RESEARCH -->
+        <div class="cell rv" id="research">
+          <div class="cell-label">research</div>
+          <h3>Selected Work</h3>
+          <div class="ri">
+            <h4>Novel Cross-Frequency Connectivity Algorithm</h4>
+            <p>Developed Time-Lagged Cross-Frequency MDPC to characterize dynamic information flow across brain networks. Full tri-language pipeline (Python, MATLAB, R) with automated preprocessing, spectral decomposition, and mixed-effects statistical modeling.</p>
+            <div class="ri-t">MDPC · Wavelets · PLV/wPLI · Graph Theory · Mixed-Effects</div>
+            <a href="https://github.com/MHBehboudi/EEG_CrossFrequency_MDPC" target="_blank">GitHub →</a>
+          </div>
+          <div class="ri">
+            <h4>AI-Driven Sleep Apnea Diagnosis</h4>
+            <p>Clinical diagnostic system using complexity features (fractals, Hurst exponent, entropy measures) with mRMR feature selection and SVM/KNN from single-channel recordings. 95% accuracy. Two peer-reviewed publications.</p>
+            <div class="ri-t">Entropy · Complexity · mRMR · SVM · Clinical Data</div>
+            <a href="https://doi.org/10.1007/978-3-031-06242-1_8" target="_blank">Paper →</a>
+          </div>
+          <div class="ri">
+            <h4>Unified Biosignal Data Infrastructure</h4>
+            <p>Universal data readers and preprocessing pipelines handling EDF, BDF, BrainVision, and HDF5 across multiple recording systems with different sampling rates, channel counts, and reference schemes. Automated artifact detection for 100+ participants.</p>
+            <div class="ri-t">Python · MNE · HDF5 · Multi-format · Cross-device</div>
+            <a href="https://github.com/MHBehboudi" target="_blank">GitHub →</a>
+          </div>
+          <div class="ri">
+            <h4>Mobile Biosignal Collection Platform</h4>
+            <p>Portable stimulus and data synchronization system for collecting neural recordings outside controlled lab environments.</p>
+            <div class="ri-t">Python · Tkinter · Portable Hardware</div>
+            <a href="https://github.com/MHBehboudi/mobile-eeg-stimulus-presenter" target="_blank">GitHub →</a>
+          </div>
+        </div>
+
+        <!-- EXPERTISE -->
+        <div class="cell rv" id="expertise">
+          <div class="cell-label">expertise</div>
+          <h3>Technical Stack</h3>
+          <div class="exp-block"><h4>Signal Processing &amp; Data Engineering</h4><p>Multi-channel preprocessing, artifact detection (ICA, spectral, threshold), cross-device normalization, montage mapping, time-frequency decomposition (FFT, STFT, wavelets), connectivity (coherence, PLV, wPLI), cross-frequency coupling, graph theory, complexity &amp; entropy features. Universal data readers for EDF/BDF/HDF5/BrainVision.</p></div>
+          <div class="exp-block"><h4>Foundation Models &amp; Deep Learning</h4><p>Self-supervised pretraining (masked modeling, contrastive learning), VQ-VAE tokenization, Transformer encoders, Graph Neural Networks, 1D-CNNs, LSTMs. Variable-channel handling via attention masks, mixed-precision training, experiment tracking, HPC workflows.</p></div>
+          <div class="exp-block"><h4>Classical ML &amp; Statistics</h4><p>SVM, KNN, ensemble methods (RUSBoost), feature engineering &amp; selection (mRMR, mutual information), mixed-effects models, ANOVA/MANOVA, permutation &amp; bootstrap inference, power analysis, IRB-compliant protocol design.</p></div>
+          <div class="exp-block"><h4>Languages &amp; Infrastructure</h4><p>Python (PyTorch, MNE, scikit-learn, SciPy, pandas, h5py), MATLAB (EEGLAB, FieldTrip), R (lme4, tidyverse), Git, Bash, SLURM HPC, FreeSurfer, SPM.</p></div>
+        </div>
+
+        <!-- PUBLICATIONS -->
+        <div class="cell rv" id="publications">
+          <div class="cell-label">publications</div>
+          <h3>Research Output</h3>
+          <div class="pub-cat">Published</div>
+          <div class="pub"><h4>Neural oscillations during predictive sentence processing in young children.</h4><p class="pub-m">Benítez-Barrera, <strong>Behboudi</strong>, Maguire (2024). <em>Brain &amp; Language</em> · <a href="https://doi.org/10.1016/j.bandl.2024.105437" target="_blank">doi</a></p></div>
+          <div class="pub"><h4>Taking culture and context into account: SES and brain development.</h4><p class="pub-m">Schneider, <strong>Behboudi</strong>, Maguire (2024). <em>Brain Sciences</em> · <a href="https://doi.org/10.3390/brainsci14040392" target="_blank">doi</a></p></div>
+          <div class="pub"><h4>Rethinking household size and children's language environment.</h4><p class="pub-m">Poudel et al. incl. <strong>Behboudi</strong> (2024). <em>Dev. Psychology</em> · <a href="https://doi.org/10.1037/dev0001650" target="_blank">doi</a></p></div>
+          <div class="pub"><h4>Gamma oscillation during sentence processing in early adolescence.</h4><p class="pub-m"><strong>Behboudi</strong>, Castro, Chalamalasetty, Maguire (2023). <em>Brain Sciences</em> · <a href="https://doi.org/10.3390/brainsci13121639" target="_blank">doi</a></p></div>
+          <div class="pub"><h4>Sleep apnea diagnosis using complexity features.</h4><p class="pub-m">Gholami, <strong>Behboudi</strong> et al. (2022). <em>Springer LNCS</em> · <a href="https://doi.org/10.1007/978-3-031-06242-1_8" target="_blank">doi</a></p></div>
+          <div class="pub"><h4>Diagnosis of Sleep Apnea using different entropy measures.</h4><p class="pub-m">Gholami, <strong>Behboudi</strong> et al. (2021). <em>IEEE ICSPIS</em> · <a href="https://doi.org/10.1109/ICSPIS54653.2021.9729367" target="_blank">doi</a></p></div>
+          <div class="pub-cat">Under Review</div>
+          <div class="pub"><h4>Novel word inferencing in noisy environments for non-native speakers.</h4><p class="pub-m">Benítez-Barrera, <strong>Behboudi</strong> et al. <em>Language and Speech</em></p></div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="cell rv" id="education">
+          <div class="cell-label">education</div>
+          <div class="edu"><h4>Ph.D., Cognition &amp; Neuroscience</h4><div class="edu-sub">University of Texas at Dallas · Callier Center</div><div class="edu-yr">2021 — 2026 (expected)</div></div>
+          <div class="edu"><h4>M.Sc., Applied Cognition &amp; Neuroscience</h4><div class="edu-sub">University of Texas at Dallas</div><div class="edu-yr">2021 — 2024</div></div>
+          <div class="edu"><h4>B.Sc., Electrical Engineering</h4><div class="edu-sub">K. N. Toosi University of Technology, Tehran</div><div class="edu-yr">2015 — 2020</div></div>
+        </div>
+
+        <!-- GALLERY -->
+        <div class="cell rv" id="gallery">
+          <div class="cell-label">conferences</div>
+          <div class="gal">
+            <figure><img src="SFN_2024.jpg" alt="SfN 2024"><figcaption>SfN 2024 · Chicago</figcaption></figure>
+            <figure><img src="profile.jpg" alt="Flux 2023"><figcaption>Flux 2023</figcaption></figure>
+            <figure><img src="CDS_2022.jpg" alt="CDS 2022"><figcaption>CDS 2022</figcaption></figure>
+            <figure><img src="Mobile_EEG_Setup.jpg" alt="Mobile Setup"><figcaption>Mobile Setup</figcaption></figure>
+          </div>
+        </div>
+        <div class="foot">&copy; 2025 M.H. Behboudi</div>
       </div>
+    </div>
 
-      <!-- REAL CODE from their notebook -->
-      <div class="code-block rv" id="foundation">
-        <div class="code-head">
-          <span class="code-file">foundation_dataset.py</span>
-          <span class="code-lang">Python · PyTorch</span>
-        </div>
-        <div class="code-body"><span class="kw">class</span> <span class="fn">EEGFoundationDataset</span>(Dataset):
-    <span class="cm">"""Unified loader for heterogeneous biosignal data.</span>
-    <span class="cm">   Handles variable channels, sampling rates, and devices."""</span>
+    <!-- ═══ PANEL 2: FOUNDATION MODELS ═══ -->
+    <div class="panel" id="panel-foundation">
+      <div class="content">
+        <div class="cell-label" style="padding-top:20px">foundation_models.py</div>
+        <h3 style="font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:10px">Foundation Models for Neural Signal Decoding</h3>
+        <p style="font-size:.95rem;color:var(--t2);line-height:1.8;margin-bottom:24px">End-to-end deep learning system: <strong style="color:var(--t)">self-supervised pretraining</strong> on unlabeled biosignal data → <strong style="color:var(--t)">VQ-VAE tokenization</strong> → <strong style="color:var(--t)">Transformer encoder</strong> with <strong style="color:var(--t)">GNN spatial module</strong> for downstream classification. Designed to generalize across subjects, recording devices, and signal modalities.</p>
 
-    <span class="kw">def</span> <span class="fn">__init__</span>(self, h5_files, window_sec=<span class="nb">10.0</span>, overlap=<span class="nb">0.5</span>):
-        self.window_samples = <span class="fn">int</span>(window_sec <span class="op">*</span> target_sfreq)
-        self.index = []
-
-        <span class="kw">for</span> f <span class="kw">in</span> h5_files:
-            <span class="kw">with</span> h5py.<span class="fn">File</span>(f, <span class="st">'r'</span>) <span class="kw">as</span> h5:
-                n_chan, n_samp = h5[grp][<span class="st">'data'</span>].shape
-                <span class="kw">for</span> start <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">0</span>, n_samp - self.window_samples, step):
-                    self.index.<span class="fn">append</span>({
-                        <span class="st">'filepath'</span>: f, <span class="st">'start'</span>: start,
-                        <span class="st">'n_channels'</span>: n_chan
-                    })
-
-<span class="kw">def</span> <span class="fn">eeg_collate_fn</span>(batch):
-    <span class="cm">"""Pad to max channels, create attention mask."""</span>
-    max_ch = <span class="fn">max</span>(b[<span class="st">'n_channels'</span>] <span class="kw">for</span> b <span class="kw">in</span> batch)
-    padded = torch.<span class="fn">zeros</span>(len(batch), max_ch, window_samples)
-    mask   = torch.<span class="fn">zeros</span>(len(batch), max_ch)
-    <span class="kw">for</span> i, item <span class="kw">in</span> <span class="fn">enumerate</span>(batch):
-        padded[i, :item[<span class="st">'n_channels'</span>]] = item[<span class="st">'data'</span>]
-        mask[i, :item[<span class="st">'n_channels'</span>]] = <span class="nb">1.0</span>
-    <span class="kw">return</span> {<span class="st">'data'</span>: padded, <span class="st">'channel_mask'</span>: mask}</div>
-        <div class="code-out">▸ Built index: 5794 windows from 6 files
-▸ Batch shape: torch.Size([4, 14, 1000]) · Mask: torch.Size([4, 14])</div>
-      </div>
-
-      <!-- Foundation Models Case Study -->
-      <div class="cell rv">
-        <div class="case">
+        <div class="case rv">
           <div class="case-header">
             <div class="case-badge">🏆 LibriBrain — Long Acquisition Track Winner</div>
-            <h3>Foundation Models for Neural Signal Decoding</h3>
-            <p>
-              End-to-end deep learning system: <strong>self-supervised pretraining</strong> on unlabeled biosignal data to learn transferable representations, then fine-tuned with <strong>Transformer encoders</strong> and <strong>Graph Neural Networks</strong> (capturing sensor topology) for downstream neural state classification. Designed to generalize across subjects, recording devices, and signal conditions.
-            </p>
+            <h3>Architecture &amp; Results</h3>
           </div>
           <div class="case-grid">
-            <div class="case-item"><h4>Architecture</h4><p>Self-supervised pretraining → 1D-CNN tokenizer → Transformer encoder → GNN spatial module</p></div>
-            <div class="case-item"><h4>Result</h4><div class="big">Macro-F1 = 0.85</div><p>Competitive international benchmark</p></div>
+            <div class="case-item"><h4>Architecture</h4><p>Self-supervised pretraining → 1D-CNN tokenizer → Transformer encoder → GNN (sensor topology)</p></div>
+            <div class="case-item"><h4>Result</h4><div class="big">Macro-F1 = 0.85</div><p>International competitive benchmark</p></div>
             <div class="case-item"><h4>Data Challenges</h4><p>Cross-subject normalization, variable-length recordings, noisy labels, heterogeneous sessions</p></div>
-            <div class="case-item"><h4>Infrastructure</h4><p>PyTorch distributed training, SLURM HPC, versioned preprocessing, experiment tracking</p></div>
+            <div class="case-item"><h4>Infrastructure</h4><p>PyTorch distributed, SLURM HPC, versioned preprocessing, experiment tracking</p></div>
           </div>
           <div class="case-foot">
             <span class="tools">PyTorch · Self-Supervised · Transformers · GNNs · HPC</span>
             <a href="https://github.com/MHBehboudi/Neural-Decoding-of-Speech/tree/main" target="_blank">GitHub →</a>
           </div>
         </div>
+
+        <!-- Data loader code -->
+        <div class="code-block rv">
+          <div class="code-head"><span class="code-file">dataset.py — Unified HDF5 Foundation Dataset</span><span class="code-lang">PyTorch</span></div>
+          <div class="code-body"><span class="kw">class</span> <span class="fn">EEGFoundationDataset</span>(Dataset):
+    <span class="cm">"""Serves windowed biosignal patches from heterogeneous HDF5 files.</span>
+    <span class="cm">   Handles variable channels, sampling rates, devices."""</span>
+
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, h5_files, window_sec=<span class="nb">10.0</span>, overlap=<span class="nb">0.5</span>,
+                 target_sfreq=<span class="nb">100.0</span>):
+        self.window_samples = <span class="fn">int</span>(window_sec <span class="op">*</span> target_sfreq)
+        self.step = <span class="fn">int</span>(self.window_samples <span class="op">*</span> (<span class="nb">1</span> - overlap))
+        self.index = []
+
+        <span class="kw">for</span> path <span class="kw">in</span> h5_files:
+            <span class="kw">with</span> h5py.<span class="fn">File</span>(path, <span class="st">'r'</span>) <span class="kw">as</span> f:
+                grp = f[sub_key][ses_key]
+                n_chan, n_samp = grp[<span class="st">'data'</span>].shape
+                <span class="kw">for</span> start <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">0</span>, n_samp - self.window_samples, self.step):
+                    self.index.<span class="fn">append</span>({
+                        <span class="st">'filepath'</span>: path,
+                        <span class="st">'start'</span>: start,
+                        <span class="st">'n_channels'</span>: n_chan
+                    })
+
+    <span class="kw">def</span> <span class="fn">__getitem__</span>(self, idx):
+        info = self.index[idx]
+        <span class="cm"># Open HDF5 lazily — fork-safe for DataLoader workers</span>
+        <span class="kw">with</span> h5py.<span class="fn">File</span>(info[<span class="st">'filepath'</span>], <span class="st">'r'</span>) <span class="kw">as</span> f:
+            data = f[grp][<span class="st">'data'</span>][:, start:end]
+        <span class="kw">return</span> {<span class="st">'data'</span>: torch.<span class="fn">from_numpy</span>(data),
+                <span class="st">'n_channels'</span>: info[<span class="st">'n_channels'</span>]}</div>
+          <div class="code-out">▸ Built index: 5794 windows from 6 files</div>
+        </div>
+
+        <!-- Collate + tokenizer code -->
+        <div class="code-block rv">
+          <div class="code-head"><span class="code-file">collate.py — Variable-Channel Attention Mask</span><span class="code-lang">PyTorch</span></div>
+          <div class="code-body"><span class="kw">def</span> <span class="fn">eeg_collate_fn</span>(batch):
+    <span class="cm">"""Pad to max channels in batch, create attention mask.</span>
+    <span class="cm">   Enables Transformer to handle mixed-montage data."""</span>
+    max_ch = <span class="fn">max</span>(b[<span class="st">'n_channels'</span>] <span class="kw">for</span> b <span class="kw">in</span> batch)
+    B = <span class="fn">len</span>(batch)
+    padded = torch.<span class="fn">zeros</span>(B, max_ch, window_samples)
+    mask   = torch.<span class="fn">zeros</span>(B, max_ch)
+
+    <span class="kw">for</span> i, item <span class="kw">in</span> <span class="fn">enumerate</span>(batch):
+        n = item[<span class="st">'n_channels'</span>]
+        padded[i, :n] = item[<span class="st">'data'</span>]
+        mask[i, :n]   = <span class="nb">1.0</span>   <span class="cm"># real channels</span>
+
+    <span class="kw">return</span> {<span class="st">'data'</span>: padded, <span class="st">'channel_mask'</span>: mask}</div>
+          <div class="code-out">▸ Batch: torch.Size([4, 14, 1000]) · Mask: torch.Size([4, 14])
+▸ Channels per sample: tensor([14., 14., 14., 14.])</div>
+        </div>
+
+        <!-- Tokenizer concept -->
+        <div class="code-block rv">
+          <div class="code-head"><span class="code-file">tokenizer.py — VQ-VAE Neural Tokenizer</span><span class="code-lang">PyTorch</span></div>
+          <div class="code-body"><span class="kw">class</span> <span class="fn">NeuralTokenizer</span>(nn.Module):
+    <span class="cm">"""VQ-VAE tokenizer: learns discrete codebook from</span>
+    <span class="cm">   spectral representations of biosignal patches.</span>
+    <span class="cm">   Target = Fourier spectrum (not raw signal)."""</span>
+
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, codebook_size=<span class="nb">8192</span>, codebook_dim=<span class="nb">64</span>):
+        self.encoder  = <span class="fn">TemporalConvEncoder</span>(d_model=<span class="nb">256</span>)
+        self.codebook = nn.<span class="fn">Embedding</span>(codebook_size, codebook_dim)
+        self.decoder  = <span class="fn">TransformerDecoder</span>(n_layers=<span class="nb">4</span>)
+        self.amp_head = nn.<span class="fn">Linear</span>(codebook_dim, fft_bins)
+        self.phs_head = nn.<span class="fn">Linear</span>(codebook_dim, fft_bins)
+
+    <span class="kw">def</span> <span class="fn">quantize</span>(self, z):
+        <span class="cm"># L2-normalized cosine similarity (BEiT v2)</span>
+        z_norm = F.<span class="fn">normalize</span>(z, dim=-<span class="nb">1</span>)
+        cb_norm = F.<span class="fn">normalize</span>(self.codebook.weight, dim=-<span class="nb">1</span>)
+        indices = torch.<span class="fn">argmin</span>(
+            torch.<span class="fn">cdist</span>(z_norm, cb_norm), dim=-<span class="nb">1</span>)
+        <span class="kw">return</span> indices  <span class="cm"># straight-through estimator</span></div>
+        </div>
+
+        <div class="code-block rv">
+          <div class="code-head"><span class="code-file">pretrain.py — Self-Supervised Masked Modeling</span><span class="code-lang">PyTorch</span></div>
+          <div class="code-body"><span class="cm"># Stage 2: Masked signal modeling</span>
+<span class="cm"># Predict discrete codebook indices for masked patches</span>
+<span class="kw">def</span> <span class="fn">train_step</span>(model, tokenizer, batch, mask_ratio=<span class="nb">0.65</span>):
+    patches = <span class="fn">patchify</span>(batch[<span class="st">'data'</span>])  <span class="cm"># (B, N, patch_len)</span>
+    <span class="kw">with</span> torch.<span class="fn">no_grad</span>():
+        targets = tokenizer.<span class="fn">quantize</span>(
+            tokenizer.<span class="fn">encoder</span>(patches))  <span class="cm"># codebook indices</span>
+
+    mask = <span class="fn">random_mask</span>(patches, ratio=mask_ratio)
+    visible = patches[~mask]
+    spatial_emb = <span class="fn">get_electrode_embedding</span>(batch[<span class="st">'montage'</span>])
+    logits = model(visible, spatial_emb)  <span class="cm"># (B, N_masked, 8192)</span>
+
+    loss = F.<span class="fn">cross_entropy</span>(
+        logits.view(-<span class="nb">1</span>, <span class="nb">8192</span>), targets[mask].view(-<span class="nb">1</span>))
+    <span class="kw">return</span> loss</div>
+          <div class="code-out">▸ Epoch 47/100 | Loss: 3.42 | Codebook util: 94.2% | LR: 1.2e-4</div>
+        </div>
+
+        <div class="foot">&copy; 2025 M.H. Behboudi</div>
       </div>
-
-      <!-- ABOUT -->
-      <div class="cell rv" id="about-cell">
-        <div class="cell-label">about</div>
-        <p>
-          Ph.D. candidate in <strong>Cognition &amp; Neuroscience</strong> at UT Dallas with an <strong>Electrical Engineering</strong> foundation. I specialize in the full computational stack for physiological signals: universal data readers across formats (EDF, BDF, HDF5, BrainVision), automated preprocessing that handles cross-device variability, and foundation model architectures that learn transferable representations from unlabeled data for any downstream task.
-        </p>
-        <p>
-          I've built a <strong>novel cross-frequency connectivity algorithm (MDPC)</strong> adopted by multiple research groups, engineered automated pipelines processing <strong>500+ GB</strong> of data across heterogeneous recording systems, and designed a <strong>clinical diagnostic system achieving 95% accuracy</strong> from single-channel recordings. My work spans lab-grade and portable devices, pediatric through adult populations, and real-world signal conditions where nothing is clean.
-        </p>
-      </div>
-
-      <!-- RESEARCH -->
-      <div class="cell rv" id="research">
-        <div class="cell-label">research</div>
-        <h3>Selected Work</h3>
-
-        <div class="ri">
-          <h4>Novel Cross-Frequency Connectivity Algorithm</h4>
-          <p>Developed Time-Lagged Cross-Frequency MDPC to characterize dynamic information flow across brain networks. Full tri-language pipeline (Python, MATLAB, R) with automated preprocessing, spectral decomposition, and mixed-effects statistical modeling.</p>
-          <div class="ri-t">MDPC · Wavelets · PLV/wPLI · Graph Theory · Mixed-Effects</div>
-          <a href="https://github.com/MHBehboudi/EEG_CrossFrequency_MDPC" target="_blank">GitHub →</a>
-        </div>
-
-        <div class="ri">
-          <h4>AI-Driven Sleep Apnea Diagnosis</h4>
-          <p>Clinical diagnostic system using complexity features (fractals, Hurst exponent, entropy measures) with mRMR feature selection and SVM/KNN from single-channel recordings. 95% accuracy. Two peer-reviewed publications.</p>
-          <div class="ri-t">Entropy · Complexity · mRMR · SVM · Clinical EEG</div>
-          <a href="https://doi.org/10.1007/978-3-031-06242-1_8" target="_blank">Paper →</a>
-        </div>
-
-        <div class="ri">
-          <h4>Unified Biosignal Data Infrastructure</h4>
-          <p>Built universal data readers and preprocessing pipelines handling EDF, BDF, BrainVision, and HDF5 formats across multiple recording systems (Neuroscan, Neuroelectrics) with different sampling rates, channel counts, and reference schemes. Automated artifact detection for 100+ participants.</p>
-          <div class="ri-t">Python · MNE · HDF5 · Multi-format · Cross-device</div>
-          <a href="https://github.com/MHBehboudi" target="_blank">GitHub →</a>
-        </div>
-
-        <div class="ri">
-          <h4>Mobile Biosignal Collection Platform</h4>
-          <p>Portable stimulus and data synchronization system for collecting neural recordings outside controlled lab environments.</p>
-          <div class="ri-t">Python · Tkinter · Portable Hardware · Data Sync</div>
-          <a href="https://github.com/MHBehboudi/mobile-eeg-stimulus-presenter" target="_blank">GitHub →</a>
-        </div>
-      </div>
-
-      <!-- EXPERTISE -->
-      <div class="cell rv" id="expertise">
-        <div class="cell-label">expertise</div>
-        <h3>Technical Stack</h3>
-
-        <div class="exp-block">
-          <h4>Signal Processing &amp; Data Engineering</h4>
-          <p>Multi-channel preprocessing, artifact detection (ICA, spectral, threshold), cross-device normalization, montage mapping, time-frequency decomposition (FFT, STFT, Morlet wavelets), connectivity measures (coherence, PLV, wPLI), cross-frequency coupling, graph theory network metrics, complexity &amp; entropy features. Universal data readers for EDF/BDF/HDF5/BrainVision.</p>
-        </div>
-        <div class="exp-block">
-          <h4>Foundation Models &amp; Deep Learning</h4>
-          <p>Self-supervised pretraining (masked modeling, contrastive learning), VQ-VAE tokenization, Transformer encoders, Graph Neural Networks, 1D-CNNs, LSTMs. Cross-subject generalization, variable-channel handling via attention masks, mixed-precision training, experiment tracking.</p>
-        </div>
-        <div class="exp-block">
-          <h4>Classical ML &amp; Statistics</h4>
-          <p>SVM, KNN, ensemble methods (RUSBoost), feature engineering &amp; selection (mRMR, mutual information), mixed-effects models, ANOVA/MANOVA, permutation &amp; bootstrap inference, power analysis, IRB-compliant protocol design.</p>
-        </div>
-        <div class="exp-block">
-          <h4>Languages &amp; Infrastructure</h4>
-          <p>Python (PyTorch, MNE, scikit-learn, SciPy, pandas, h5py), MATLAB (EEGLAB, FieldTrip), R (lme4, tidyverse), Git, Bash, SLURM HPC, FreeSurfer, SPM.</p>
-        </div>
-      </div>
-
-      <!-- PUBLICATIONS -->
-      <div class="cell rv" id="publications">
-        <div class="cell-label">publications</div>
-        <h3>Research Output</h3>
-
-        <div class="pub-cat">Published</div>
-        <div class="pub"><h4>Neural oscillations during predictive sentence processing in young children.</h4><p class="pub-m">Benítez-Barrera, <strong>Behboudi</strong>, Maguire (2024). <em>Brain &amp; Language</em> · <a href="https://doi.org/10.1016/j.bandl.2024.105437" target="_blank">doi</a></p></div>
-        <div class="pub"><h4>Taking culture and context into account: SES and brain development.</h4><p class="pub-m">Schneider, <strong>Behboudi</strong>, Maguire (2024). <em>Brain Sciences</em> · <a href="https://doi.org/10.3390/brainsci14040392" target="_blank">doi</a></p></div>
-        <div class="pub"><h4>Rethinking household size and children's language environment.</h4><p class="pub-m">Poudel et al. incl. <strong>Behboudi</strong> (2024). <em>Dev. Psychology</em> · <a href="https://doi.org/10.1037/dev0001650" target="_blank">doi</a></p></div>
-        <div class="pub"><h4>Gamma oscillation during sentence processing in early adolescence.</h4><p class="pub-m"><strong>Behboudi</strong>, Castro, Chalamalasetty, Maguire (2023). <em>Brain Sciences</em> · <a href="https://doi.org/10.3390/brainsci13121639" target="_blank">doi</a></p></div>
-        <div class="pub"><h4>Sleep apnea diagnosis using complexity features.</h4><p class="pub-m">Gholami, <strong>Behboudi</strong> et al. (2022). <em>Springer LNCS</em> · <a href="https://doi.org/10.1007/978-3-031-06242-1_8" target="_blank">doi</a></p></div>
-        <div class="pub"><h4>Diagnosis of Sleep Apnea using different entropy measures.</h4><p class="pub-m">Gholami, <strong>Behboudi</strong> et al. (2021). <em>IEEE ICSPIS</em> · <a href="https://doi.org/10.1109/ICSPIS54653.2021.9729367" target="_blank">doi</a></p></div>
-        <div class="pub-cat">Under Review / In Prep</div>
-        <div class="pub"><h4>Novel word inferencing in noisy environments for non-native speakers.</h4><p class="pub-m">Benítez-Barrera, <strong>Behboudi</strong> et al. <em>Language and Speech</em></p></div>
-        <div class="pub"><h4>Time-Lagged Multi-Oscillatory Network during speech perception.</h4><p class="pub-m"><strong>Behboudi</strong>, Benítez-Barrera, Maguire</p></div>
-        <div class="pub"><h4>Large-Scale Brain Networks during semantic &amp; syntactic error processing.</h4><p class="pub-m"><strong>Behboudi</strong>, Schneider, Maguire</p></div>
-      </div>
-
-      <!-- EDUCATION -->
-      <div class="cell rv" id="education">
-        <div class="cell-label">education</div>
-        <div class="edu"><h4>Ph.D., Cognition &amp; Neuroscience</h4><div class="edu-sub">University of Texas at Dallas · Callier Center</div><div class="edu-yr">2021 — 2026 (expected)</div></div>
-        <div class="edu"><h4>M.Sc., Applied Cognition &amp; Neuroscience</h4><div class="edu-sub">University of Texas at Dallas</div><div class="edu-yr">2021 — 2024</div></div>
-        <div class="edu"><h4>B.Sc., Electrical Engineering</h4><div class="edu-sub">K. N. Toosi University of Technology, Tehran</div><div class="edu-yr">2015 — 2020</div></div>
-      </div>
-
-      <!-- GALLERY -->
-      <div class="cell rv" id="gallery">
-        <div class="cell-label">conferences</div>
-        <div class="gal">
-          <figure><img src="SFN_2024.jpg" alt="SfN 2024"><figcaption>SfN 2024 · Chicago</figcaption></figure>
-          <figure><img src="profile.jpg" alt="Flux 2023"><figcaption>Flux 2023</figcaption></figure>
-          <figure><img src="CDS_2022.jpg" alt="CDS 2022"><figcaption>CDS 2022</figcaption></figure>
-          <figure><img src="Mobile_EEG_Setup.jpg" alt="Mobile Setup"><figcaption>Mobile Setup</figcaption></figure>
-        </div>
-      </div>
-
-      <div class="foot">&copy; 2025 M.H. Behboudi</div>
-
     </div>
+
   </div>
 </div>
 
 <script>
-// Active sidebar link tracking
-const links = document.querySelectorAll('.sb-link[data-section]');
-const sections = {};
-links.forEach(l => {
-  const id = l.dataset.section;
-  const el = document.getElementById(id);
-  if (el) sections[id] = { el, link: l };
-});
+// ═══ TAB SWITCHING ═══
+function switchTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.sb-link[data-tab]').forEach(l => l.classList.remove('active'));
+  const panel = document.getElementById('panel-' + name);
+  if (panel) panel.classList.add('active');
+  document.querySelectorAll(`.tab[data-tab="${name}"]`).forEach(t => t.classList.add('active'));
+  document.querySelectorAll(`.sb-link[data-tab="${name}"]`).forEach(l => l.classList.add('active'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Re-observe reveals in new panel
+  panel.querySelectorAll('.rv').forEach(el => robs.observe(el));
+}
 
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting && sections[e.target.id]) {
-      links.forEach(l => l.classList.remove('active'));
-      sections[e.target.id].link.classList.add('active');
+// ═══ TERMINAL TYPING ═══
+const lines = [
+  {t:'cm', s:'# 1. Universal data reader — EDF/BDF/HDF5'},
+  {t:'c', s:'<span class="kw">import</span> h5py, numpy <span class="kw">as</span> np'},
+  {t:'c', s:'data, header = <span class="fn">read_edf</span>(<span class="st">"patient_032.edf"</span>)'},
+  {t:'c', s:'<span class="fn">print</span>(f<span class="st">"Detected {header[\'n_signals\']} channels"</span>)'},
+  {t:'b'},
+  {t:'cm', s:'# 2. Preprocess + unify to HDF5'},
+  {t:'c', s:'processed, log = <span class="fn">preprocess_eeg</span>(filepath)'},
+  {t:'c', s:'<span class="fn">save_unified_h5</span>(processed, sfreq=<span class="nb">100.0</span>)'},
+  {t:'b'},
+  {t:'cm', s:'# 3. Foundation dataset — variable channels'},
+  {t:'c', s:'dataset = <span class="fn">EEGFoundationDataset</span>('},
+  {t:'c', s:'    h5_files, window_sec=<span class="nb">10.0</span>, overlap=<span class="nb">0.5</span>)'},
+  {t:'c', s:'loader = <span class="fn">DataLoader</span>(dataset, batch_size=<span class="nb">4</span>,'},
+  {t:'c', s:'    collate_fn=<span class="fn">eeg_collate_fn</span>)'},
+  {t:'b'},
+  {t:'cm', s:'# 4. VQ-VAE tokenizer → spectral targets'},
+  {t:'c', s:'tokenizer = <span class="fn">NeuralTokenizer</span>(codebook=<span class="nb">8192</span>)'},
+  {t:'c', s:'tokenizer.<span class="fn">fit</span>(loader, epochs=<span class="nb">100</span>, lr=<span class="nb">3e-4</span>)'},
+  {t:'b'},
+  {t:'cm', s:'# 5. Self-supervised masked pretraining'},
+  {t:'c', s:'encoder = <span class="fn">TransformerEncoder</span>(d=<span class="nb">256</span>, heads=<span class="nb">8</span>)'},
+  {t:'c', s:'<span class="kw">for</span> epoch <span class="kw">in</span> <span class="fn">range</span>(<span class="nb">100</span>):'},
+  {t:'c', s:'    loss = <span class="fn">masked_pretrain</span>(encoder, tokenizer)'},
+  {t:'b'},
+  {t:'cm', s:'# 6. Fine-tune → downstream BCI task'},
+  {t:'c', s:'model.<span class="fn">finetune</span>(labeled_data, epochs=<span class="nb">50</span>)'},
+  {t:'c', s:'f1 = <span class="fn">macro_f1</span>(y_true, y_pred) <span class="cm"># → 0.85</span>'},
+];
+
+const terminal = document.getElementById('terminal');
+let li=0,ci=0,curEl=null;
+function typ(){
+  if(li>=lines.length){setTimeout(()=>{terminal.innerHTML='';li=0;typ()},3500);return}
+  const ln=lines[li];
+  if(ln.t==='b'){terminal.appendChild(document.createElement('br'));li++;setTimeout(typ,150);return}
+  if(!curEl){curEl=document.createElement('div');if(ln.t==='cm')curEl.className='cm';terminal.appendChild(curEl);ci=0}
+  const raw=ln.s,plain=raw.replace(/<[^>]+>/g,'');
+  if(ci<=plain.length){
+    let p=0,h=0;
+    while(p<ci&&h<raw.length){if(raw[h]==='<'){while(h<raw.length&&raw[h]!=='>')h++;h++}else{h++;p++}}
+    while(h<raw.length&&raw[h]==='<'){while(h<raw.length&&raw[h]!=='>')h++;h++}
+    const pfx=ln.t==='cm'?'':'<span class="pr">→ </span>';
+    curEl.innerHTML=pfx+raw.substring(0,h)+'<span class="term-cursor"></span>';
+    ci++;setTimeout(typ,16+Math.random()*18);
+  }else{
+    curEl.innerHTML=(ln.t==='cm'?'':'<span class="pr">→ </span>')+raw;
+    curEl=null;li++;setTimeout(typ,250+Math.random()*180);
+  }
+}
+setTimeout(typ,600);
+
+// ═══ BACKGROUND CANVAS — subtle signal grid + flowing data ═══
+(function(){
+  const c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
+  let w,h;
+  function resize(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight}
+  window.addEventListener('resize',resize);resize();
+
+  // Flowing columns of characters (matrix-lite but subtle)
+  const cols=Math.floor(w/18);
+  const drops=Array(cols).fill(0).map(()=>Math.random()*h);
+  const chars='01αβθδγ∑∫∂λ→←↑↓±×÷√∞≈≠≤≥∈∉⊂⊃∪∩∧∨¬∀∃∅π';
+
+  // Faint horizontal signal traces
+  const traces=[];
+  for(let i=0;i<6;i++){
+    traces.push({
+      y:h*.15+Math.random()*h*.7,
+      speed:.2+Math.random()*.4,
+      freq:.01+Math.random()*.02,
+      amp:3+Math.random()*8,
+      phase:Math.random()*6.28,
+      alpha:.03+Math.random()*.04,
+    });
+  }
+
+  let t=0;
+  function draw(){
+    ctx.fillStyle='rgba(10,10,12,.12)';
+    ctx.fillRect(0,0,w,h);
+
+    // Matrix rain — very faint
+    ctx.font='12px monospace';
+    for(let i=0;i<cols;i++){
+      if(Math.random()>.97){
+        const ch=chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillStyle=`rgba(91,154,255,${.04+Math.random()*.06})`;
+        ctx.fillText(ch,i*18,drops[i]);
+        drops[i]+=14;
+        if(drops[i]>h&&Math.random()>.98)drops[i]=0;
+      }
     }
-  });
-}, { rootMargin: '-40% 0px -50% 0px' });
-Object.values(sections).forEach(s => obs.observe(s.el));
+
+    // Signal traces
+    t+=.6;
+    for(const tr of traces){
+      ctx.beginPath();
+      ctx.strokeStyle=`rgba(61,220,132,${tr.alpha})`;
+      ctx.lineWidth=.8;
+      for(let x=0;x<w;x+=3){
+        const n=x+t*tr.speed;
+        const y=tr.y+Math.sin(n*tr.freq+tr.phase)*tr.amp+
+          Math.sin(n*tr.freq*3.7)*tr.amp*.3;
+        x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
 // Scroll reveal
-const robs = new IntersectionObserver(e => {
-  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('v'); });
-}, { threshold: .06 });
-document.querySelectorAll('.rv').forEach(el => robs.observe(el));
+const robs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')})},{threshold:.06});
+document.querySelectorAll('.rv').forEach(el=>robs.observe(el));
+
+// Sidebar section tracking
+const secLinks=document.querySelectorAll('.sb-link[data-section]');
+const sobs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      secLinks.forEach(l=>l.classList.remove('active'));
+      const match=document.querySelector(`.sb-link[data-section="${e.target.id}"]`);
+      if(match)match.classList.add('active');
+    }
+  });
+},{rootMargin:'-30% 0px -60% 0px'});
+secLinks.forEach(l=>{const el=document.getElementById(l.dataset.section);if(el)sobs.observe(el)});
 </script>
 
 </body>
