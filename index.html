@@ -208,14 +208,12 @@
 
     /* ═══ SHARED CELL STYLES ═══ */
     .cell{padding:48px 0;border-top:1px solid var(--b)}
-    .cell-label{font-family:var(--m);font-size:.65rem;font-weight:500;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;position:relative}
-    .cell.entered .cell-label{animation:labelType .4s ease forwards}
-    @keyframes labelType{
-      0%{color:var(--blue);letter-spacing:.12em}
-      100%{color:var(--t3);letter-spacing:.06em}
-    }
-    .cell h3{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;padding-left:12px;border-left:2px solid transparent}
-    .cell.entered h3{border-left-color:rgba(91,154,255,.25)}
+    .cell-label{font-family:var(--m);font-size:.65rem;font-weight:500;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;
+      transition:color .3s ease,letter-spacing .3s ease}
+    .cell.focus .cell-label{color:var(--blue);letter-spacing:.08em}
+    .cell h3{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;padding-left:12px;
+      border-left:2px solid transparent;transition:border-color .3s ease}
+    .cell.focus h3{border-left-color:var(--blue)}
     .cell p{font-size:.95rem;color:var(--t2);line-height:1.8;max-width:600px}
     .cell p strong{color:var(--t);font-weight:600}
     .cell p+p{margin-top:12px}
@@ -281,25 +279,33 @@
 
     .foot{border-top:1px solid var(--b);padding:24px 0;margin-top:40px;font-family:var(--m);font-size:.68rem;color:var(--t3)}
 
-    /* Animations — clean techy section reveal */
-    .rv{opacity:0;transform:translateY(16px);transition:none}
-    .rv.v{animation:sectionIn .55s cubic-bezier(.25,1,.5,1) forwards}
-    @keyframes sectionIn{
-      0%{opacity:0;transform:translateY(16px)}
-      100%{opacity:1;transform:translateY(0)}
-    }
+    /* Animations — dynamic scroll focus */
+    .rv{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+    .rv.v{opacity:1;transform:translateY(0)}
 
-    /* Section border glow on enter */
-    .cell{padding:48px 0;border-top:1px solid var(--b);position:relative}
-    .cell.entered::after{
-      content:'';position:absolute;top:-1px;left:0;width:0;height:1px;
-      background:linear-gradient(90deg,var(--blue),var(--green),transparent);
-      animation:borderDraw .7s ease-out forwards;
+    /* Dynamic focus — sections dim/blur when not in viewport center */
+    .cell{
+      padding:48px 0;border-top:1px solid var(--b);position:relative;
+      transition:opacity .4s ease,filter .4s ease,transform .4s ease;
     }
-    @keyframes borderDraw{
-      0%{width:0;opacity:.8}
-      70%{width:50%;opacity:.6}
-      100%{width:100%;opacity:0}
+    .cell.out-above{opacity:.35;filter:blur(1.5px);transform:scale(.985) translateY(-4px)}
+    .cell.out-below{opacity:.35;filter:blur(1.5px);transform:scale(.985) translateY(4px)}
+    .cell.focus{opacity:1;filter:blur(0);transform:scale(1) translateY(0)}
+    .cell.near{opacity:.7;filter:blur(.5px);transform:scale(.995)}
+
+    /* Glow line on focused section */
+    .cell.focus::after{
+      content:'';position:absolute;top:-1px;left:0;
+      width:60px;height:2px;
+      background:linear-gradient(90deg,var(--blue),transparent);
+      border-radius:1px;
+      transition:width .5s ease,opacity .5s ease;
+      opacity:1;
+    }
+    .cell:not(.focus)::after{
+      content:'';position:absolute;top:-1px;left:0;
+      width:0;height:2px;background:transparent;opacity:0;
+      transition:width .3s ease,opacity .3s ease;
     }
 
     @media(max-width:900px){
@@ -310,7 +316,9 @@
       .term{max-height:300px}
       .case-grid{grid-template-columns:1fr}
     }
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}
+      .cell.out-above,.cell.out-below,.cell.near{opacity:1;filter:none;transform:none}
+    }
   </style>
 </head>
 <body>
@@ -648,6 +656,8 @@ function switchTab(name) {
       target.classList.add('active');
       window.scrollTo({ top: 0 });
       target.querySelectorAll('.rv').forEach(function(el){ robs.observe(el) });
+      allCells=document.querySelectorAll('#panel-readme .cell');
+      setTimeout(updateFocus,50);
     }, 280);
   } else {
     target.classList.add('active');
@@ -811,7 +821,6 @@ setTimeout(typ,300);
 function goSection(id){
   var readmePanel=document.getElementById('panel-readme');
   if(!readmePanel.classList.contains('active')){
-    // Quick switch without animation
     document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active','exit');p.style.display='none'});
     readmePanel.style.display='block';readmePanel.classList.add('active');
     document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
@@ -823,15 +832,46 @@ function goSection(id){
   if(el) setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'})},50);
 }
 
-// Scroll reveal + section border glow
+// Scroll reveal for .rv elements
 var robs=new IntersectionObserver(function(e){e.forEach(function(x){
-  if(x.isIntersecting){
-    x.target.classList.add('v');
-    if(x.target.classList.contains('cell')) x.target.classList.add('entered');
-  }
+  if(x.isIntersecting) x.target.classList.add('v');
 })},{threshold:.08});
 document.querySelectorAll('.rv').forEach(function(el){robs.observe(el)});
-document.querySelectorAll('.cell').forEach(function(el){robs.observe(el)});
+
+// ═══ Dynamic scroll focus — spotlight follows viewport ═══
+var allCells=document.querySelectorAll('#panel-readme .cell');
+function updateFocus(){
+  var vpH=window.innerHeight;
+  var vpCenter=vpH*0.45; // sweet spot slightly above center
+  var bestIdx=-1,bestDist=Infinity;
+
+  // Find which cell is closest to the viewport sweet spot
+  allCells.forEach(function(cell,i){
+    var rect=cell.getBoundingClientRect();
+    var cellMid=rect.top+rect.height*0.3;
+    var dist=Math.abs(cellMid-vpCenter);
+    if(rect.top<vpH&&rect.bottom>0&&dist<bestDist){
+      bestDist=dist;bestIdx=i;
+    }
+  });
+
+  allCells.forEach(function(cell,i){
+    cell.classList.remove('focus','near','out-above','out-below');
+    var rect=cell.getBoundingClientRect();
+    if(i===bestIdx){
+      cell.classList.add('focus');
+    } else if(Math.abs(i-bestIdx)===1){
+      cell.classList.add('near');
+    } else if(rect.bottom<0||rect.top<vpCenter){
+      cell.classList.add('out-above');
+    } else {
+      cell.classList.add('out-below');
+    }
+  });
+}
+window.addEventListener('scroll',updateFocus,{passive:true});
+window.addEventListener('resize',updateFocus);
+updateFocus();
 
 // Sidebar section tracking
 const secLinks=document.querySelectorAll('.sb-link[data-section]');
