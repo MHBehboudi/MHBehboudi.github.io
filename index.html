@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>behboudi — biosignal ML</title>
+  <title>Mohammad Hossein Behboudi | Biosignal Processing · Foundation Models · Computational Neuroscience</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -643,16 +643,29 @@ function typ(){
 }
 setTimeout(typ,300);
 
-// ═══ BACKGROUND — live EEG montage + floating code + data packets ═══
+// ═══ BACKGROUND — EEG montage + brain topography + floating code + data flow ═══
 (function(){
   var c=document.getElementById('bg-canvas'),X=c.getContext('2d');
   var W,H,t=0;
-  var eeg=[],snips=[],pkts=[];
+  var eeg=[],snips=[],pkts=[],elecs=[],conns=[];
+  var brainCx,brainCy,brainR;
   var stxts=['model.pretrain()','F.cross_entropy()','tokenizer.quantize(z)',
     'fft(sig,n=1024)','mask_ratio=0.65','codebook=8192','torch.no_grad()',
     'ICA.fit(raw)','class Transformer:','self.encoder(x)','F.normalize(z)',
     'AdamW(lr=3e-4)','h5py.File(path)','PLV=phase_lock()','wavelet(sig)',
     'F1=0.85','epochs=100','batch=128','n_heads=8','d_model=256'];
+
+  // 10-20 system electrode positions (normalized -1..1)
+  var e1020=[
+    {n:'Fp1',rx:-.2,ry:-.9},{n:'Fp2',rx:.2,ry:-.9},
+    {n:'F7',rx:-.7,ry:-.55},{n:'F3',rx:-.35,ry:-.55},{n:'Fz',rx:0,ry:-.55},
+    {n:'F4',rx:.35,ry:-.55},{n:'F8',rx:.7,ry:-.55},
+    {n:'T3',rx:-.85,ry:0},{n:'C3',rx:-.4,ry:0},{n:'Cz',rx:0,ry:0},
+    {n:'C4',rx:.4,ry:0},{n:'T4',rx:.85,ry:0},
+    {n:'T5',rx:-.7,ry:.55},{n:'P3',rx:-.35,ry:.55},{n:'Pz',rx:0,ry:.55},
+    {n:'P4',rx:.35,ry:.55},{n:'T6',rx:.7,ry:.55},
+    {n:'O1',rx:-.2,ry:.9},{n:'O2',rx:.2,ry:.9}
+  ];
 
   function mkS(){return{
     tx:stxts[Math.floor(Math.random()*stxts.length)],
@@ -662,7 +675,38 @@ setTimeout(typ,300);
 
   function init(){
     W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;
-    eeg=[];snips=[];pkts=[];
+    eeg=[];snips=[];pkts=[];elecs=[];conns=[];
+
+    // Brain topography — positioned at right side of screen
+    brainCx=W*0.82;brainCy=H*0.45;brainR=Math.min(W,H)*0.18;
+
+    // Map 10-20 electrodes to canvas coords
+    for(var i=0;i<e1020.length;i++){
+      var e=e1020[i];
+      elecs.push({
+        x:brainCx+e.rx*brainR,
+        y:brainCy+e.ry*brainR,
+        n:e.n,
+        phase:Math.random()*6.28,
+        act:Math.random()  // activation level
+      });
+    }
+
+    // Build connectivity pairs (random subset of electrode pairs)
+    for(var i=0;i<elecs.length;i++){
+      for(var j=i+1;j<elecs.length;j++){
+        if(Math.random()>.6){
+          var dx=elecs[i].x-elecs[j].x,dy=elecs[i].y-elecs[j].y;
+          var d=Math.sqrt(dx*dx+dy*dy);
+          if(d<brainR*1.8){
+            conns.push({a:i,b:j,phase:Math.random()*6.28,
+              str:.3+Math.random()*.7});
+          }
+        }
+      }
+    }
+
+    // EEG montage channels (left half)
     var labs=['Fp1','Fp2','F3','F4','C3','C4','P3','P4','O1','O2'];
     for(var i=0;i<10;i++){
       var yy=H*0.05+i*(H*0.9/10);
@@ -675,13 +719,13 @@ setTimeout(typ,300);
         col:i%3===0?'61,220,132':(i%3===1?'91,154,255':'255,171,64'),
         al:.055+Math.random()*.05,dr:Math.random()*500});
     }
-    for(var i=0;i<14;i++)snips.push(mkS());
-    for(var i=0;i<18;i++)pkts.push({
+    for(var i=0;i<12;i++)snips.push(mkS());
+    for(var i=0;i<14;i++)pkts.push({
       x:Math.random()*W,y:Math.random()*H,
       tx:Math.random()*W,ty:Math.random()*H,
       sp:.003+Math.random()*.005,pr:Math.random(),
       r:1+Math.random()*2,col:Math.random()>.5?'91,154,255':'61,220,132',
-      al:.07+Math.random()*.1});
+      al:.06+Math.random()*.08});
   }
 
   window.addEventListener('resize',init);init();
@@ -689,11 +733,56 @@ setTimeout(typ,300);
   function draw(){
     X.fillStyle='rgba(10,10,12,0.055)';X.fillRect(0,0,W,H);t++;
 
-    // EEG montage — 10ch scrolling waveforms
+    // ── Brain topography ──
+    // Scalp outline
+    X.beginPath();X.arc(brainCx,brainCy,brainR*1.05,0,Math.PI*2);
+    X.strokeStyle='rgba(91,154,255,0.04)';X.lineWidth=1;X.stroke();
+    // Nose indicator
+    X.beginPath();
+    X.moveTo(brainCx-brainR*0.1,brainCy-brainR*1.05);
+    X.lineTo(brainCx,brainCy-brainR*1.18);
+    X.lineTo(brainCx+brainR*0.1,brainCy-brainR*1.05);
+    X.strokeStyle='rgba(91,154,255,0.04)';X.lineWidth=.8;X.stroke();
+
+    // Connectivity arcs (pulsing)
+    for(var i=0;i<conns.length;i++){
+      var cn=conns[i];
+      var a=elecs[cn.a],b=elecs[cn.b];
+      var pulse=(Math.sin(t*0.025+cn.phase)*0.5+0.5)*cn.str;
+      X.beginPath();
+      // Curved arc via midpoint offset
+      var mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+      var nx=-(a.y-b.y)*0.15,ny=(a.x-b.x)*0.15;
+      X.moveTo(a.x,a.y);
+      X.quadraticCurveTo(mx+nx,my+ny,b.x,b.y);
+      X.strokeStyle='rgba(91,154,255,'+(0.01+pulse*0.04)+')';
+      X.lineWidth=.4+pulse*.6;
+      X.stroke();
+    }
+
+    // Electrode dots
+    for(var i=0;i<elecs.length;i++){
+      var el=elecs[i];
+      var act=Math.sin(t*0.03+el.phase)*0.5+0.5;
+      el.act=el.act*0.98+act*0.02; // smooth
+
+      // Glow
+      X.beginPath();X.arc(el.x,el.y,4+el.act*4,0,Math.PI*2);
+      X.fillStyle='rgba(91,154,255,'+(0.02+el.act*0.04)+')';X.fill();
+      // Dot
+      X.beginPath();X.arc(el.x,el.y,1.5+el.act*1,0,Math.PI*2);
+      X.fillStyle='rgba(91,154,255,'+(0.06+el.act*0.08)+')';X.fill();
+      // Label
+      X.font='6px monospace';
+      X.fillStyle='rgba(91,154,255,'+(0.03+el.act*0.03)+')';
+      X.fillText(el.n,el.x+5,el.y-4);
+    }
+
+    // ── EEG montage ──
     for(var i=0;i<eeg.length;i++){
       var e=eeg[i];X.beginPath();
       X.strokeStyle='rgba('+e.col+','+e.al+')';X.lineWidth=.8;
-      for(var x=0;x<W;x+=2){
+      for(var x=0;x<W*0.65;x+=2){
         var n=x+t*.8+e.dr,v=0;
         for(var k=0;k<e.o.length;k++){
           var oo=e.o[k];
@@ -703,11 +792,11 @@ setTimeout(typ,300);
         x===0?X.moveTo(x,e.y+v):X.lineTo(x,e.y+v);
       }
       X.stroke();
-      X.font='8px monospace';X.fillStyle='rgba('+e.col+',0.04)';
+      X.font='7px monospace';X.fillStyle='rgba('+e.col+',0.035)';
       X.fillText(e.lb,6,e.y-10);
     }
 
-    // Floating code snippets rising up
+    // ── Floating code ──
     for(var i=0;i<snips.length;i++){
       var s=snips[i];s.x+=s.vx;s.y+=s.vy;s.lf++;
       var fa=s.al;if(s.lf<50)fa*=s.lf/50;if(s.lf>340)fa*=(1-(s.lf-340)/60);
@@ -717,22 +806,23 @@ setTimeout(typ,300);
       if(s.y<-20||s.lf>400)snips[i]=mkS();
     }
 
-    // Data packets traveling between points
+    // ── Data packets ──
     for(var i=0;i<pkts.length;i++){
       var p=pkts[i];p.pr+=p.sp;
       if(p.pr>=1){p.x=p.tx;p.y=p.ty;p.tx=Math.random()*W;p.ty=Math.random()*H;p.pr=0;}
       var cx=p.x+(p.tx-p.x)*p.pr,cy=p.y+(p.ty-p.y)*p.pr;
       X.beginPath();X.moveTo(p.x,p.y);X.lineTo(cx,cy);
-      X.strokeStyle='rgba('+p.col+',0.015)';X.lineWidth=.3;X.stroke();
+      X.strokeStyle='rgba('+p.col+',0.012)';X.lineWidth=.3;X.stroke();
       X.beginPath();X.arc(cx,cy,p.r,0,Math.PI*2);
       X.fillStyle='rgba('+p.col+','+p.al+')';X.fill();
       X.beginPath();X.arc(cx,cy,p.r*3,0,Math.PI*2);
-      X.fillStyle='rgba('+p.col+',0.015)';X.fill();
+      X.fillStyle='rgba('+p.col+',0.012)';X.fill();
     }
     requestAnimationFrame(draw);
   }
   draw();
 })();
+
 
 
 // Scroll reveal
