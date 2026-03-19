@@ -28,7 +28,7 @@
     /* ═══ BACKGROUND CANVAS ═══ */
     #bg-canvas{
       position:fixed;inset:0;width:100%;height:100%;z-index:0;
-      pointer-events:none;opacity:.22;
+      pointer-events:none;opacity:.3;
     }
 
     /* ═══ IDE SHELL ═══ */
@@ -643,129 +643,97 @@ function typ(){
 }
 setTimeout(typ,300);
 
-// ═══ BACKGROUND — neural network graph + biosignal traces ═══
+// ═══ BACKGROUND — live EEG montage + floating code + data packets ═══
 (function(){
-  const c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
-  let w,h;
-  let traces=[];
-  let nodes=[];
-  let cols,drops;
-  const chars='01αβθδγλπ{}()def→∫';
+  var c=document.getElementById('bg-canvas'),X=c.getContext('2d');
+  var W,H,t=0;
+  var eeg=[],snips=[],pkts=[];
+  var stxts=['model.pretrain()','F.cross_entropy()','tokenizer.quantize(z)',
+    'fft(sig,n=1024)','mask_ratio=0.65','codebook=8192','torch.no_grad()',
+    'ICA.fit(raw)','class Transformer:','self.encoder(x)','F.normalize(z)',
+    'AdamW(lr=3e-4)','h5py.File(path)','PLV=phase_lock()','wavelet(sig)',
+    'F1=0.85','epochs=100','batch=128','n_heads=8','d_model=256'];
+
+  function mkS(){return{
+    tx:stxts[Math.floor(Math.random()*stxts.length)],
+    x:Math.random()*W,y:H+10+Math.random()*60,
+    vx:(Math.random()-.5)*.3,vy:-.12-Math.random()*.28,
+    al:.015+Math.random()*.04,sz:9+Math.floor(Math.random()*3),lf:0};}
 
   function init(){
-    w=c.width=c.offsetWidth;
-    h=c.height=c.offsetHeight;
-
-    // Biosignal traces
-    traces=[];
-    for(let i=0;i<6;i++){
-      traces.push({
-        y:h*.1+Math.random()*h*.8,
-        speed:.1+Math.random()*.35,
-        freq:.005+Math.random()*.018,
-        amp:4+Math.random()*10,
-        phase:Math.random()*6.28,
-        alpha:.04+Math.random()*.06,
-        hue:i%2===0?'91,154,255':'61,220,132',
-      });
+    W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;
+    eeg=[];snips=[];pkts=[];
+    var labs=['Fp1','Fp2','F3','F4','C3','C4','P3','P4','O1','O2'];
+    for(var i=0;i<10;i++){
+      var yy=H*0.05+i*(H*0.9/10);
+      eeg.push({y:yy,lb:labs[i],
+        o:[{a:6+Math.random()*8,f:.004+Math.random()*.003,p:Math.random()*6.28},
+           {a:3+Math.random()*5,f:.012+Math.random()*.008,p:Math.random()*6.28},
+           {a:4+Math.random()*7,f:.028+Math.random()*.015,p:Math.random()*6.28},
+           {a:1.5+Math.random()*2,f:.06+Math.random()*.03,p:Math.random()*6.28},
+           {a:.5+Math.random(),f:.13+Math.random()*.07,p:Math.random()*6.28}],
+        col:i%3===0?'61,220,132':(i%3===1?'91,154,255':'255,171,64'),
+        al:.055+Math.random()*.05,dr:Math.random()*500});
     }
-
-    // Neural network nodes — arranged in loose layers like a DL diagram
-    nodes=[];
-    var layers=[4,6,8,6,4,3];
-    var xStep=w/(layers.length+1);
-    for(var L=0;L<layers.length;L++){
-      var count=layers[L];
-      var yStep=h/(count+1);
-      for(var n=0;n<count;n++){
-        nodes.push({
-          x:xStep*(L+1)+(Math.random()-.5)*40,
-          y:yStep*(n+1)+(Math.random()-.5)*30,
-          layer:L,
-          r:1.5+Math.random()*1.5,
-          pulse:Math.random()*6.28,
-        });
-      }
-    }
-
-    // Matrix rain
-    cols=Math.floor(w/20);
-    drops=[];
-    for(var i=0;i<cols;i++) drops[i]=Math.random()*h;
+    for(var i=0;i<14;i++)snips.push(mkS());
+    for(var i=0;i<18;i++)pkts.push({
+      x:Math.random()*W,y:Math.random()*H,
+      tx:Math.random()*W,ty:Math.random()*H,
+      sp:.003+Math.random()*.005,pr:Math.random(),
+      r:1+Math.random()*2,col:Math.random()>.5?'91,154,255':'61,220,132',
+      al:.07+Math.random()*.1});
   }
 
-  window.addEventListener('resize',init);
-  init();
+  window.addEventListener('resize',init);init();
 
-  var t=0;
   function draw(){
-    ctx.fillStyle='rgba(10,10,12,.07)';
-    ctx.fillRect(0,0,w,h);
+    X.fillStyle='rgba(10,10,12,0.055)';X.fillRect(0,0,W,H);t++;
 
-    t+=.5;
-
-    // 1) Neural network edges between adjacent layers
-    for(var i=0;i<nodes.length;i++){
-      var a=nodes[i];
-      for(var j=i+1;j<nodes.length;j++){
-        var b=nodes[j];
-        if(Math.abs(a.layer-b.layer)===1){
-          var dx=a.x-b.x,dy=a.y-b.y;
-          var dist=Math.sqrt(dx*dx+dy*dy);
-          if(dist<300){
-            // Traveling pulse along the edge
-            var pulse=(Math.sin(t*.02+a.pulse+b.pulse)*.5+.5);
-            ctx.beginPath();
-            ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-            ctx.strokeStyle='rgba(91,154,255,'+(0.02+pulse*0.04)+')';
-            ctx.lineWidth=.4;
-            ctx.stroke();
-          }
+    // EEG montage — 10ch scrolling waveforms
+    for(var i=0;i<eeg.length;i++){
+      var e=eeg[i];X.beginPath();
+      X.strokeStyle='rgba('+e.col+','+e.al+')';X.lineWidth=.8;
+      for(var x=0;x<W;x+=2){
+        var n=x+t*.8+e.dr,v=0;
+        for(var k=0;k<e.o.length;k++){
+          var oo=e.o[k];
+          v+=(k===2)?oo.a*Math.sin(n*oo.f+oo.p)*Math.sin(n*.001+oo.p):oo.a*Math.sin(n*oo.f+oo.p);
         }
+        if(Math.random()>.9998)v+=30*(Math.random()>.5?1:-1);
+        x===0?X.moveTo(x,e.y+v):X.lineTo(x,e.y+v);
       }
+      X.stroke();
+      X.font='8px monospace';X.fillStyle='rgba('+e.col+',0.04)';
+      X.fillText(e.lb,6,e.y-10);
     }
 
-    // 2) Neural network nodes
-    for(var i=0;i<nodes.length;i++){
-      var nd=nodes[i];
-      var glow=Math.sin(t*.03+nd.pulse)*.5+.5;
-      ctx.beginPath();
-      ctx.arc(nd.x,nd.y,nd.r+glow,0,Math.PI*2);
-      ctx.fillStyle='rgba(91,154,255,'+(0.06+glow*0.06)+')';
-      ctx.fill();
+    // Floating code snippets rising up
+    for(var i=0;i<snips.length;i++){
+      var s=snips[i];s.x+=s.vx;s.y+=s.vy;s.lf++;
+      var fa=s.al;if(s.lf<50)fa*=s.lf/50;if(s.lf>340)fa*=(1-(s.lf-340)/60);
+      X.font=s.sz+'px monospace';
+      X.fillStyle='rgba(91,154,255,'+Math.max(0,fa)+')';
+      X.fillText(s.tx,s.x,s.y);
+      if(s.y<-20||s.lf>400)snips[i]=mkS();
     }
 
-    // 3) Biosignal traces flowing across
-    for(var i=0;i<traces.length;i++){
-      var tr=traces[i];
-      ctx.beginPath();
-      ctx.strokeStyle='rgba('+tr.hue+','+tr.alpha+')';
-      ctx.lineWidth=.7;
-      for(var x=0;x<w;x+=3){
-        var n=x+t*tr.speed;
-        var y=tr.y+Math.sin(n*tr.freq+tr.phase)*tr.amp+
-          Math.sin(n*tr.freq*3.3)*tr.amp*.25;
-        if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-      }
-      ctx.stroke();
+    // Data packets traveling between points
+    for(var i=0;i<pkts.length;i++){
+      var p=pkts[i];p.pr+=p.sp;
+      if(p.pr>=1){p.x=p.tx;p.y=p.ty;p.tx=Math.random()*W;p.ty=Math.random()*H;p.pr=0;}
+      var cx=p.x+(p.tx-p.x)*p.pr,cy=p.y+(p.ty-p.y)*p.pr;
+      X.beginPath();X.moveTo(p.x,p.y);X.lineTo(cx,cy);
+      X.strokeStyle='rgba('+p.col+',0.015)';X.lineWidth=.3;X.stroke();
+      X.beginPath();X.arc(cx,cy,p.r,0,Math.PI*2);
+      X.fillStyle='rgba('+p.col+','+p.al+')';X.fill();
+      X.beginPath();X.arc(cx,cy,p.r*3,0,Math.PI*2);
+      X.fillStyle='rgba('+p.col+',0.015)';X.fill();
     }
-
-    // 4) Faint matrix rain
-    ctx.font='11px monospace';
-    for(var i=0;i<cols;i++){
-      if(Math.random()>.96){
-        var ch=chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillStyle='rgba(91,154,255,'+(0.02+Math.random()*.04)+')';
-        ctx.fillText(ch,i*20,drops[i]);
-        drops[i]+=14;
-        if(drops[i]>h&&Math.random()>.97)drops[i]=0;
-      }
-    }
-
     requestAnimationFrame(draw);
   }
   draw();
 })();
+
 
 // Scroll reveal
 const robs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')})},{threshold:.06});
