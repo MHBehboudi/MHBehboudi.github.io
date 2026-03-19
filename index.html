@@ -208,8 +208,22 @@
 
     /* ═══ SHARED CELL STYLES ═══ */
     .cell{padding:48px 0;border-top:1px solid var(--b)}
-    .cell-label{font-family:var(--m);font-size:.65rem;font-weight:500;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
-    .cell h3{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
+    .cell-label{font-family:var(--m);font-size:.65rem;font-weight:500;color:var(--t3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px;position:relative}
+    .cell.scanned .cell-label{animation:labelGlitch .5s ease forwards .1s}
+    @keyframes labelGlitch{
+      0%{opacity:.3;letter-spacing:.15em}
+      20%{opacity:1;letter-spacing:.02em;color:var(--blue)}
+      40%{opacity:.6;letter-spacing:.08em}
+      60%{opacity:1;letter-spacing:.06em;color:var(--t3)}
+      100%{opacity:1;letter-spacing:.06em;color:var(--t3)}
+    }
+    .cell h3{font-size:1.3rem;font-weight:700;letter-spacing:-.02em;margin-bottom:14px;padding-left:14px;border-left:2px solid transparent;position:relative}
+    .cell.scanned h3{animation:titleBar .4s ease forwards .2s}
+    @keyframes titleBar{
+      0%{border-left-color:transparent;padding-left:0}
+      50%{border-left-color:var(--blue);padding-left:14px}
+      100%{border-left-color:rgba(91,154,255,.2);padding-left:14px}
+    }
     .cell p{font-size:.95rem;color:var(--t2);line-height:1.8;max-width:600px}
     .cell p strong{color:var(--t);font-weight:600}
     .cell p+p{margin-top:12px}
@@ -275,9 +289,31 @@
 
     .foot{border-top:1px solid var(--b);padding:24px 0;margin-top:40px;font-family:var(--m);font-size:.68rem;color:var(--t3)}
 
-    /* Animations */
-    .rv{opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s}
-    .rv.v{opacity:1;transform:none}
+    /* Animations — techy section reveal */
+    .rv{opacity:0;transform:translateX(-20px);filter:blur(3px);transition:none}
+    .rv.v{
+      animation:sectionIn .6s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    @keyframes sectionIn{
+      0%{opacity:0;transform:translateX(-20px);filter:blur(3px)}
+      30%{opacity:.7;transform:translateX(3px);filter:blur(0)}
+      50%{opacity:.5;transform:translateX(0)}
+      70%{opacity:1;transform:translateX(-1px)}
+      100%{opacity:1;transform:translateX(0);filter:blur(0)}
+    }
+
+    /* Section divider scan line */
+    .cell{padding:48px 0;border-top:1px solid var(--b);position:relative;overflow:hidden}
+    .cell.scanned::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:1px;
+      background:linear-gradient(90deg,transparent,rgba(91,154,255,.5),rgba(61,220,132,.3),transparent);
+      animation:scanAcross .8s ease-out forwards;
+    }
+    @keyframes scanAcross{
+      0%{transform:scaleX(0);transform-origin:left;opacity:1}
+      60%{transform:scaleX(1);transform-origin:left;opacity:1}
+      100%{transform:scaleX(1);opacity:0}
+    }
 
     @media(max-width:900px){
       .sidebar{display:none}
@@ -720,12 +756,12 @@ setTimeout(typ,300);
         al:.07+Math.random()*.06,dr:Math.random()*500});
     }
     for(var i=0;i<14;i++)snips.push(mkS());
-    for(var i=0;i<18;i++)pkts.push({
+    for(var i=0;i<30;i++)pkts.push({
       x:Math.random()*W,y:Math.random()*H,
       tx:Math.random()*W,ty:Math.random()*H,
-      sp:.003+Math.random()*.005,pr:Math.random(),
-      r:1+Math.random()*2,col:Math.random()>.5?'91,154,255':'61,220,132',
-      al:.08+Math.random()*.12});
+      sp:.002+Math.random()*.006,pr:Math.random(),
+      r:1.2+Math.random()*2.5,col:Math.random()>.5?'91,154,255':'61,220,132',
+      al:.14+Math.random()*.18});
   }
 
   window.addEventListener('resize',init);init();
@@ -761,17 +797,23 @@ setTimeout(typ,300);
       if(s.y<-20||s.lf>400)snips[i]=mkS();
     }
 
-    // Data packets
+    // Data packets — brain network sparks
     for(var i=0;i<pkts.length;i++){
       var p=pkts[i];p.pr+=p.sp;
       if(p.pr>=1){p.x=p.tx;p.y=p.ty;p.tx=Math.random()*W;p.ty=Math.random()*H;p.pr=0;}
       var cx=p.x+(p.tx-p.x)*p.pr,cy=p.y+(p.ty-p.y)*p.pr;
+      // Trail line
       X.beginPath();X.moveTo(p.x,p.y);X.lineTo(cx,cy);
-      X.strokeStyle='rgba('+p.col+',0.018)';X.lineWidth=.3;X.stroke();
+      X.strokeStyle='rgba('+p.col+',0.04)';X.lineWidth=.5;X.stroke();
+      // Core dot
       X.beginPath();X.arc(cx,cy,p.r,0,Math.PI*2);
       X.fillStyle='rgba('+p.col+','+p.al+')';X.fill();
-      X.beginPath();X.arc(cx,cy,p.r*3,0,Math.PI*2);
-      X.fillStyle='rgba('+p.col+',0.018)';X.fill();
+      // Inner glow
+      X.beginPath();X.arc(cx,cy,p.r*2.5,0,Math.PI*2);
+      X.fillStyle='rgba('+p.col+',0.04)';X.fill();
+      // Outer glow
+      X.beginPath();X.arc(cx,cy,p.r*5,0,Math.PI*2);
+      X.fillStyle='rgba('+p.col+',0.015)';X.fill();
     }
     requestAnimationFrame(draw);
   }
@@ -781,9 +823,19 @@ setTimeout(typ,300);
 
 
 
-// Scroll reveal
-const robs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')})},{threshold:.06});
-document.querySelectorAll('.rv').forEach(el=>robs.observe(el));
+// Scroll reveal + section scan lines
+var robs=new IntersectionObserver(function(e){e.forEach(function(x){
+  if(x.isIntersecting){
+    x.target.classList.add('v');
+    // If it's a cell, trigger the scan line
+    if(x.target.classList.contains('cell')){
+      x.target.classList.add('scanned');
+    }
+  }
+})},{threshold:.08});
+document.querySelectorAll('.rv').forEach(function(el){robs.observe(el)});
+// Also observe cells for scan effect
+document.querySelectorAll('.cell').forEach(function(el){robs.observe(el)});
 
 // Sidebar section tracking
 const secLinks=document.querySelectorAll('.sb-link[data-section]');
