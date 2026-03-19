@@ -28,7 +28,7 @@
     /* ═══ BACKGROUND CANVAS ═══ */
     #bg-canvas{
       position:fixed;inset:0;width:100%;height:100%;z-index:0;
-      pointer-events:none;opacity:.12;
+      pointer-events:none;opacity:.18;
     }
 
     /* ═══ IDE SHELL ═══ */
@@ -124,14 +124,14 @@
     .hm-l{font-size:.65rem;color:var(--t3);margin-top:1px}
 
     /* Hero social row */
-    .hero-socials{display:flex;gap:8px;margin-top:16px}
+    .hero-socials{display:flex;gap:10px;margin-top:20px}
     .hs{
-      width:32px;height:32px;border-radius:7px;border:1px solid var(--b);
+      width:42px;height:42px;border-radius:10px;border:1px solid var(--bh);
       display:flex;align-items:center;justify-content:center;
-      color:var(--t3);transition:all .15s;
+      color:var(--t2);transition:all .15s;background:rgba(255,255,255,.03);
     }
-    .hs:hover{color:var(--blue);border-color:var(--bh);background:rgba(255,255,255,.03)}
-    .hs svg{width:16px;height:16px}
+    .hs:hover{color:var(--blue);border-color:rgba(91,154,255,.3);background:rgba(91,154,255,.06);transform:translateY(-2px)}
+    .hs svg{width:20px;height:20px}
 
     /* Terminal */
     .term{
@@ -148,8 +148,12 @@
     .term-title{font-family:var(--m);font-size:.6rem;color:var(--t3);margin-left:auto}
     .term-body{
       padding:16px 18px;font-family:var(--m);font-size:.7rem;line-height:1.85;
-      min-height:320px;max-height:420px;overflow:hidden;color:var(--t2);
+      min-height:320px;max-height:420px;overflow-y:auto;color:var(--t2);
+      scroll-behavior:smooth;
     }
+    .term-body::-webkit-scrollbar{width:4px}
+    .term-body::-webkit-scrollbar-track{background:transparent}
+    .term-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
     .term-body .pr{color:var(--green)}.term-body .cm{color:var(--t3)}
     .term-body .kw{color:var(--pink)}.term-body .fn{color:var(--blue)}
     .term-body .st{color:var(--green)}.term-body .nb{color:var(--orange)}.term-body .op{color:var(--t)}
@@ -336,7 +340,7 @@
               <a class="hs" href="https://orcid.org/0000-0003-1335-3617" target="_blank" title="ORCID"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><line x1="9" y1="8" x2="9" y2="16"/><path d="M13 16v-5.5h2.1a2.75 2.75 0 1 1 0 5.5H13z"/></svg></a>
             </div>
             <div class="hero-metrics">
-              <div class="hm"><div class="hm-v">1st</div><div class="hm-l">LibriBrain · Long Acq.</div></div>
+              <div class="hm"><div class="hm-v">🏆</div><div class="hm-l">LibriBrain Long Acquisition<br>Track Winner</div></div>
               <div class="hm"><div class="hm-v">6+</div><div class="hm-l">Publications</div></div>
               <div class="hm"><div class="hm-v">95%</div><div class="hm-l">Diagnostic Acc.</div></div>
               <div class="hm"><div class="hm-v">500GB+</div><div class="hm-l">Data Processed</div></div>
@@ -617,9 +621,9 @@ const lines = [
 const terminal = document.getElementById('terminal');
 let li=0,ci=0,curEl=null;
 function typ(){
-  if(li>=lines.length){setTimeout(()=>{terminal.innerHTML='';li=0;typ()},3500);return}
+  if(li>=lines.length){setTimeout(()=>{terminal.innerHTML='';terminal.scrollTop=0;li=0;typ()},2000);return}
   const ln=lines[li];
-  if(ln.t==='b'){terminal.appendChild(document.createElement('br'));li++;setTimeout(typ,150);return}
+  if(ln.t==='b'){terminal.appendChild(document.createElement('br'));terminal.scrollTop=terminal.scrollHeight;li++;setTimeout(typ,60);return}
   if(!curEl){curEl=document.createElement('div');if(ln.t==='cm')curEl.className='cm';terminal.appendChild(curEl);ci=0}
   const raw=ln.s,plain=raw.replace(/<[^>]+>/g,'');
   if(ci<=plain.length){
@@ -628,69 +632,113 @@ function typ(){
     while(h<raw.length&&raw[h]==='<'){while(h<raw.length&&raw[h]!=='>')h++;h++}
     const pfx=ln.t==='cm'?'':'<span class="pr">→ </span>';
     curEl.innerHTML=pfx+raw.substring(0,h)+'<span class="term-cursor"></span>';
-    ci++;setTimeout(typ,16+Math.random()*18);
+    terminal.scrollTop=terminal.scrollHeight;
+    ci++;setTimeout(typ,6+Math.random()*8);
   }else{
     curEl.innerHTML=(ln.t==='cm'?'':'<span class="pr">→ </span>')+raw;
-    curEl=null;li++;setTimeout(typ,250+Math.random()*180);
+    terminal.scrollTop=terminal.scrollHeight;
+    curEl=null;li++;setTimeout(typ,100+Math.random()*80);
   }
 }
-setTimeout(typ,600);
+setTimeout(typ,300);
 
-// ═══ BACKGROUND CANVAS — subtle signal grid + flowing data ═══
+// ═══ BACKGROUND CANVAS — signals + matrix rain + neural net nodes ═══
 (function(){
   const c=document.getElementById('bg-canvas'),ctx=c.getContext('2d');
   let w,h;
-  function resize(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight}
+  function resize(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;initNodes()}
   window.addEventListener('resize',resize);resize();
 
-  // Flowing columns of characters (matrix-lite but subtle)
-  const cols=Math.floor(w/18);
+  // Matrix rain
+  const cols=Math.floor(w/16);
   const drops=Array(cols).fill(0).map(()=>Math.random()*h);
-  const chars='01αβθδγ∑∫∂λ→←↑↓±×÷√∞≈≠≤≥∈∉⊂⊃∪∩∧∨¬∀∃∅π';
+  const chars='01αβθδγ∑∫∂λ→±×√∞≈π{};()=>.defclass';
 
-  // Faint horizontal signal traces
+  // Signal traces
   const traces=[];
-  for(let i=0;i<6;i++){
+  for(let i=0;i<10;i++){
     traces.push({
-      y:h*.15+Math.random()*h*.7,
-      speed:.2+Math.random()*.4,
-      freq:.01+Math.random()*.02,
-      amp:3+Math.random()*8,
+      y:h*.1+Math.random()*h*.8,
+      speed:.15+Math.random()*.5,
+      freq:.008+Math.random()*.025,
+      amp:4+Math.random()*12,
       phase:Math.random()*6.28,
-      alpha:.03+Math.random()*.04,
+      alpha:.025+Math.random()*.05,
+      color:Math.random()>.5?'91,154,255':'61,220,132',
     });
+  }
+
+  // Neural network nodes
+  let nodes=[];
+  function initNodes(){
+    nodes=[];
+    for(let i=0;i<30;i++){
+      nodes.push({
+        x:Math.random()*w, y:Math.random()*h,
+        vx:(Math.random()-.5)*.15, vy:(Math.random()-.5)*.15,
+        r:1+Math.random()*1.5
+      });
+    }
   }
 
   let t=0;
   function draw(){
-    ctx.fillStyle='rgba(10,10,12,.12)';
+    ctx.fillStyle='rgba(10,10,12,.1)';
     ctx.fillRect(0,0,w,h);
 
-    // Matrix rain — very faint
-    ctx.font='12px monospace';
+    // Matrix rain
+    ctx.font='11px monospace';
     for(let i=0;i<cols;i++){
-      if(Math.random()>.97){
+      if(Math.random()>.95){
         const ch=chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillStyle=`rgba(91,154,255,${.04+Math.random()*.06})`;
-        ctx.fillText(ch,i*18,drops[i]);
-        drops[i]+=14;
-        if(drops[i]>h&&Math.random()>.98)drops[i]=0;
+        ctx.fillStyle=`rgba(91,154,255,${.03+Math.random()*.05})`;
+        ctx.fillText(ch,i*16,drops[i]);
+        drops[i]+=13;
+        if(drops[i]>h&&Math.random()>.97)drops[i]=0;
       }
     }
 
     // Signal traces
-    t+=.6;
+    t+=.7;
     for(const tr of traces){
       ctx.beginPath();
-      ctx.strokeStyle=`rgba(61,220,132,${tr.alpha})`;
-      ctx.lineWidth=.8;
+      ctx.strokeStyle=`rgba(${tr.color},${tr.alpha})`;
+      ctx.lineWidth=.7;
       for(let x=0;x<w;x+=3){
         const n=x+t*tr.speed;
         const y=tr.y+Math.sin(n*tr.freq+tr.phase)*tr.amp+
-          Math.sin(n*tr.freq*3.7)*tr.amp*.3;
+          Math.sin(n*tr.freq*4.1)*tr.amp*.25+
+          Math.sin(n*tr.freq*7.3)*tr.amp*.1;
         x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
       }
       ctx.stroke();
+    }
+
+    // Neural net nodes + connections
+    for(let i=0;i<nodes.length;i++){
+      const a=nodes[i];
+      a.x+=a.vx;a.y+=a.vy;
+      if(a.x<0||a.x>w)a.vx*=-1;
+      if(a.y<0||a.y>h)a.vy*=-1;
+
+      // Draw connections
+      for(let j=i+1;j<nodes.length;j++){
+        const b=nodes[j];
+        const dx=a.x-b.x,dy=a.y-b.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<140){
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+          ctx.strokeStyle=`rgba(91,154,255,${.04*(1-dist/140)})`;
+          ctx.lineWidth=.5;
+          ctx.stroke();
+        }
+      }
+      // Draw node
+      ctx.beginPath();
+      ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(91,154,255,.06)';
+      ctx.fill();
     }
 
     requestAnimationFrame(draw);
