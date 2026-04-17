@@ -13,7 +13,7 @@ function Socials() {
       <a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener" title="ORCID">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zM7.37 18.33h-1.8V7.62h1.8v10.71zM6.47 6.86a1.05 1.05 0 110-2.1 1.05 1.05 0 010 2.1zm12.23 6.41c0 3.06-2.03 5.06-5.25 5.06h-4.24V7.62h4.24c3.22 0 5.25 2.59 5.25 5.65zm-1.83 0c0-2.06-1.27-3.98-3.42-3.98h-2.44v7.95h2.44c2.15 0 3.42-1.93 3.42-3.97z"/></svg>
       </a>
-      <a href="mailto:Behboudi@UTDallas.edu" title="Email">
+      <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" title="Email">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
       </a>
     </div>
