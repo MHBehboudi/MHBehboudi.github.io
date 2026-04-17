@@ -64,7 +64,7 @@ const EXPERTISE = [
 const EDUCATION = [
   { yr: '2021 — 2026', d: 'Ph.D., Cognition & Neuroscience', s: 'University of Texas at Dallas · Callier Center', w: 'Richardson, TX' },
   { yr: '2021 — 2024', d: 'M.Sc., Applied Cognition & Neuroscience', s: 'University of Texas at Dallas', w: 'Richardson, TX' },
-  { yr: '2015 — 2020', d: 'B.Sc., Electrical Engineering', s: 'K. N. Toosi University of Technology', w: 'Tehran, Iran' },
+  { yr: '2015 — 2020', d: 'B.Sc., Electrical Engineering', s: 'K. N. Toosi University of Technology' },
 ];
 
 window.DATA = { SECTIONS, RESEARCH, PUBS, EXPERTISE, EDUCATION };
