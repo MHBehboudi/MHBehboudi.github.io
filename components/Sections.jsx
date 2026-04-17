@@ -76,7 +76,7 @@ function Hero() {
             <a className="btn btn-ghost" href="#" onClick={(e) => e.preventDefault()}>
               Download CV <span className="arrow">↓</span>
             </a>
-            <a className="btn btn-ghost" href="mailto:Behboudi@UTDallas.edu">
+            <a className="btn btn-ghost" href="https://www.linkedin.com/in/mohammad-hossein-behboudi/">
               Get in touch
             </a>
           </div>
