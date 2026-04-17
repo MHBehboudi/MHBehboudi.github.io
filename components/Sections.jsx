@@ -24,7 +24,7 @@ function Nav({ active, onNav }) {
   return (
     <aside className="nav">
       <div className="brand">
-        <span className="brand-dot"></span> M.H. Behboudi / 2026
+        <span className="brand-dot"></span> Mohammad Hossein. Behboudi
       </div>
       <div className="nav-items">
         {window.DATA.SECTIONS.map((s) => (
@@ -40,7 +40,7 @@ function Nav({ active, onNav }) {
       </div>
       <div className="nav-bottom">
         <div className="status">
-          <span className="status-dot"></span>Open to ML/AI roles · 2026
+          <span className="status-dot"></span>
         </div>
         <div style={{ marginTop: 8 }}></div>
         <Socials />
@@ -57,7 +57,7 @@ function Hero() {
         <div className="right">
           <span>lat </span>
           <span></span>
-          <span>2026</span>
+          <span></span>
         </div>
       </div>
       <h1 className="hero-name">
@@ -267,12 +267,12 @@ function Contact() {
           <div className="v">Open to relocate</div>
         </div>
         <div className="cm-item">
-          <div className="k">Looking for</div>
-          <div className="v">ML/AI research roles · Industry or academia · 2026</div>
+          <div className="k"></div>
+          <div className="v"></div>
         </div>
         <div className="cm-item">
           <div className="k">CV</div>
-          <div className="v"><a href="#">Download PDF ↓</a></div>
+          <div className="v"><a href="https://www.linkedin.com/in/mohammad-hossein-behboudi/">Link</a></div>
         </div>
         <div className="cm-item">
           <div className="k">Scholar</div>
