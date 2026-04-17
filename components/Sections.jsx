@@ -24,7 +24,7 @@ function Nav({ active, onNav }) {
   return (
     <aside className="nav">
       <div className="brand">
-        <span className="brand-dot"></span> M.H. Behboudi / 2026
+        <span className="brand-dot"></span> Mohammad Hossein Behboudi
       </div>
       <div className="nav-items">
         {window.DATA.SECTIONS.map((s) => (
