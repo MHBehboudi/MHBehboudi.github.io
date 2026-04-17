@@ -249,44 +249,6 @@ function Education() {
   );
 }
 
-function Contact() {
-  return (
-    <section className="contact" id="contact">
-      <div className="section-num" style={{ marginBottom: 40 }}>[ 08 / CONTACT ]</div>
-      <h2 className="contact-big">
-        Let's build <span className="italic">foundation models</span> that actually<br />
-        generalize<span className="accent">.</span>
-      </h2>
-      <div className="contact-meta">
-        <div className="cm-item">
-          <div className="k">Email</div>
-          <div className="v"><a href="mailto:Behboudi@UTDallas.edu">Behboudi@UTDallas.edu</a></div>
-        </div>
-        <div className="cm-item">
-          <div className="k">Based in</div>
-          <div className="v">open to relocate</div>
-        </div>
-        <div className="cm-item">
-          <div className="k">Looking for</div>
-          <div className="v">ML/AI research roles · Industry or academia · 2026</div>
-        </div>
-        <div className="cm-item">
-          <div className="k">CV</div>
-          <div className="v"><a href="#">Download PDF ↓</a></div>
-        </div>
-        <div className="cm-item">
-          <div className="k">Scholar</div>
-          <div className="v"><a href="https://scholar.google.com/citations?user=e81fVS0AAAAJ&hl=en" target="_blank" rel="noopener">citations ↗</a></div>
-        </div>
-        <div className="cm-item">
-          <div className="k">ORCID</div>
-          <div className="v"><a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener">0000-0003-1335-3617 ↗</a></div>
-        </div>
-      </div>
-      <div style={{ marginTop: 60 }}><Socials /></div>
-    </section>
-  );
-}
 
 function Footer() {
   return (
