@@ -55,7 +55,7 @@ function Hero() {
       <div className="hero-meta">
         <span>[ 01 / INTRO ]</span>
         <div className="right">
-          <span>lat </span>
+          <span></span>
           <span></span>
           <span></span>
         </div>
