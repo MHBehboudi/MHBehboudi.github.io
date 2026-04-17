@@ -13,7 +13,7 @@ function Socials() {
       <a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener" title="ORCID">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zM7.37 18.33h-1.8V7.62h1.8v10.71zM6.47 6.86a1.05 1.05 0 110-2.1 1.05 1.05 0 010 2.1zm12.23 6.41c0 3.06-2.03 5.06-5.25 5.06h-4.24V7.62h4.24c3.22 0 5.25 2.59 5.25 5.65zm-1.83 0c0-2.06-1.27-3.98-3.42-3.98h-2.44v7.95h2.44c2.15 0 3.42-1.93 3.42-3.97z"/></svg>
       </a>
-      <a href="https://www.linkedin.com/in/mohammad-hossein-behboudi/" title="Email">
+      <a href="mailto:Behboudi@UTDallas.edu" title="Email">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
       </a>
     </div>
@@ -24,7 +24,7 @@ function Nav({ active, onNav }) {
   return (
     <aside className="nav">
       <div className="brand">
-        <span className="brand-dot"></span> Mohammad Hossein Behboudi
+        <span className="brand-dot"></span> M.H. Behboudi / 2026
       </div>
       <div className="nav-items">
         {window.DATA.SECTIONS.map((s) => (
@@ -76,7 +76,7 @@ function Hero() {
             <a className="btn btn-ghost" href="#" onClick={(e) => e.preventDefault()}>
               Download CV <span className="arrow">↓</span>
             </a>
-            <a className="btn btn-ghost" href="https://www.linkedin.com/in/mohammad-hossein-behboudi/">
+            <a className="btn btn-ghost" href="mailto:Behboudi@UTDallas.edu">
               Get in touch
             </a>
           </div>
@@ -249,6 +249,44 @@ function Education() {
   );
 }
 
+function Contact() {
+  return (
+    <section className="contact" id="contact">
+      <div className="section-num" style={{ marginBottom: 40 }}>[ 08 / CONTACT ]</div>
+      <h2 className="contact-big">
+        Let's build <span className="italic">foundation models</span> that actually<br />
+        generalize<span className="accent">.</span>
+      </h2>
+      <div className="contact-meta">
+        <div className="cm-item">
+          <div className="k">Email</div>
+          <div className="v"><a href="mailto:Behboudi@UTDallas.edu">Behboudi@UTDallas.edu</a></div>
+        </div>
+        <div className="cm-item">
+          <div className="k">Based in</div>
+          <div className="v">Dallas, TX — open to relocate</div>
+        </div>
+        <div className="cm-item">
+          <div className="k">Looking for</div>
+          <div className="v">ML/AI research roles · Industry or academia · 2026</div>
+        </div>
+        <div className="cm-item">
+          <div className="k">CV</div>
+          <div className="v"><a href="#">Download PDF ↓</a></div>
+        </div>
+        <div className="cm-item">
+          <div className="k">Scholar</div>
+          <div className="v"><a href="https://scholar.google.com/citations?user=e81fVS0AAAAJ&hl=en" target="_blank" rel="noopener">citations ↗</a></div>
+        </div>
+        <div className="cm-item">
+          <div className="k">ORCID</div>
+          <div className="v"><a href="https://orcid.org/0000-0003-1335-3617" target="_blank" rel="noopener">0000-0003-1335-3617 ↗</a></div>
+        </div>
+      </div>
+      <div style={{ marginTop: 60 }}><Socials /></div>
+    </section>
+  );
+}
 
 function Footer() {
   return (
