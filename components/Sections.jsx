@@ -264,7 +264,7 @@ function Contact() {
         </div>
         <div className="cm-item">
           <div className="k">Based in</div>
-          <div className="v">Dallas, TX — open to relocate</div>
+          <div className="v">open to relocate</div>
         </div>
         <div className="cm-item">
           <div className="k">Looking for</div>
